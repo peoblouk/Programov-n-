@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Ahoj Světe! Podruhé ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-hello-tkinter.htm" tppabs="http://tkinter.programujte.com/tkinter-hello-tkinter.htm">předchozí</a> ] [ <a href=
+          "tkinter-classes.htm" tppabs="http://tkinter.programujte.com/tkinter-classes.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ]
+          [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-hello-again.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-hello-again.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-hello-again.htm">originál</a>
+          ]
+        </p>
+        <h1>
+          Ahoj Světe! Podruhé a objektově.
+        </h1>
+        <p>
+          Když se píše rozsáhlejší program, je vhodné umístit kód do jedné nebo
+          více tříd. Následující příklad "Hello World" je převzat z knihy Matta
+          Conwaye <a href="javascript:if(confirm('http://www.python.org/doc/life-preserver  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.python.org/doc/life-preserver'" tppabs="http://www.python.org/doc/life-preserver">A Tkinter
+          Life Preserver</a>
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+class App:
+
+    def __init__(self, master):
+
+        frame = Frame(master)
+        frame.pack()
+
+        self.button = Button(frame, text="KONEC", fg="red", command=master.destroy)
+        self.button.pack(side=LEFT)
+
+        self.hi_there = Button(frame, text="Pozdrav!", command=self.rekni_ahoj)
+        self.hi_there.pack(side=LEFT)
+
+    def rekni_ahoj(self):
+
+        print u'Ahoj všici!'
+
+
+if __name__=="__main__":
+
+    root = Tk()
+    app = App(root)
+    root.mainloop()
+</pre>
+        <h2>
+          Spuštění příkladu.
+        </h2>
+        <p>
+          Pokud spuštění proběhne v pořádku, uvidíte následující okno.
+        </p>
+        <p>
+          <img alt='Ukázková aplikace.' src="hello-again1.png" tppabs="http://tkinter.programujte.com/images/hello-again1.png">
+        </p>
+        <p>
+          Když nyní kliknete na pravé tlačítko, vypíše se do konzole text 'Ahoj
+          všici!'. Po kliknutí na levé se program ukončí.
+        </p>
+        <div class='note'>
+          <p>
+            <b>Poznámka</b> : Některá vývojová prostředí mají problém spustit
+            programy, jako je tento. Je to zapříčiněno tím, že používají
+            Tkinter pro vykreslování sama sebe a pokud v programu použijete
+            mainloop a pak zavoláte destroy(), ukončí se jak Váš program tak
+            vlastní vývojové prostředí. Proto si pročtěte dokumentaci k Vašemu
+            editoru a následně upravte svůj program. (Nebo vývojové prostředí
+            ;-)).
+          </p>
+        </div>
+        <h2>
+          Detaily.
+        </h2>
+        <p>
+          Tento ukázkový program je napsaný jako třída. Konstruktor (metoda
+          <b>__init__</b>) je volaný s parametrem obsahujícím rodičovský widget
+          (<b>master</b>), do kterého sepřidává množství widgetů - potomků.
+          Vlastní metoda začíná vytvořením widgetu <b>Frame</b>, který je
+          jednoduchým kontejnerem (prvkem, který se používá pouze k udržení
+          ostatních widgetů pohromadě).
+        </p>
+        <pre>
+class App:
+
+    def __init__(self, master):
+
+        frame = Frame(master)
+        frame.pack()
+</pre>
+        <p>
+          Instance frame je uložena v lokální proměnné <b>frame</b>. Ihned
+          poté, co jsme vytvořili widget, zavoláme metodu <b>pack()</b>,
+          abychom učinili frame viditelným.
+        </p>
+        <p>
+          Dále vytvoříme dvě tlačítka (widget <b>Button</b>) jako potomky
+          frame.
+        </p>
+        <pre>
+self.button = Button(frame, text="KONEC", fg="red", command=master.destroy)
+self.button.pack(side=LEFT)
+
+self.hi_there = Button(frame, text="Pozdrav!", command=self.rekni_ahoj)
+self.hi_there.pack(side=LEFT)
+</pre>
+        <p>
+          Tentokrát jsme použili několik <b>argumentů</b>. První tlačítko je
+          pojmenováno 'KONEC' a je červené (fg je zkratkou pro foreground).
+          Druhé se jmenuje 'Pozdrav!'. Obě dvě tlačítka mají také argument
+          <b>'command'</b>, který specifikuje funkci (v tomto případě metodu,
+          ale to je jen slovíčkaření ;-) ) která se volá po kliknutí na
+          tlačítko.
+        </p>
+        <div class='note'>
+          <p>
+            <b>Poznámka ke command</b>: Všimněte si prosím, že zde *není*
+            napsáno <tt>command=self.rekni_ahoj()</tt>. Za názvem funkce se
+            nepíší uvozovky. Pokud je tam napíšete, funkce se zavolá pouze
+            jednou, při spuštění programu a na samotné tlačítko pak již nebude
+            reagovat.
+          </p>
+        </div>
+        <p>
+          Obě dvě tlačítka jsou zobrazena pomocí metody pack(), ale tentokrát s
+          argumentem <b>side=LEFT</b>. Znamená to, že se budou přitiskávat k
+          předchozím zapakovaným widgetům vždy jejich <i>levé</i> hrany.
+          Standardně jsou widgety vykreslovány uvnitř jejich rodičovských prvků
+          (které jsou je momentálně <b>master</b> pro frame a frame pro
+          tlačítka). Jestliže argument side není zadán, použije se <b>TOP</b>.
+        </p>
+        <p>
+          Odezva kliknutí na tlačítko 'Pozdrav!' je zajištěna následující
+          funkcí. Jednoduše vytiskne na konzoli zprávu pokaždé, když je
+          kliknuto na tlačítko.
+        </p>
+        <pre>
+def rekni_ahoj(self):
+
+    print u"Ahoj všici!"
+</pre>
+        <p>
+          Nakonec vytvoříme kód, který vytvoří widget root (třídy <b>Tk</b>) a
+          jednu instanci třídy <b>App</b> (použitím root jako rodiče).
+        </p>
+        <pre>
+if __name__=="__main__":
+
+    root = Tk()
+    app = App(root)
+    root.mainloop()
+</pre>
+        <p>
+          Poslední volání je metoda <b>mainloop()</b> widgetu root. Spustí
+          smyčku Tkinteru, ve které zůstane, dokud nebude zavolána metoda
+          <b>destroy()</b> nebo dokud nebude okno prostě zavřeno.
+        </p>
+        <h2>
+          Více o odkazech
+        </h2>
+        <p>
+          V druhém ukázkovém programu je widget frame uložen v lokální proměnné
+          <b>frame</b>, zatímco widgety tlačítek jsou uloženy v atributech
+          instance třídy App. Rýsuje se zde vážný problém? Co se stane, když se
+          metoda __init__ ukončí, tím pádem také proměnná frame?
+        </p>
+        <p>
+          V tomto případě můžete být v klidu, není potřeba uchovávat odkaz na
+          widget frame. Tkinter automaticky upravuje strom widgetů (přes
+          <b>rodič/potomek</b> vazby každého atributu), takže widget 'nezmizí'
+          když je zničen poslední odkaz. Pokud bychom tak chtěli učinit, musíme
+          widget ručně zničit (použitím metody <b>destroy()</b>), ale pokud
+          chcete s widdgetem ještě něco dělat po jeho vytvoření, je lepší jeho
+          odkaz uchovat ručně.
+        </p>
+        <p>
+          Jestli nechcete uchovat odkaz na widget, můžete použít jedno řádkový
+          zápis.
+        </p>
+        <pre>
+Button(frame, text="Pozdrav!", command=self.hello).pack(side=LEFT)
+</pre>
+        <p>
+          Neukládejte ale návratovou hodnotu této operace. Dostali byste stejně
+          jenom <b>None</b>, generované metodou <b>pack()</b>. Tak jako tak, je
+          bezpečnější a lepší oddělit inicializaci od vlastního vykreslení.
+        </p>
+        <pre>
+w = Button(frame, text="Pozdrav§", command=self.hello) 
+w.pack(side=LEFT)
+</pre>
+        <h2>
+          Více o jménech
+        </h2>
+        <p>
+          Dalším zdrojem zmatků, hlavně pro ty programátory kteří ovládají Tcl,
+          je způsob zápisu jmen widgetů v Tkinteru. V Tcl, musíte specifikovat
+          název každého widgetu. Například, následující Tcl kód vytvoří
+          tlačítko pojmenované 'ok', potomek widgety 'dialog' (který je
+          potomkem root -&gt; ".").
+        </p>
+        <pre>
+button .dialog.ok
+</pre>
+        <p>
+          Shodný program v Pythonu.
+        </p>
+        <pre>
+ok = Button(dialog)
+</pre>
+        <p>
+          Nicméně, v příkladu Tkinteru jsou <b>ok</b> a <b>dialog</b> odkazy na
+          instance widgetů, ne přímo jejich názvy. Protože Tk samo o sobě
+          potřebuje jména, Tkinter automaticky přidělí každému widgetu unikátní
+          název. V příkladu tedy jméno instance <b>dialog</b> může vypadat
+          třeba takto '.1428748' a tlačítko třeba takhle '.1428748.142920'.
+          Pokud se chcete dozvědět tato plná jména, stačí použít funkci
+          <b>str()</b>
+        </p>
+        <pre>
+&gt;&gt;&gt; print str(ok)
+.1428748.1432920
+</pre>
+        <p>
+          (Pokud něco tisknete, Python automaticky použije str() k nalezení
+          tisknutého textu. Ale operace třeba jako 'jmeno = ok' toto neprovádí,
+          takže pozor na to.)
+        </p>
+        <p>
+          Pokud opravdu potřebujete definovat název widgetu, můžete použít
+          parametr <b>name</b>. Jeden z důvodu (možná i jediný) proč dělat
+          takovouto věc, je potřeba spolupracovat s kódem psaným v Tcl.
+        </p>
+        <p>
+          V následujícím případě je výsledný název widgetu '.dialog.ok' (nebo,
+          pokud zapomenete pojmenovat dialog, tak nějak takhle '.1428748.ok')
+        </p>
+        <pre>
+ok = Button(dialog, name="ok")
+</pre>
+        <p>
+          Aby se nestalo, že vaše nové jméno bude kolidovat se jmény
+          automaticky přidělovanými Pythonem, nepoužívejte názvy, které
+          obsahují pouze číslice. Také se nesnažte měnit názvy již vytvořených
+          widgetů!
+        </p>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - tommz - Copyright © 2006 TkinterCZ - <a href=
+          "javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License
+          1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

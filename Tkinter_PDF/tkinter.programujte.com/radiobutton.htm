@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>
+      Udělátko Radiobutton ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="panedwindow.htm" tppabs="http://tkinter.programujte.com/panedwindow.htm">předchozí</a> ] [ <a href=
+          "scale.htm" tppabs="http://tkinter.programujte.com/scale.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/radiobutton.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/radiobutton.htm'" tppabs="http://effbot.org/tkinterbook/radiobutton.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Radiobutton (Přepínací tlačítko)
+        </h1>
+        <p>
+          Udělátko <b>Přepínací tlačítko</b> je standardní udělátko Tkinter
+          používané k vytvoření výběru z několika hodnot. Přepínací tlačítko
+          může obsahovat text nebo obrázek a také můžete spojit každé tlačítko
+          s metodou nebo funkcí. Jestliže uživatel zmáčkne přepínací tlačítko,
+          Python automaticky zavolá funkci nebo metodu spojenou s tlačítkem.
+        </p>Přepínací tlačítko může zobrazit text pouze jednoho druhu, ale může
+        být rozdělen do více řádků. Navíc jeden ze znaků může být podtržen,
+        například pro označení klávesové zkratky. Standardně může být klávesa
+        <span style="font-weight: bold;">Tab</span> použita k posunutí na
+        tlačítko.
+        <p>
+          Každá skupina přepínacích tlačítek musí být spojena s <a href=
+          "variable.htm" tppabs="http://tkinter.programujte.com/variable.htm">proměnou</a>.
+        </p>
+        <h2>
+          Kdy použít udělátko Radiobutton
+        </h2>
+        <p>
+          Udělátko Přepínací tlačítko je obvykle používáno k vytvoření výběru z
+          několika hodnot. Obvykle používáno ve skupinách používajících stejnou
+          proměnou.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Přepínací tlačítko je velmi podobné udělátku <a href=
+          "checkbutton.htm" tppabs="http://tkinter.programujte.com/checkbutton.htm">checkbutton</a>.
+        </p>
+        <pre>
+from Tkinter import * 
+ 
+okno = Tk() 
+v = IntVar() 
+ 
+Radiobutton(okno, text="Jedna", variable=v, value=1).pack(anchor=W) 
+Radiobutton(okno, text="Dva", variable=v, value=2).pack(anchor=W) 
+ 
+mainloop() 
+</pre><img style="width: 126px; height: 80px;" alt="" src=
+"radiobutton1.PNG" tppabs="http://tkinter.programujte.com/images/radiobutton1.PNG" />
+        <p>
+          Jestliže potřebujete zjistit, kdy se změnila hodnota přepínacího
+          tlačítka, přidejte parametr <span style=
+          "font-weight: bold;">command</span> ke každému tlačítku.
+        </p>
+        <p>
+          K vytvoření více tlačítek použijte následující návod:
+        </p>
+        <pre>
+ from Tkinter import * 
+ okno=Tk() 
+ MODES = [ 
+ ("Jedna", "1"), 
+ ("Dva", "2"), 
+ ("Osm", "8"), 
+ ("Deset", "10"), 
+ ] 
+  
+ v = StringVar() 
+ v.set("1") 
+  
+ for text, mode in MODES: 
+     b = Radiobutton(okno, text=text, 
+     variable=v, value=mode) 
+     b.pack(anchor=W) 
+ mainloop() 
+</pre>
+        <h3>
+          Standardní přepínací tlačítko
+        </h3>
+        <p>
+          <img style="width: 126px; height: 126px;" alt="" src=
+          "radiobutton2.PNG" tppabs="http://tkinter.programujte.com/images/radiobutton2.PNG" />
+        </p>
+        <p>
+          Abyste vzhled přepínacího tlačítka byl jako obrázek níže, nastavte
+          parametr <b>indicatoron</b> na 0. Vybrané tlačítko pak změní relief z
+          <span style="font-weight: bold;">RAISED</span> na <span style=
+          "font-weight: bold;">SUNKEN</span>. Neurčíte-li parametr indicatoron,
+          vzhled přepínacích tlačítek bude automaticky jako na horním obrázku.
+        </p>
+        <h3>
+          Přepínací tlačítko s parametrem indicatoron=0
+        </h3>
+        <p>
+          <img style="width: 126px; height: 125px;" alt="" src=
+          "radiobutton3.PNG" tppabs="http://tkinter.programujte.com/images/radiobutton3.PNG" />
+        </p>
+        <h2>
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b>Radiobutton(master=None, **options)</b> (class) [<a href=
+            "index.php-akce=404#Tkinter.Radiobutton-class" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton-class">#</a>]
+          </dt>
+          <dd>
+            Přepínací tlačítka bývají obvykle používány ve skupinách, kde
+            všechny tlačítka maji stejnou proměnou
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.__init__-method" name=
+            "Tkinter.Radiobutton.__init__-method"><b>__init__(master=None,
+            **options)</b></a> [<a href=
+            "index.php-akce=404#Tkinter.Radiobutton.__init__-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.__init__-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vytvoř přepínací tlačítko.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívej se na metodu config pro všechny
+                dostupné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.config-method" name=
+            "Tkinter.Radiobutton.config-method"><b>config(**options)</b></a>
+            [<a href="index.php-akce=404#Tkinter.Radiobutton.config-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Modifikuje jeden nebo více parametrů. Jestliže nejsou dány, tato
+              metoda vrací seznam všech daných parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Jakou barvu použít na pozadí, když je přepínací tlačítko
+                aktivní. Standardní nastavení zavisí na systému
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Jakou barvu použít na barvu písma když je přepínací tlačítko
+                aktivní. Standardní nastavení závisí na systému
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kontroluje kde v přepínacím tlačítku se objeví text nebo
+                obrázek. Používejte hodnoty <b>N</b>, <b>NE</b>, <b>E</b>,
+                <b>SE</b>, <b>S</b>, <b>SW</b>, <b>W</b>, <b>NW</b> nebo
+                <b>CENTER</b>. Standardní nastavení je <b>CENTER</b>.
+                (anchor/Anchor)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí. Standardní nastavení závisí na systému.
+                (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <span style="font-weight: bold;">background</span>.
+              </dd>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dd>
+                Bitmapu do přepínacího tlačítka. Jestliže je dán parametr
+                image, tento parametr je ignorován. (bitmap/Bitmap)
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje přepínacího tlačítka. Standardní nastavení závisí
+                na systému, ale obvykle je to 1 nebo 2 pixely.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <span style="font-weight: bold;">borderwidth</span>
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Funkce nebo metoda zavolaná, když je přepínací tlačítko
+                zmáčknuto. Může zavolat funkci, metodu, nebo jiný volatelný
+                pythonovský objekt. (command/Command)
+              </dd>
+              <dt>
+                <i>compound=</i>
+              </dt>
+              <dd>
+                Kontroluje jak zkombinovat text s obrázkem nebo bitmapou.
+                Standardně, když je dán obrázek nebo bitmapa text nebude vidět.
+                Jestliže je tento parametr na <span style=
+                "font-weight: bold;">CENTER</span>, text je vykreslen nahoře a
+                obrázek pod ním. Používejte hodnoty <span style=
+                "font-weight: bold;">BOTTOM</span>, <span style=
+                "font-weight: bold;">LEFT</span> nebo <span style=
+                "font-weight: bold;">TOP</span>. Standardní nastavení je
+                <span style="font-weight: bold;">NONE.</span>
+                (compound/Compound)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Kurzor, který se zobrazí, jestliže se myš nachází na tlačítku.
+                (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitý v udělátku. Přepínací tlačítko může
+                zobrazovat pouze jeden druh písma. Standardní nastavení závisí
+                na systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <span style="font-weight: bold;">foreground</span>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška přepínacího tlačítka. Jestliže tlačítko zobrazuje text,
+                je tento parametr dán v textových jednotkách. Když tlačítko
+                zobrazuje obrázek, je tento parametr dán v pixelech.
+                (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když přepínací
+                tlačítko nebude mít focus. Standardní nastavení záleží na
+                systému. (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když přepínací
+                tlačítko bude mít focus. Standardní nastavení záleží na
+                systému. (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému. (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek zobrazovaný v přepínacím tlačítku. Jestliže je dán text
+                a bitmapa, obrázek se vykreslí nad ně. (image/Image)
+              </dd>
+              <dt>
+                <i>indicatoron=</i>
+              </dt>
+              <dd>
+                Jestliže je tento paramter nastaven na <span style=
+                "font-weight: bold;">true,</span> přepínací tlačítko má
+                normální vzhled, jestliže je tento parametr nastaven na
+                <span style="font-weight: bold;">false,</span> přepínací
+                tlačítko má vzhled jako normální tlačítko. Standardní nastavení
+                je true. (indicatorOn/IndicatorOn)
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Definuje jak zarovnat víceřádkový text. Používejte hodnoty
+                <span style="font-weight: bold;">LEFT</span>, <span style=
+                "font-weight: bold;">RIGHT</span>, <span style=
+                "font-weight: bold;">CENTER</span>. Standardní nastavení je
+                <span style="font-weight: bold;">CENTER</span>.
+                (justify/Justify)
+              </dd>
+              <dt>
+                <i>offrelief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je <span style=
+                "font-weight: bold;">raised</span>. (offRelief/OffRelief)
+              </dd>
+              <dt>
+                <i>overrelief=</i>
+              </dt>
+              <dd>
+                Alternativní okrasa okraje, jestliže se myš dostane nad
+                přepínací tlačítko. (overRelief/OverRelief)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Horizontální vycpávka mezi okrajem a obsahem přepínacího
+                tlačítka. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vertikální vycpávka mezi okrajem a obsahem přepínacího
+                tlačítka. (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Vybírejte z <b>SUNKEN</b>, <b>RAISED</b>,
+                <b>GROOVE</b>, <b>RIDGE</b> nebo <b>FLAT.</b> Standardní
+                nastavení je FLAT. (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemWindow'.
+                (selectColor/Background)
+              </dd>
+              <dt>
+                <i>selectimage=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní nastavení.
+                (selectImage/SelectImage)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav přepínacího tlačítka: <b>NORMAL</b>, <b>ACTIVE</b> nebo
+                <b>DISABLED</b>. Standardní nastavení je <b>NORMAL</b>.
+                (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, zda může uživatel použít klávesu Tab k posunutí na
+                tlačítko. Standardní nastavení je prázdný řetězec, což znamená,
+                že tlačítko přijímá klávesové vazby. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Zobrazuje text v přepínacím tlačítku. Jestliže je dán parametr
+                <span style="font-weight: bold;">bitmap</span> nebo
+                <span style="font-weight: bold;">image</span>, text je
+                ignorován. (text/Text)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Spojí Tkinterovskou proměnou s přepínacím tlačítkem.
+                (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dd>
+                Jaký znak má být podtrhnut. Standardní nastavení je -1, což
+                znamená že žádný. (underline/Underline)
+              </dd>
+              <dt>
+                <i>value=</i>
+              </dt>
+              <dd>
+                Hodnota spojená s přepínacím tlačítkem. Všechny tlačítka v
+                jedné skupině měly mít jinou hodnotu. (value/Value)
+              </dd>
+              <dt>
+                <i>variable=</i>
+              </dt>
+              <dd>
+                Proměnná spojená s přepínacím tlačítkem. Všechna přepínací
+                tlačítka v jedné skupině, by měli mít stejnou proměnnou.
+                (variable/Variable)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka přepínacího tlačítka. Když tlačítko obsahuje text,
+                zadávejte tento parametr v textových jednotkách. Jestliže
+                tlačítko obsahuje obrázek zadejte hodnotu v pixelech. Jestliže
+                je tento parametr vynechán, nebo nastaven na 0, python
+                přizpůsobí šířku obsahu. (width/Width)
+              </dd>
+              <dt>
+                <i>wraplength=</i>
+              </dt>
+              <dd>
+                Indikuje, kdy může být text přepínacího tlačítka rozdělen do
+                více řádků. Standardní nastavení je 0. (wrapLength/WrapLength)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.deselect-method" name=
+            "Tkinter.Radiobutton.deselect-method"><b>deselect()</b></a>
+            [<a href="index.php-akce=404#Tkinter.Radiobutton.deselect-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.deselect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vypnutí tlačítka
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.flash-method" name=
+            "Tkinter.Radiobutton.flash-method"><b>flash()</b></a> [<a href=
+            "index.php-akce=404#Tkinter.Radiobutton.flash-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.flash-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Probleskující přepínací tlačítko. Tato metoda přepíná mezi
+              normálním a aktivním stavem přepínacího tlačítka.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.invoke-method" name=
+            "Tkinter.Radiobutton.invoke-method"><b>invoke()</b></a> [<a href=
+            "index.php-akce=404#Tkinter.Radiobutton.invoke-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.invoke-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zavolá fukci nebo metodu spojenou s tlačítkem.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Radiobutton.select-method" name=
+            "Tkinter.Radiobutton.select-method"><b>select()</b></a> [<a href=
+            "index.php-akce=404#Tkinter.Radiobutton.select-method" tppabs="http://tkinter.programujte.com/obsah.html#Tkinter.Radiobutton.select-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zapnutí tlačítka.
+            </p>
+          </dd>
+        </dl>
+        <div class="navigate">
+          <hr id="zonebar" />
+          <span class="info">Přeložil a upravil - Jakub Vojáček - Copyright © 2006
+          TkinterCZ -</span> <a class="info" href=
+          "javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License
+          1.2</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Ahoj (aneb první program), Tkinter ::: Úvod do Tkinter :::
+      tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-whats-tkinter.htm" tppabs="http://tkinter.programujte.com/tkinter-whats-tkinter.htm">předchozí</a> ] [ <a href=
+          "tkinter-hello-again.htm" tppabs="http://tkinter.programujte.com/tkinter-hello-again.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-hello-tkinter.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-hello-tkinter.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-hello-tkinter.htm">originál</a>
+          ]
+        </p>
+        <h1 class="title">
+          Ahoj (aneb první program), Tkinter
+        </h1>
+        <p>
+          Konec povídání, podívejme se radši na nějaký kód. Skoro každý pořádný
+          tutoriál začíná programem <span>"hello world" - "ahoj světe"</span>.
+          Začneme tak i my. Podívejme se na&nbsp;malou ukázku:
+        </p><b>Náš první Tkinter program (Soubor: ahoj1.py)</b>
+        <pre>
+# -*- coding: utf-8 -*-
+
+from Tkinter import *
+
+hlavni_okno = Tk()
+
+w = Label(hlavni_okno, text=u"Ahoj světe!")
+w.pack()
+
+hlavni_okno.mainloop()
+
+</pre><img src=
+"data-tkinter-hello-tkinter-3fd3019d8414d19ed155451fd9e4902e.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-hello-tkinter-3fd3019d8414d19ed155451fd9e4902e.gif">
+        <h2>
+          Detaily
+        </h2>
+        <p>
+          První nastavíme kódování, abychom mohli správně zobrazovat české
+          znaky.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+</pre>
+        <p>
+          Začínáme od nejdůležitějšího modulu <tt>Tkinter.</tt> Ten obsahuje
+          všechny třídy, funkce a jiné věci potřebné k práci s nástroji Tk. V
+          mnoha případech můžete jednoduše naimportovat <b>Tkinter</b> do
+          vašeho programu:
+        </p>
+        <pre>
+from Tkinter import *
+</pre>
+        <p>
+          K inicializaci Tkinter, musíme vytvořit hlavní (<b>root</b>) udělátko
+          Tk. To je obyčejné okno s titulkem a dalšími dekorativními prvky,
+          které vytvoří Váš manažer oken (Windows, KDE, Gnome atd.). Vždy byste
+          měli vytvořit jedno hlavní okno a toto okno musí být vytvořeno dříve
+          než ostatní prvky (udělátka).
+        </p>
+        <pre>
+hlavni_okno = Tk()
+</pre>
+        <p>
+          Tak a teď si vytvoříme a udělátku <b>Label</b> (Štítek). Udělátko <b>Label</b> může zobrazit buď text nebo ikonku či jiný
+          obrázek. Zde ho používáme pro zobrazení textu.
+        </p>
+        <pre>
+w = Label(hlavni_okno, text=u"Ahoj světe!")
+</pre>
+        <p>
+          Zatím je udělátko pouze v paměti programu. Chceme-li ho zobrazit,
+          musíme ho tzv. zapakovat - voláme metodu <b>pack</b>. 
+                  <pre>
+w.pack()
+</pre>
+
+          Nakonec
+          vstoupíme do smyčky událostí Tkinter:
+        </p>
+        <pre>
+hlavni_okno.mainloop()
+</pre>
+        <p>
+          Program zůstává ve smyčce událostí, dokud nezavřeme program. Smyčka
+          událostí neobsluhuje jen události od uživatele (stisknutí tlačítka
+          myši nebo tlačítka na klávesnici) či práci s okenním systémem (jako
+          překreslení obrazovky nebo konfigurací systémových zpráv), ale může
+          také obsluhovat operace vyvolané samotným Tkinterem. Tyto operace
+          spravuje správce rozmístnění - zde metoda <b>pack</b> - a také
+          zobrazuje nově vytvořené věci.
+        </p>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - <a href="mailto:V.Titl@seznam.cz">Vítězslav
+          Titl</a>, Pavel Kosina - Copyright © 2006-2007 TkinterCZ - <a href=
+          "javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License
+          1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

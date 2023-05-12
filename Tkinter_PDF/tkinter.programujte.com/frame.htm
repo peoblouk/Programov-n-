@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head> 
+  <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" /> 
+  <meta name="generator" content="HTML Tidy for Solaris (vers 1st November 2003), see www.w3.org" /> 
+  <title>Udělátko Frame ::: Úvod do Tkinter ::: www.tkintercz.wz</title>
+  <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media="print" />
+</head>
+<body bgcolor="#ffffff">
+<div id="effbot-page">
+<div id="effbot-nav"><b></b><br />
+<div class="adsense">
+<script language="JavaScript" type="text/javascript">
+</script> 
+<script language="JavaScript" src="index.php-akce=404" tppabs="http://tkinter.programujte.com/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script></div>
+</div>
+<div id="effbot-body">
+<p class="info">Úvod do Tkinter  - Okna pro jazyk Python - Postavené na základech 'An Introduction to Tkinter'</p>
+<p class="navigate"> 
+ [ <a href="entry.htm" tppabs="http://tkinter.programujte.com/entry.htm">předchozí</a> ]
+ [ <a href="label.htm" tppabs="http://tkinter.programujte.com/label.htm">další</a> ]
+ [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ]
+ [ <a href="javascript:if(confirm('http://effbot.org/tkinterbook/frame.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/frame.htm'" tppabs="http://effbot.org/tkinterbook/frame.htm">originál</a> ]</p>
+<h1 class="title">Tkinter - Frame</h1>
+<br />
+<p>Udělátko Rám&nbsp; je používáno jako geometrický manažer pro ostatní udělátka, nebo k vytvoření vycpávky mezi dvěma udělátky.</p>
+<h2>Kdy použít udělátko Frame</h2>
+<p>Udělátko Rám je obvykle používáno k seskupení jiných udělátek dohromady. Může být také použít jako vycpávka.</p>
+<h2 id="patterns">Pojetí</h2>
+<p>Udělátko Rám muže být použit jako okrasa.</p>
+<pre>from Tkinter import *<br /><br />okno = Tk()<br /><br />Label(text="Jedna").pack()<br /><br />Frame(height=2, bd=1, relief=SUNKEN).pack(fill=X, padx=5, pady=5)<br /><br />Label(text="Dva").pack()<br /><br />mainloop()<br /><br /><br /><img style="width: 129px; height: 90px;" alt="" src="frame.png" tppabs="http://tkinter.programujte.com/images/frame.png" />
+</pre>
+<h2 id="reference">Referenční příručka</h2>
+    <dl>
+      <dt><b><a name="Tkinter.Frame-class" id="Tkinter.Frame-class"></a>Frame(master=None, 
+        **options)</b> (class) [<a href="#Tkinter.Frame-class">#</a>]</dt>
+      <dd></dd>
+      <dd> 
+        <dl>
+          <dt><i>master</i></dt>
+          <dd>Rodičovské udělátko</dd>
+          <dt><i>**options</i></dt>
+          <dd>Parametry udělátka. Podívej se na metodu&nbsp;<a class="link" href="frame.htm#frame.Frame.config-method" tppabs="http://tkinter.programujte.com/frame.htm#frame.Frame.config-method"><b>config</b></a> 
+            pro všechny dostupné parametry.</dd>
+        </dl>
+        <br />
+      </dd>
+      <dt><a id="Tkinter.Frame.config-method" name="Tkinter.Frame.config-method"><b>config(**options)</b></a> 
+        [<a href="#Tkinter.Frame.config-method">#</a>]</dt>
+      <dd> 
+        <p>Modifikuje jeden nebo více parametrů udělátka. Jestliže parametry nejsou 
+          dány, tato metoda vrací seznam&nbsp;již všech daných parametrů.</p>
+      </dd>
+      <dd> 
+        <dl>
+          <dt><i>**options</i></dt>
+          <dd>Parametry udělátka.</dd>
+          <dt><i>background=</i></dt>
+          <dd>Barva použitá na pozadní rámečku.</dd>
+          <dt><i>bg=</i></dt>
+          <dd>Stejné jako <b>background</b>.</dd>
+          <dt><i>borderwidth=</i></dt>
+          <dd>Šířka okraje. Standardní nastavení je 0 (bez okraje) . (borderWidth/BorderWidth)</dd>
+          <dt><i>bd=</i></dt>
+          <dd>Stejné jako <b>borderwidth</b>.</dd>
+          <dt><i>class=</i></dt>
+          <dd>Standartní nastavení je Frame. (class/Class)</dd>
+          <dt><i>colormap=</i></dt>
+          <dd>Některé monitory mohou zobrazovat pouze 256 barev. Tímto parametrem 
+            můžete určit jakých 256 se použije na toto a všechny další potomky 
+            udělátka. Standardně používá rám stejnou color mapu jako rodičovské 
+            okno. Tento parametr nemůžete změnit potom, co udělátko vykreslíte. 
+            (colormap/Colormap)</dd>
+          <dt><i>container=</i></dt>
+          <dd>Standardní nastavení je 0. (container/Container)</dd>
+          <dt><i>cursor=</i></dt>
+          <dd>Kurzor, který se ukáže, když se myš posune nad rám. Standardní 
+            nastavení závisí na systému. (cursor/Cursor)</dd>
+          <dt><i>height=</i></dt>
+          <dd>Výška rámečku. Standardní nastavení je 0. (height/Height)</dd>
+          <dt><i>highlightbackground=</i></dt>
+          <dd>Standardní nastavení závisí na systému. (highlightBackground/HighlightBackground)</dd>
+          <dt><i>highlightcolor=</i></dt>
+          <dd>Standardní nastavení závisí na systému. (highlightColor/HighlightColor)</dd>
+          <dt><i>highlightthickness=</i></dt>
+          <dd>Standardní nastavení je&nbsp; 0. (highlightThickness/HighlightThickness)</dd>
+          <dt><i>padx=</i></dt>
+          <dd>Horizontální vycpávka mezi okrajem a obsahem rámečku.Standardní 
+            nastavení je 0. (padX/Pad)</dd>
+          <dt><i>pady=</i></dt>
+          <dd>Vertikální vycpávka mezi okrajem a obsahem rámečku.Standardní nastavení 
+            je 0. (padY/Pad)</dd>
+          <dt><i>relief=</i></dt>
+          <dd>Okrasa okraje. Standardní nastavení je <span style="font-weight: bold;">FLAT</span>. 
+            Ostatní možné natavení jsou <b>SUNKEN</b>, <b>RAISED</b>, <b>GROOVE</b> 
+            a <b>RIDGE</b>.Pro zobrazení tohoto parametru musíte nejprve změnit 
+            parametr borderwidth na vyšší číslo než 0. &nbsp;(relief/Relief)</dd>
+        </dl>
+        <dl>
+          <dt><i>takefocus=</i></dt>
+          <dd>Jestliže je tento parametr nastaven na pravdu (true), může uživatel 
+            použit klávesu <span style="font-weight: bold;">Tab </span>k posunutí 
+            na tlačítko. Standartní nastavení je 0. (takeFocus/TakeFocus)</dd>
+          <dt><i>visual=</i></dt>
+          <dd>Tento parametr nemá standardní nastavení. (visual/Visual)</dd>
+          <dt><i>width=</i></dt>
+          <dd>Standardní nastavení je 0. (width/Width)</dd>
+        </dl>
+        <br />
+      </dd>
+    </dl>
+<div class="navigate">
+<hr id="zonebar" />
+<p class="info">Přeložil a upravil -  Jakub Vojáček - Copyright © 2006 TkinterCZ -  
+<a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License 1.2</a></p>
+</div>
+</div>
+</div>
+</body>
+</html>

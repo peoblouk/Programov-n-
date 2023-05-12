@@ -1,0 +1,458 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <title>
+      Udělátko Scrollbar ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-nav">
+        <br>
+        <br>
+      </div>
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="scale.htm" tppabs="http://tkinter.programujte.com/scale.htm">předchozí</a> ] [ <a href=
+          "scrolledtext.htm" tppabs="http://tkinter.programujte.com/scrolledtext.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/scrollbar.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/scrollbar.htm'" tppabs="http://effbot.org/tkinterbook/scrollbar.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Scrollbar (Posuvník)
+        </h1><br>
+        <h2>
+          Kdy použít udělátko Posuvník
+        </h2>
+        <p>
+          Toto udělátko se používá k vytváření rolovacích udělátek jako
+          <a href="canvas.htm" tppabs="http://tkinter.programujte.com/canvas.htm">Canvas</a>, <a href="listbox.htm" tppabs="http://tkinter.programujte.com/listbox.htm">Listbox</a> a
+          <a href="text.htm" tppabs="http://tkinter.programujte.com/text.htm">Text</a>.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Udělátko posuvník je skoro vždycky propojeno s udělátky <span style=
+          "font-weight: bold;">Listbox</span>, <span style=
+          "font-weight: bold;">Canvas</span> nebo <span style=
+          "font-weight: bold;">Text</span>. Horizontální posuvník může být
+          použit také s udělátkem <span style=
+          "font-weight: bold;">Entry</span>.
+        </p>
+        <p>
+          K připojení vertikálního posuvníku k udělátko musíte udělat dvě věci:
+        </p>
+        <ol>
+          <li>
+            <p>
+              Nastavit parametr udělátka <b>yscrollcommand</b> jako metodu
+              posuvníku <span style="font-weight: bold;">set</span>.
+            </p>
+          </li>
+          <li>
+            <p>
+              Nastavit <span style="font-weight: bold;">command</span>
+              posuvníku na metodu <span style="font-weight: bold;">yview</span>
+              daného udělátka.
+            </p>
+          </li>
+        </ol>
+        <pre>
+from Tkinter import *<br><br>master = Tk()<br><br>scrollbar = Scrollbar(master)<br>scrollbar.pack(side=RIGHT, fill=Y)<br><br>listbox = Listbox(master, yscrollcommand=scrollbar.set)<br>for i in range(1000):<br> listbox.insert(END, str(i))<br>listbox.pack(side=LEFT, fill=BOTH)<br><br>scrollbar.config(command=listbox.yview)<br><br>mainloop()<br><br><img src="data-scrollbar-1682c46219db6b19fa54ae4a700ac27b.png" tppabs="http://tkinter.programujte.com/images/data-scrollbar-1682c46219db6b19fa54ae4a700ac27b.png"><br>
+</pre>
+        <p>
+          Když se obsah udělátka změní, zavolá se metoda posuvníku <span style=
+          "font-weight: bold;">set</span>. Když uživatel použije posuvník, tak
+          se zavolá metoda <span style="font-weight: bold;">yview</span> s
+          patřičnými parametry.
+        </p>
+        <p>
+          Připojení horizontálního posuvníku je prakticky stejné. Ale musíte
+          použít <b>xscrollcommand</b> a metodu <b>xview.</b>
+        </p>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Scrollbar-class" id=
+            "Tkinter.Scrollbar-class"></a>Scrollbar(master=None, **options)</b>
+            (class) [<a href="#Tkinter.Scrollbar-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posuvník.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívejte se na metodu <a href=
+                "#Tkinter.Scrollbar.config-method">config</a> pro všechny možné
+                parametry.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.activate-method" name=
+            "Tkinter.Scrollbar.activate-method"><b>activate(element)</b></a>
+            [<a href="#Tkinter.Scrollbar.activate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Aktivuje část posuvníku.
+            </p>
+            <dl>
+              <dt>
+                <i>element</i>
+              </dt>
+              <dd>
+                Část posuvníku, která se má aktivovat. Použijte jedno z
+                "arrow1", "slider" nebo "arrow2". Při vynechání metoda vrací,
+                která část je právě aktivní. V případě že žádná, vrací prázdný
+                řetězec.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.config-method" name=
+            "Tkinter.Scrollbar.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Scrollbar.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jedno nebo více parametrů udělátka. Jestliže je tato metoda
+              zavolána bez parametrů, vrací slovník všech nastavení daného
+              udělátka.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+              </dd>
+              <dt>
+                <i>activerelief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je RAISED. (activeRelief/Relief)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje. Standardní nastavení je 0.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Zpětná metoda udělátka, které je spojeno s posuvníkem. Obvykle
+                se jedná o <span style="font-weight: bold;">xview</span> nebo
+                <span style="font-weight: bold;">yview</span>.
+              </dd>
+              <dd>
+                Když uživatel pohne se šoupátkem, metoda je volána způsobem
+                <b>callback("moveto", offset)</b>, kde offset rovný 0.0
+                znamená, že je šoupátko nahoře (nebo vlevo) a offset 1.0
+                znamená, že se šoupátko nalézá dole (nebo vpravo).
+              </dd>
+              <dd>
+                Jestliže uživatel kliká na šipková tlačítka, je metoda volána
+                takto: <b>callback("scroll", step, what)</b>. Druhý parametr je
+                buď "-1" nebo "1", podle směru pohybu šoupátka. Třetí parametr
+                označuje jednotky posunu. Buď se jedná o "units" nebo "pages".
+                (command/Command)<br>
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Kurzor, který se zobrazí jakmile se dostane nad posuvník.
+                Standardní nastavení záleží na systému. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>elementborderwidth=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je -1. (elementBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Spolu s <b>highlightcolor</b> a <b>highlightthickness</b>
+                určuje tato volba, jak vykreslovat okraje. Když má udělátko
+                fokus, je okraj <b>highlightthickness</b> v barvě
+                <b>highlightcolor</b>. Jinak je vykreslen v barvě
+                <b>highlightbackground</b>r. Standardní nastavení záleží na
+                systému. (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Podívejte se na <b>highlightbackground</b>.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Podívejte se na <b>highlightbackground</b>. Standardní
+                nastavení je 0 (no highlight border).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>jump=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (jump/Jump)
+              </dd>
+              <dt>
+                <i>orient=</i>
+              </dt>
+              <dd>
+                Určuje jak vykreslit posuvník. Vybírejte z <b>HORIZONTAL</b> a
+                <b>VERTICAL</b>. Standardní nastavení je <b>VERTICAL</b>.
+                (orient/Orient)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Standardní nastavení je <span style=
+                "font-weight: bold;">SUNKEN</span>. Další možnosti jsou
+                <b>FLAT</b>, <b>RAISED</b>, <b>GROOVE</b>, and <b>RIDGE</b>.
+                Tento parametr je pod Windowsy ignorován. (relief/Relief)
+              </dd>
+              <dt>
+                <i>repeatdelay=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 300. (repeatDelay/RepeatDelay)
+              </dd>
+              <dt>
+                <i>repeatinterval=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 100. (repeatInterval/RepeatInterval)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je prázdný řetězec. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>troughcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (troughColor/Background)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka posuvníku v pixelech. Standardní nastavení je 16.
+                (width/Width)
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.delta-method" name=
+            "Tkinter.Scrollbar.delta-method"><b>delta(deltax, deltay)</b></a>
+            [<a href="#Tkinter.Scrollbar.delta-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací desetinné číslo, které by se mělo přičíst k současnému
+              nastavení šoupátka, aby se tento posunul o daný počet pixelů.
+              Typicky se toto využívá při myšoidních posunech, kdy se zjišťuje,
+              jak posunout šoupátko, když s ním uživatel hýbe.
+            </p>
+            <dl>
+              <dt>
+                <i>deltax</i>
+              </dt>
+              <dd>
+                Horizontální posun v obrazovkových souřadnicích.
+              </dd>
+              <dt>
+                <i>deltay</i>
+              </dt>
+              <dd>
+                Svislý posun v obrazovkových souřadnicích.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Hodnotu, která se má přičíst k offsetu posuvníku.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.fraction-method" name=
+            "Tkinter.Scrollbar.fraction-method"><b>fraction(x, y)</b></a>
+            [<a href="#Tkinter.Scrollbar.fraction-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pozici šoupátka vzhledem k daným souřadnicím.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Vertikální souřadnice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pozici šoupátka mezi 0.0 a 1.0.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.get-method" name=
+            "Tkinter.Scrollbar.get-method"><b>get()</b></a> [<a href=
+            "#Tkinter.Scrollbar.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací aktuální hodnotu šoupátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                N-tici obsahující vzdálenost od horního (levého) a dolního
+                (pravého) konce šoupátka.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.identify-method" name=
+            "Tkinter.Scrollbar.identify-method"><b>identify(x, y)</b></a>
+            [<a href="#Tkinter.Scrollbar.identify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pojmenování části posuvníku na daných souřadnicích.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Vertikální souřadnice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Jednu z následujících hodnot: "arrow1" (šipka nahoře/vlevo),
+                "trough1", "slider", "trough2", "arrow2" (šipka dole/vpravo),
+                nebo prázdný řetězec.
+              </dd>
+            </dl><br>
+          </dd>
+          <dt>
+            <a id="Tkinter.Scrollbar.set-method" name=
+            "Tkinter.Scrollbar.set-method"><b>set(lo, hi)</b></a> [<a href=
+            "#Tkinter.Scrollbar.set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje šoupátko na novou pozici.
+            </p>
+            <dl>
+              <dt>
+                <i>lo</i>
+              </dt>
+              <dd>
+                Relativní polohu k hornímu (levému) konci posuvníku.
+              </dd>
+              <dt>
+                <i>hi</i>
+              </dt>
+              <dd>
+                Relativní polohu ke spodnímu (pravému) konci posuvníku.
+              </dd>
+            </dl><br>
+          </dd>
+        </dl>
+        <div class="navigate">
+          <hr class="zonebar">
+          <p class="info">
+            Přeložil a upravil - Jakub Vojáček, geon - Copyright © 2007 TkinterCZ -
+            <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+            License 1.2</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

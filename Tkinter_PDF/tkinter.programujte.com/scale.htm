@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
+    <title>
+      Udělátko Scale ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-nav">
+        <br />
+        <div class="adsense"></div>
+      </div>
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="radiobutton.htm" tppabs="http://tkinter.programujte.com/radiobutton.htm">předchozí</a> ] [ <a href=
+          "scrollbar.htm" tppabs="http://tkinter.programujte.com/scrollbar.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/scale.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/scale.htm'" tppabs="http://effbot.org/tkinterbook/scale.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - udělátko Scale
+        </h1><br />
+        <p>
+          Udělátko stupnice dovoluje uživateli vybrat číselnou hodnotu pohybem
+          posuvníku. Mimo jiné můžete kontrolovat minimální a maximální hodnoty
+          a velikost dílku stupnice.
+        </p>
+        <h2>
+          Kdy použít udělátko Stupnice?
+        </h2>
+        <p>
+          Udělátko stupnice můžete použít jako náhradu udělátka <a href=
+          "tkinter-entry.htm" tppabs="http://tkinter.programujte.com/tkinter-entry.htm">Entry</a> nebo <a href="spinbox.htm" tppabs="http://tkinter.programujte.com/spinbox.htm">Spinbox</a>.
+          Zároveň můžete specifikovat rozsah velikosti daného čísla.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>K vytvoření stupnice se specifickou délkou, použijte parametry
+        <span style="font-weight: bold;">from</span>_ a <span style=
+        "font-weight: bold;">to</span>. Podtržítko za from je z důvodu že from
+        je klíčové slovo Pythona.
+        <pre>
+from Tkinter import *<br />okno = Tk(
+w = Scale(from_=0, to=100)
+w.pack()<br />w = Scale(from_=0, to=200, orient=HORIZONTAL)<br />w.pack()
+mainloop()<br /><img src=
+"data-scale-10f29d34ad2f09dcac4836fade214ef7.png" tppabs="http://tkinter.programujte.com/images/data-scale-10f29d34ad2f09dcac4836fade214ef7.png" />
+</pre>
+        <p>
+          K získání aktuální hodnoty stupnice použijte metodu <span style=
+          "font-weight: bold;">get()</span>.
+        </p>
+        <pre>
+w = Scale(from_=0, to=100)<br />w.pack()<br />print w.get()<br />
+</pre>
+        <p>
+          Obvykle je nejmenší dílek stupnice <span style=
+          "font-weight: bold;">1</span>, což znamená, že všechny čísla s
+          desetinou čárkou se budou zaokrouhlovat. Ale tomu můžete zabránit
+          použitím parametru <span style="font-weight: bold;">resolution</span>
+          ke specifikaci nejmenšího dílku.
+        </p>
+        <pre>
+w = Scale(from_=0, to=100, resolution=0.1)<br />
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b>Scale(master=None, **options)</b> (class) [<a href=
+            "#Tkinter.Scale-class">#</a>]
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Metoda&nbsp;<a class="link" href=
+                "scale.htm#scale.Scale.config-method" tppabs="http://tkinter.programujte.com/scale.htm#scale.Scale.config-method"><b>config</b></a>
+                poskytuje všechny možné parametry.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Scale.config-method" name=
+            "Tkinter.Scale.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Scale.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Modifikuje jeden nebo více parametrů udělátka. Jestliže parametr
+              není daný, vrací tato metoda seznam všech možných parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <span style="font-weight: bold;">background</span>.
+              </dd>
+              <dt>
+                <i>bigincrement=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (bigIncrement/BigIncrement)
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 2. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (command/Command)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>digits=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (digits/Digits)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.(font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.(foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>from=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (from/From)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 2.
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>label=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (label/Label)
+              </dd>
+              <dt>
+                <i>length=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 100. (length/Length)
+              </dd>
+              <dt>
+                <i>orient=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je VERTICAL. (orient/Orient)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je FLAT. (relief/Relief)
+              </dd>
+              <dt>
+                <i>repeatdelay=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 300. (repeatDelay/RepeatDelay)
+              </dd>
+              <dt>
+                <i>repeatinterval=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 100. (repeatInterval/RepeatInterval)
+              </dd>
+              <dt>
+                <i>resolution=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 1. (resolution/Resolution)
+              </dd>
+              <dt>
+                <i>showvalue=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 1. (showValue/ShowValue)
+              </dd>
+              <dt>
+                <i>sliderlength=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 30. (sliderLength/SliderLength)
+              </dd>
+              <dt>
+                <i>sliderrelief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je RAISED. (sliderRelief/SliderRelief)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je NORMAL. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>tickinterval=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (tickInterval/TickInterval)
+              </dd>
+              <dt>
+                <i>to=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 100. (to/To)
+              </dd>
+              <dt>
+                <i>troughcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (troughColor/Background)
+              </dd>
+              <dt>
+                <i>variable=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá Standardní nastavení. (variable/Variable)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 15. (width/Width)
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Scale.coords-method" name=
+            "Tkinter.Scale.coords-method"><b>coords(value=None)</b></a>
+            [<a href="#Tkinter.Scale.coords-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací souřadnice dané hodnoty stupnice.
+            </p>
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>hodnota</i>
+              </dt>
+              <dd>
+                Hodnota stupnice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Souřadnice jako dvouprvkovou n-tici.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Scale.get-method" name=
+            "Tkinter.Scale.get-method"><b>get()</b></a> [<a href=
+            "#Tkinter.Scale.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrátí současnou hodnotu stupnice.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Vrací aktuální hodnotu stupnice jako celé číslo nebo jako s
+                číslo s pohyblivou desetinou čárkou. Abyste si byli jistí, že
+                bude navráceno číslo s desetinou čárkou, použijte
+                <b>float(scale.get())</b>.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Scale.identify-method" name=
+            "Tkinter.Scale.identify-method"><b>identify(x, y)</b></a> [<a href=
+            "#Tkinter.Scale.identify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zkontroluje zda je některá aktivní část stupnice na dané pozici.
+            </p>
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Vertikální souřadnice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Řetězec obsahující informaci o tom, která část je na dané
+                pozici. Může to být "slider", "trough 1" (nahoře nebo nalevo od
+                jezdce), "trough 2" (dole nebo napravo od jezdce) nebo prázdný
+                řetězec. Prázdný řetězec znamená, že vámi udané souřadnice jsou
+                mimo stupnici.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Scale.set-method" name=
+            "Tkinter.Scale.set-method"><b>set(value)</b></a> [<a href=
+            "#Tkinter.Scale.set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastaví hodnotu stupnice.
+            </p>
+            <dl>
+              <dt>
+                <i>hodnota</i>
+              </dt>
+              <dd>
+                Nová hodnota stupnice.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar" />
+        <p class="info">
+          Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Listbox - Rozbalený seznam ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="labelframe.htm" tppabs="http://tkinter.programujte.com/labelframe.htm">předchozí</a> ] [ <a href=
+          "menu.htm" tppabs="http://tkinter.programujte.com/menu.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/listbox.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/listbox.htm'" tppabs="http://effbot.org/tkinterbook/listbox.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Listbox - Rozbalený seznam
+        </h1>
+        <p>
+          <b>Listbox</b> je standardní udělátko, které se používá na zobrazení
+          seznamu nějakých hodnot. Listbox může obsahovat jen textové položky a
+          všechny položky musí mít stejnou barvu i font. Uživatel si může
+          zvolit se seznamu, v závislosti na parametrech, jednu nebo více
+          položek.
+        </p>
+        <h2>
+          Kdy Listbox použít
+        </h2>
+        <p>
+          Rozbalené seznamy se používají na výběr jedné nebo více hodnot ze
+          skupiny textových položek.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Když Rozbalený seznam vytvoříte, je prázdný. První věc je tedy ho
+          naplnit jednou nebo více řádkami textu. Metoda <b>insert</b> vkládá
+          text na danou pozici v seznamu.
+        </p>
+        <h3>
+          Identifikátory pozice:
+        </h3>
+        <p>
+          Pozice je obvykle číslo položky (0 značí první položku), ale můžete
+          také použít některý ze speciálních pozičních indexů, jako třeba
+          <b>ACTIVE</b>, který ukazuje na "vybranou" položku, nebo <b>END</b>,
+          který ukazuje na konec seznamu.
+        </p>
+        <dl>
+          <dt>
+            <i>čísla</i>
+          </dt>
+          <dd>
+            čísla od 0 do size()-1
+          </dd>
+          <dt>
+            <i>END</i>
+          </dt>
+          <dd>
+            Konec seznamu. Odpovídá size()-1
+          </dd>
+          <dt>
+            <i>ACTIVE</i>
+          </dt>
+          <dd>
+            Ukazuje na naposledy kliknutou položku
+          </dd>
+          <dt>
+            <i>ANCHOR</i>
+          </dt>
+          <dd>
+            Ukazuje na vybranou položku případně na položku označenou
+            pomocí <a href=
+            "#Tkinter.Listbox.selection_anchor-method"><b>selection_anchor</b></a>
+          </dd>
+          <dt>
+            "@x,y"
+          </dt>
+          <dd>
+            kde x a y jsou pixelové souřadnice, vztažené relativně k listboxu
+          </dd>
+        </dl>
+        <h3>
+          <a name="listbox-example1" id="listbox-example1"></a>Ukázkový příklad
+        </h3>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+hlavni.option_add('*Font', 'serif 8') # protože defaultní písmo pod Windows je hrozné
+
+listbox = Listbox(hlavni)
+listbox.pack()
+
+listbox.insert(END, u"položka seznamu")
+for item in [u"jedna", u"dva", u"tři", u"čtyři"]:
+    listbox.insert(END, item)
+
+mainloop()
+
+<img alt="" src="data-listbox-1.png" tppabs="http://tkinter.programujte.com/images/data-listbox-1.png" height="190" width="134">
+
+</pre>
+        <h3>
+          Mazání
+        </h3>
+        <p>
+          Chcete-li smazat položku ze seznamu, použijte metodu <b>delete</b>.
+          Nejobvyklejší operace je smazání všech položek v seznamu:
+        </p>
+        <pre>
+listbox.delete(0, END)
+</pre>
+        <p>
+          Můžete také mazat jednotlivé položky. V následujícím příkladu se
+          vytváří specielní tlačítko, které maže <b>aktivní</b> položku se
+          seznamu.
+        </p>
+        <pre>
+b = Button(hlavni, text="Smazat!",command=lambda : listbox.delete(ANCHOR))
+b.pack()
+</pre>
+        <h3>
+          Režim výběru
+        </h3>
+        <p>
+          Rozbalený seznam nabízí čtyři různé režimy výběrů přes parametr
+          <b>selectmode</b>. Jsou to <b>SINGLE</b> (možno vybrat jen jednu
+          položku), <b>BROWSE</b> (stejné, ale výběr se dá posouvat pomocí
+          myši), <b>MULTIPLE</b> (možnost vybrat více voleb) a <b>EXTENDED</b>
+          (možnost vybrat několik skupin položek pomocí kláves <b>Shift</b> a
+          <b>CTRL</b>). Standard je <b>BROWSE.</b> Použijte <b>MULTIPLE</b>,
+          pokud chcete podobné chování, jako u zaškrtávátek a <b>EXTENDED</b>,
+          kdy uživatel nejčastěji vybírá jednu položku, ale někdy potřebuje
+          vybrat celou skupinu položek.
+        </p>
+        <pre>
+listbox = Listbox(selectmode=EXTENDED)
+</pre>
+        <h3>
+          Co uživatel vybral?
+        </h3>
+        <p>
+          Chcete-li zjistit, co uživatel vybral, použijte metodu
+          <b>curselection</b>. Vrací seznam pozic položek jako řetězce.
+          Chcete-li je převést jednoduše na čísla, můžete použít funkci map:
+        </p>
+        <pre>
+items = map(int, list.curselection())
+</pre>
+        <p>
+          Použijte metodu <b>get</b>, chcete-li zjistit, co se nachází na
+          určité pozici. Jako parametr tato metoda přijímá číslo pozice a to
+          jak ve tvaru řetězce tak celého čísla.
+        </p>
+        <h3>
+          Command
+        </h3>
+        <p>
+          Listbox bohužel nemá parametr <b>command</b>, která by vám umožňovala
+          sledovat změny ve výběrech. Řešení mohou být také tato:
+        </p>
+        <h4>
+          Jednoduchý klik
+        </h4>
+        <p>
+            Protože obyčejné curselection() s metodou  
+            listbox.bind("&lt;1&gt;", funkce) funguje podivně (vždy vrací předchozí výběr),
+            je možný následující trik:
+            
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+def klik(param):
+    print listbox.curselection()[0]
+    
+hlavni = Tk()
+hlavni.option_add('*Font', 'serif 8')
+listbox = Listbox(hlavni)
+listbox.bind( "&lt;1&gt;", None)
+listbox.bind( "&lt;ButtonRelease-1&gt;", klik)  # metoda se volá až po uvolnění myši
+
+listbox.pack()
+listbox.insert(END, u"jedna", u"dva", u"tři", u"čtyři")
+mainloop()
+</pre>  
+<p>
+  Podobný trik se dá udělat pomocí souřadnic x a y od předaného parametru:
+</p>
+
+<pre>
+def klik(param):
+    souradnice="@"+str(param.x)+","+str(param.y)    
+    print listbox.get(souradnice)
+</pre>
+      <h4>
+          Dvojitý klik
+        </h4>
+        <p>
+          Standardní řešení je svázat <i>dvojitý klik</i> ke stejné volané
+          funkci jako tlačítko <i>OK</i>. Toto umožní uživateli vybrat položku
+          jedním klikem a pak kliknout na OK a pokračovat nebo rovnou dvojklik
+          na žádané položce. Toto řešení funguje nejlépe v režimech
+          <b>BROWSE</b> a <b>EXTENDED</b>.
+        </p>
+        <pre>
+listbox.bind("&lt;Double-Button-1&gt;", ok)
+</pre>
+        <h4>
+          Tk vazby Listboxu
+        </h4>
+        <p>
+          Chcete-li sledovat jakékoliv změny ve výběru okamžitě, jako kdyby
+          existoval command, můžete buď svázat všechny možnosti výběrů
+          příslušných událostí (viz Tk stránky, kde najdete kompletní seznam
+          vazeb Listboxu) nebo o mnoho jednodušeji,
+        </p>
+        <h4>
+          Časovač
+        </h4>
+        <p>
+          pomocí časovače sledovat výběr:
+        </p>
+        <pre>
+....
+
+class Box:
+    "Třída jako kontejner atributů"
+    pass
+
+def sledovatListbox():
+    nyni=listbox.curselection()
+    if nyni != box.minulyVyber:
+        print u"Výber je:", nyni
+        box.minulyVyber=nyni
+    hlavni.after(250, sledovatListbox)
+
+.....
+
+box=Box()
+box.minulyVyber=None
+sledovatListbox()
+
+mainloop()
+</pre>
+        <h3>
+          Trable s více listboxy
+        </h3>
+        <p>
+          Standardně je výběr exportován pod Linuxem pomocí X selection
+          mechanismus a pod Windows pomocí schránky. Pokud máte více jak jeden
+          listbox v okně, situace se pro běžného uživatele, chudáka,
+          komplikuje. Když vybere něco v jednom listboxu a pak hned něco jiného
+          v druhém listboxu, původní výběr se ztrácí. Vyzkoušejte toto chování:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+hlavni.option_add('*Font', 'serif 8') # protože defaultní písmo pod Windows je hrozné
+
+listbox = Listbox(hlavni, selectmode=MULTIPLE)
+listbox.pack()
+
+listbox2 = Listbox(hlavni, selectmode=MULTIPLE)
+listbox2.pack()
+
+for item in [u"jedna", u"dva", u"tři", u"čtyři"]:
+    listbox.insert(END, item)
+    listbox2.insert(END, item)
+
+mainloop()
+</pre>
+        <p>
+          Je vhodné tento mechanismus v těchto případech vypínat:
+        </p>
+        <pre>
+listbox = Listbox(hlavni, selectmode=MULTIPLE,exportselection=0)
+listbox2 = Listbox(hlavni, selectmode=MULTIPLE,exportselection=0)
+</pre>
+        <h3>
+          Posuvníky
+        </h3>
+        <p>
+          Samotný listbox neobsahuje posuvníky. Nicméně připojení posuvníků je
+          vcelku přímočaré. Jednoduše nastavte parametry <b>xscrollcommand</b> a
+          <b>yscrollcommand</b> listboxu na metodu <b>set</b> odpovídajícího
+          posuvníku a parametr posuvníku <b>command</b> na odpovídající metody
+          listboxu <b>xview</b> a <b>yview</b>. Nezapomeňte také zapakovat
+          posuvníky před listboxem. V následujícím příkladu je použit jen
+          posuvník svislý. Více příkladů najde v popisu <a href=
+          "scrollbar.htm" tppabs="http://tkinter.programujte.com/scrollbar.htm"><b>Scrollbar</b></a>.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+hlavni.option_add('*Font', 'serif 8') # protože defaultní písmo pod Windows je hrozné
+
+frame = Frame(hlavni)
+frame.pack()
+
+scrollbar = Scrollbar(frame, orient=VERTICAL)
+listbox = Listbox(frame, yscrollcommand=scrollbar.set)
+scrollbar.config(command=listbox.yview)
+scrollbar.pack(side=RIGHT, fill=Y)
+listbox.pack(side=LEFT, fill=BOTH, expand=1)
+
+for item in u"Žluťoučký kůň pěl ďábelské ódy!".split()*10:
+    listbox.insert(END, item)
+
+hlavni.mainloop()
+</pre>
+        <p>
+          Fintou můžete dosáhnout stavu, kdy s jedním posuvníkem budete
+          pohybovat několika listboxy. To předpokládá, že všechny listboxy mají
+          stejný počet položek. Všimněte si také pořadí pakování udělátek:
+        </p>
+        <pre>
+def __init__(self, hlavni):
+    scrollbar = Scrollbar(hlavni, orient=VERTICAL)
+    self.b1 = Listbox(hlavni, yscrollcommand=scrollbar.set)
+    self.b2 = Listbox(hlavni, yscrollcommand=scrollbar.set)
+    scrollbar.config(command=self.yview)
+    scrollbar.pack(side=RIGHT, fill=Y)
+    self.b1.pack(side=LEFT, fill=BOTH, expand=1)
+    self.b2.pack(side=LEFT, fill=BOTH, expand=1)
+
+
+
+def yview(self, *args):
+    apply(self.b1.yview, args)
+    apply(self.b2.yview, args)
+
+</pre>
+        <h3>
+          Ovládání kolečkem myši a kurzorovými šipkami
+        </h3>Chcete-li ovládat listbox kolečkem myši a/nebo kurzorovými
+        šipkami, případně i PgUp/PgDown, musíte zajistit, aby listbox získal
+        klávesnicový focus. Nejlépe asi toho docílíte svázáním události
+        &lt;Enter&gt; s listboxem:
+        <pre>
+def focusWidget(udalost):
+    udalost.widget.focus_set()
+
+listbox.bind("&lt;Enter&gt;", focusWidget) 
+</pre>Je dobré použít ještě vazbu &lt;Leave&gt;, aby jste neměli aktivní
+kolečko myši, když už budete myší jezdit úplně někde jinde.
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Listbox-class" id=
+            "Tkinter.Listbox-class"></a>Listbox(master=None, **options)</b>
+            (class) [<a href="#Tkinter.Listbox-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunovací rozbalený seznam.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodič udělátka.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Viz metoda <a class="link" href=
+                "#Tkinter.Listbox.config-method"><b>config</b></a> ohledně
+                dostupných parametrů.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.activate-method" name=
+            "Tkinter.Listbox.activate-method"><b>activate(index)</b></a>
+            [<a href="#Tkinter.Listbox.activate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Aktivuje daný index - bude zvýrazněn podtržením. Na aktivní prvek
+              se dá odkazovat pomocí indexu <b>ACTIVE</b>. Pozn. předkladatele -
+              nějak mi to nefunguje.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.bbox-method" name=
+            "Tkinter.Listbox.bbox-method"><b>bbox(self, index)</b></a>
+            [<a href="#Tkinter.Listbox.bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací ohraničující box daného položky.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Ohraničující box jako čtveřici (xoffset, yoffset, šířku,
+                výšku). Pokud je položka neviditelná, vrací None. Pokud je
+                položka viditelná částečně, box může zasahovat mimo viditelnou
+                oblast.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.config-method" name=
+            "Tkinter.Listbox.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Listbox.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje jeden nebo více parametrů. Pokud nejsou zadány žádné,
+              metoda vrací slovník s aktuálními hodnotami všem parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activestyle=</i>
+              </dt>
+              <dd>
+                Standard je podtrženo. (jméno v databázi option je activeStyle,
+                třída je ActiveStyle)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standard je 'SystemButtonFace'. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Standard je 2. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Žádná standardní hodnota. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>exportselection=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (exportSelection/ExportSelection)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému. (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 10. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1.
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>listvariable=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (listVariable/Variable)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Standardní je SUNKEN. (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectborderwidth=</i>
+              </dt>
+              <dd>
+                Standardní je 1. (selectBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                (selectForeground/Background)
+              </dd>
+              <dt>
+                <i>selectmode=</i>
+              </dt>
+              <dd>
+                Standardní je BROWSE. (selectMode/SelectMode)
+              </dd>
+              <dt>
+                <i>setgrid=</i>
+              </dt>
+              <dd>
+                Standardní je 0. (setGrid/SetGrid)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Standardní je NORMAL. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardní je 20. (width/Width)
+              </dd>
+              <dt>
+                <i>xscrollcommand=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (xScrollCommand/ScrollCommand)
+              </dd>
+              <dt>
+                <i>yscrollcommand=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (yScrollCommand/ScrollCommand)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.curselection-method" name=
+            "Tkinter.Listbox.curselection-method"><b>curselection()</b></a>
+            [<a href="#Tkinter.Listbox.curselection-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací list aktuální stavu výběru položek. Seznam obsahuje pozice
+              vybraných položek (začíná se od 0). Na většině instalací Pythonu
+              se jedná o seznam řetězců (někde čísel). Protože se toto chování
+              může v budoucnu změnit, měli byste zajistit, aby váš kód dokázal
+              zpracovat oba dva případy. Viz kapitolu Pojetí, kde je malá
+              nápověda, jak na to.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Seznam identifikátorů pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.delete-method" name=
+            "Tkinter.Listbox.delete-method"><b>delete(first, last=None)</b></a>
+            [<a href="#Tkinter.Listbox.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže jeden nebo více položek. <b>delete(0, END)</b> maže
+              vše.
+            </p>
+            <dl>
+              <dt>
+                <i>first</i>
+              </dt>
+              <dd>
+                První položka, která se má smazat.
+              </dd>
+              <dt>
+                <i>last</i>
+              </dt>
+              <dd>
+                Poslední položka, která se má smazat. Je-li vynecháno, maže se
+                jediná položka.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.get-method" name=
+            "Tkinter.Listbox.get-method"><b>get(first, last=None)</b></a>
+            [<a href="#Tkinter.Listbox.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací jednu nebo více položek ze seznamu. Tato metoda vrací
+              řetězec odpovídající pozici (nebo řetězce v zadaném rozsahu
+              pozic). Použijte <b>get(0, END)</b> a dostanete seznam všech
+              hodnot. Použijte <b>get(ACTIVE)</b> a dostanete aktivní,
+              podtrženou položku.
+            </p>
+            <dl>
+              <dt>
+                <i>first</i>
+              </dt>
+              <dd>
+                První položka, která se má vrátit.
+              </dd>
+              <dt>
+                <i>last</i>
+              </dt>
+              <dd>
+                Poslední položka, která se má vrátit. Pokud je vynecháno, vrací
+                se jediná položka.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Seznam řetězců.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.index-method" name=
+            "Tkinter.Listbox.index-method"><b>index(index)</b></a> [<a href=
+            "#Tkinter.Listbox.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací číselný index (od 0 do size()-1), který odpovídá danému
+              indexu. Typicky je to  <b>ACTIVE</b>, ale může být
+              i <b>ANCHOR</b> nebo řetězec ve tvaru"@x,y" - viz výše 
+              Identifikátory pozice.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Číselnou pozici.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.insert-method" name=
+            "Tkinter.Listbox.insert-method"><b>insert(index, *elements)</b></a>
+            [<a href="#Tkinter.Listbox.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá jeden nebo více položek na danou pozici. Toto funguje
+              stejně jako u pythonovských seznamů - pozice 0 je první.
+              Použijte <b>END</b> , chcete-li položku připojit na konec.
+              Použijte <b>ACTIVE</b>, chcete-li vložit položku před
+              aktivní položku.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+              <dt>
+                <i>*elements</i>
+              </dt>
+              <dd>
+                Jeden nebo více elementů, které se mají vložit.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.itemcget-method" name=
+            "Tkinter.Listbox.itemcget-method"><b>itemcget(index,
+            option)</b></a> [<a href="#Tkinter.Listbox.itemcget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací parametry nastavení jednotlivé položky seznamu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice položky
+              </dd>
+              <dt>
+                <i>option</i>
+              </dt>
+              <dd>
+                Viz itemconfig
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.itemconfig-method" name=
+            "Tkinter.Listbox.itemconfig-method"><b>itemconfig(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Listbox.itemconfig-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění nastavení jednotlivé položky seznamu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice položky.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry jednotlivých položek
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí. (background/Background)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva písma. (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí při výběru. (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>
+              </dt>
+              <dd>
+                Barva písma při výběru. (selectForeground/Background)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.nearest-method" name=
+            "Tkinter.Listbox.nearest-method"><b>nearest(y)</b></a> [<a href=
+            "#Tkinter.Listbox.nearest-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací nejbližší pozici k dané souřadnici (pixelová souřadnice,
+              relativně vztažená k udělátku samému).
+            </p>
+            <dl>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Souřadnice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.scan_dragto-method" name=
+            "Tkinter.Listbox.scan_dragto-method"><b>scan_dragto(x, y)</b></a>
+            [<a href="#Tkinter.Listbox.scan_dragto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje obsah udělátka podle souřadnic myši. Text je posunut o
+              desetinásobek vzdálenosti mezi  zarážkou a novou
+              pozicí.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Souřadnice myši.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Souřadnice myši.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.scan_mark-method" name=
+            "Tkinter.Listbox.scan_mark-method"><b>scan_mark(x, y)</b></a>
+            [<a href="#Tkinter.Listbox.scan_mark-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje zarážku pro rychlý vodorovný posun na dané souřadnice
+              myši.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Souřadnice myši.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Souřadnice myši.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.see-method" name=
+            "Tkinter.Listbox.see-method"><b>see(index)</b></a> [<a href=
+            "#Tkinter.Listbox.see-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zajistí, že daná pozice bude viditelná. Můžete použít číselný
+              index nebo <b>END</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.select_anchor-method" name=
+            "Tkinter.Listbox.select_anchor-method"><b>select_anchor(index)</b></a>
+            [<a href="#Tkinter.Listbox.select_anchor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Listbox.selection_anchor-method"><b>selection_anchor</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.select_clear-method" name=
+            "Tkinter.Listbox.select_clear-method"><b>select_clear(first,
+            last=None)</b></a> [<a href=
+            "#Tkinter.Listbox.select_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Listbox.selection_clear-method"><b>selection_clear</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.select_includes-method" name=
+            "Tkinter.Listbox.select_includes-method"><b>select_includes(index)</b></a>
+            [<a href="#Tkinter.Listbox.select_includes-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Listbox.selection_includes-method"><b>selection_includes</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.select_set-method" name=
+            "Tkinter.Listbox.select_set-method"><b>select_set(first,
+            last=None)</b></a> [<a href=
+            "#Tkinter.Listbox.select_set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Listbox.selection_set-method"><b>selection_set</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.selection_anchor-method" name=
+            "Tkinter.Listbox.selection_anchor-method"><b>selection_anchor(index)</b></a>
+            [<a href="#Tkinter.Listbox.selection_anchor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje zarážku na danou pozici. Na zarážku se pak může
+              odkazovat pomocí indexu <b>ANCHOR</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.selection_clear-method" name=
+            "Tkinter.Listbox.selection_clear-method"><b>selection_clear(first,
+            last=None)</b></a> [<a href=
+            "#Tkinter.Listbox.selection_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vyjímá jednu nebo více položek z výběru.
+            </p>
+            <dl>
+              <dt>
+                <i>first</i>
+              </dt>
+              <dd>
+                První položka, která se má vyjmout..
+              </dd>
+              <dt>
+                <i>last</i>
+              </dt>
+              <dd>
+                Poslední položka, která se má vyjmout. Pokud je vynecháno,
+                vyjímá se jen jedna položka.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.selection_includes-method" name=
+            "Tkinter.Listbox.selection_includes-method"><b>selection_includes(index)</b></a>
+            [<a href="#Tkinter.Listbox.selection_includes-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Kontroluje, jestli je položka vybrána.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Identifikátor pozice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pravdu, pokud je položka vybrána.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.selection_set-method" name=
+            "Tkinter.Listbox.selection_set-method"><b>selection_set(first,
+            last=None)</b></a> [<a href=
+            "#Tkinter.Listbox.selection_set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává jednu nebo více položek k výběru.
+            </p>
+            <dl>
+              <dt>
+                <i>first</i>
+              </dt>
+              <dd>
+                První položka.
+              </dd>
+              <dt>
+                <i>last</i>
+              </dt>
+              <dd>
+                Poslední položka. Pokud je vynecháno, přidává se jen jedna
+                položka.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.size-method" name=
+            "Tkinter.Listbox.size-method"><b>size()</b></a> [<a href=
+            "#Tkinter.Listbox.size-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací počet položek v seznamu. Platný rozsah pozic/indexů je od 0
+              do size()-1.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Počet položek v seznamu.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.xview-method" name=
+            "Tkinter.Listbox.xview-method"><b>xview(column, *extra)</b></a>
+            [<a href="#Tkinter.Listbox.xview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Řídí vodorovný posun.
+            </p>
+            <p>
+              Pokud je metoda zavolána bez argumentu, vrací rozsah seznamu,
+              který je viditelný ve vodorovném směru. Hodnota je vrácena jako
+              offset a velikost viditelné části vzhledem k celému seznamu. (1.0
+              je celý seznam).
+            </p>
+            <p>
+              Pokud je zavolána s jediným argumenten, nastavuje seznam v okně
+              tak, aby daný sloupec písmen byl na levé hraně listboxu.
+            </p>
+            <p>
+              Pokud je zavolána s řetězci "moveto" a zlomek, chová se tato
+              metoda jako <a class="link" href=
+              "#Tkinter.Listbox.xview_moveto-method"><b>xview_moveto</b></a>.
+              Pokud je zavolána s řetězcem "scroll" a ještě dvěma
+              argumenty, chová se tato metoda jako  <a class="link" href=
+              "#Tkinter.Listbox.xview_scroll-method"><b>xview_scroll</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>column</i>
+              </dt>
+              <dd>
+                Sloupec, který se má objevit na levé hraně, nebo řetězec, který
+                určuje, který podpříkaz vykonat.
+              </dd>
+              <dt>
+                <i>*extra</i>
+              </dt>
+              <dd>
+                Dodatečné argumenty k formám "moveto" a "scroll". Detaily výše.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pokud je zavolána bez argumentů, vrací dvojici, obsahující levý
+                offset a velikost pohledu, relativně k celé šířce.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.xview_moveto-method" name=
+            "Tkinter.Listbox.xview_moveto-method"><b>xview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Listbox.xview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje seznam, takže daný offset je u horní hrany
+              listboxu. Offset 0.0 je začátek seznamu, 1.0 je konec. Tyto
+              metody používá vazba od <b>Scrollbar</b>, když uživatel hýbe
+              s jezdcem posuvníku.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+              <dd>
+                Offset.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.xview_scroll-method" name=
+            "Tkinter.Listbox.xview_scroll-method"><b>xview_scroll(number,
+            what)</b></a> [<a href=
+            "#Tkinter.Listbox.xview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posouvá vodorovný pohled na seznam o dané číslo.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dd>
+                Počet jednotek.
+              </dd>
+              <dt>
+                <i>what</i>
+              </dt>
+              <dd>
+                Jaké jednotky použít. Může být buď <b>"units"</b> (znaky) nebo
+                <b>"pages"</b> (delší kroky).
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.yview-method" name=
+            "Tkinter.Listbox.yview-method"><b>yview(*what)</b></a> [<a href=
+            "#Tkinter.Listbox.yview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Řídí svislý posun. Tato metoda funguje podobně jako <a class=
+              "link" href="#Tkinter.Listbox.xview-method"><b>xview</b></a>, ale
+              svisle.
+            </p>
+            <p>
+              Chcete-li docílit viditelnosti určité položky, použijte metodu
+              <a class="link" href=
+              "#Tkinter.Listbox.see-method"><b>see</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice, která se má umístit k horní hraně nebo řetězec,
+                určující jaký podpříkaz se má vykonat.
+              </dd>
+              <dt>
+                <i>*extra</i>
+              </dt>
+              <dd>
+                Dodatečné argumenty k formám "moveto" a "scroll".
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pokud je zavolána bez argumentů, vrací dvojici, obsahující levý
+                offset a velikost pohledu, relativně k celé výšce.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.yview_moveto-method" name=
+            "Tkinter.Listbox.yview_moveto-method"><b>yview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Listbox.yview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje seznam, takže daný offset je u horní hrany
+              listboxu. Offset 0.0 je začátek seznamu, 1.0 je konec. Tyto
+              metody používá vazba od <b>Scrollbar</b>, když uživatel hýbe
+              s jezdcem posuvníku. 
+            </p>
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+              <dd>
+                Offset.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Listbox.yview_scroll-method" name=
+            "Tkinter.Listbox.yview_scroll-method"><b>yview_scroll(number,
+            what)</b></a> [<a href=
+            "#Tkinter.Listbox.yview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posouvá svislý pohled na seznam o dané číslo..
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dd>
+                Počet jednotek.
+              </dd>
+              <dt>
+                <i>what</i>
+              </dt>
+              <dd>
+                Jaké jednotky použít. Může být buď <b>"units"</b> (znaky) nebo
+                <b>"pages"</b> (delší kroky).
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2007 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

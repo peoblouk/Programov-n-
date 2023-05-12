@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Události a vazby ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech An
+          Introduction to Tkinter
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-widget-styling.htm" tppabs="http://tkinter.programujte.com/tkinter-widget-styling.htm">předchozí</a> ] [ <a href=
+          "tkinter-application-windows.htm" tppabs="http://tkinter.programujte.com/tkinter-application-windows.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-events-and-bindings.htm">originál</a>
+          ]
+        </p>
+        <h1 class="title">
+          Události a vazby (Events and bindings)
+        </h1>
+        <p>
+          Jak již bylo zmíněno dříve, aplikace Tkinter stráví většinu času
+          uvnitř smyčky událostí, kam se dostane metodou <b>mainloop</b>.
+          Události přichází z nejrůznějších zdrojů včetně uživatelského stisku
+          kláves a operace myši a dále pak události překreslování od okenního
+          správce (zprostředkovaně vyvolané v mnoha případech také uživatelem).
+        </p>
+        <p>
+          Tkinter poskytuje mocný mechanismus, který vám umožňuje tyto události
+          obsluhovat. U každého udělátka můžete <b>svázat (bind)</b> jeho
+          události s pythonýrskými funkcemi a metodami.
+        </p>
+        <pre>
+udelatko.bind(udalost, ovladac)
+</pre>
+        <p>
+          Pokud na udělátku nastane příslušná <i>událost</i>, daný
+          <i>ovladač</i> je zavolán s parametrem popisujícím událost.
+        </p>
+        <h2>
+          <b>Zachytávání myši</b>
+        </h2>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+
+def volanafunkce(udalost):
+    print u"kliknuto na pozici:", udalost.x, udalost.y 
+
+ramec = Frame(hlavni, width=100, height=100)
+ramec.bind("&lt;Button-1&gt;", volanafunkce)
+ramec.pack()
+
+hlavni.mainloop()
+</pre>
+        <p>
+          V tomto příkladě používáme metodu <b>bind</b> udělátka 'ramec' k
+          tomu, abychom svázali funkci 'volanafunkce' s událostí jménem
+          <b>&lt;Button-1&gt;</b>. Spusťte tento program a klikejte v okně,
+          které se objeví. Pokaždé když kliknete, vytiskne se do konsolového
+          okna zpráva něco jako <b>"kliknuto na pozici: 44 63"</b>.
+        </p>
+        <h2>
+          <b>Zachytávání&nbsp;klávesnice</b>
+        </h2>
+        <p>
+          Události klávesnice jsou posílány udělátku, které aktuálně má focus.
+          Pokud tedy chcete, aby klávesnice fungovala v celé aplikaci, svažte
+          příslušnou událost s hlavním oknem nebo nejvyšším Framem. Pokud
+          chcete mít u každého udělátka jiné klávesové vazby, musíte zajistit
+          vhodné přepínaní focusu mezi udělátky (např. pomocí událostí
+          &lt;Enter&gt; a &lt;Leave&gt;). Na nastavení focusu na určité
+          udělátko můžete použít metodu <b>focus_set</b> :
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+
+def klavesa(udalost):
+    print u"stisknuto", repr(udalost.char)
+
+ramec = Frame(hlavni, width=100, height=100)
+ramec.bind("&lt;Key&gt;", klavesa)
+ramec.pack()
+
+ramec.focus_set()
+hlavni.mainloop()
+</pre>
+        <p>
+          Pustíte-li tento script, zjistíte, že musíte nejprve kliknout do
+          rámce, než tento začne přijímat události z klávesnice.
+        </p>
+        <h2 id="events">
+          Události
+        </h2>
+        <p>
+          Popisovače událostí se zadávají jako řetězce, za použití speciální
+          syntaxe:
+        </p>
+        <pre>
+&lt;modifikace-typ-detail&gt;
+</pre>
+        <p>
+          Nejdůležitější částí popisovače události je pole <i>typ.</i> Určuje
+          druh události, který si přejeme vázat, a může být uživatelskými
+          akcemi jako <b>Button</b> nebo <b>Key</b>, případně událostmi
+          okenního správce jako <b>Enter</b>, <b>Configure</b> a další. Pole
+          modifikace a detail se používá na upřesňující informace - v mnoha
+          případech se mohou vynechat. Existuje také mnoho způsobů, jak
+          zjednodušit popisovač události; např. při zachytávání klávesy můžete
+          vynechat ostré závorky a použít název klávesy tak jak je. Samozřejmě
+          pokud to není mezera nebo ostrá závorka.
+        </p>
+        <p>
+          Namísto několika stran ohledně diskuze nad všemi syntaktickými
+          zkratkami se podívejme na nejpoužívanější formáty událostí:
+        </p>
+        <h3>
+          Formáty událostí
+        </h3>
+        <dl>
+          <dt>
+            <b>&lt;Button-1&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Tlačítko na myši je stisknuto nad udělátkem. Button 1 je úplně
+              vlevo, button 2 je uprostřed a button 3 je vpravo na myši. Když
+              stlačíte tlačítko myši na udělátku, Tkinter automaticky zachytí
+              ukazatel myši a událost myši je zaslána k aktuálnímu udělátku.
+              Aktuální pozice ukazatele myši (relativně vzhledem k udělátku) je
+              pak přístupna v atributech x a y události, zaslaného
+              volanefunkci.
+            </p>
+          </dd>
+          <dd>
+            Namísto <b>Button</b> můžete použít <b>ButtonPress</b> nebo to
+            dokonce zcela vypustit: <b>&lt;Button-1&gt;</b>,
+            <b>&lt;ButtonPress-1&gt;</b> a <b>&lt;1&gt;</b> jsou všechno
+            synonyma. Kvůli čitelnosti dávám přednost syntaxi
+            <b>&lt;Button-1&gt;</b>.
+          </dd>
+          <dt>
+            <b>&lt;B1-Motion&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Myš se pohybuje se stisknutým tlačítkem 1 (použijte B pro střední
+              a B3 pro pravé tlačítko). Aktuální pozice myši je poskytována v
+              atributech <b>x</b> a <b>y</b> v události zaslaného volanefunkci.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;ButtonRelease-1&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Tlačítko 1 bylo uvolněno. Aktuální pozice myši je poskytována v
+              atributech <b>x</b> a <b>y</b> v události zaslaného volanefunkci.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Double-Button-1&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Na Tlačítko 1 bylo dvojkliknuto. Jako prefixy můžete použít
+              <b>Double</b> nebo <b>Triple</b>. Pokud svážete udělátko jak s
+              obyčejným klikem (&lt; <b>Button-1&gt;</b> ) tak s dvojitým
+              klikem, tak obě dvě události budou zavolány.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Enter&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Ukazatel myši vstoupil na udělátko (tato událost
+              <b>neznamená</b>, že uživatel stiskl <b>Enter</b> !).
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Leave&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Ukazatel myši opustil udělátko.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;FocusIn&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Tento widget (nebo jeho potomek) získal klávesnicový focus.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;FocusOut&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Focus byl přesunut z tohoto udělátka na jiný.
+            </p>
+          </dd>
+          <dt>
+            <b>Klávesy na klávesnici - např. &lt;Return&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Na svázání se dají použít všechny klávesy na klávesnici. Pro
+              běžnou 102-klávesovou klávesnici existují specielní klávesy
+              <b>Cancel</b>, <b>BackSpace</b>, <b>Tab</b>, <b>Return</b>
+              (klávesa Enter), <b>Shift_L</b> (levá klávesa Shift),
+              <b>Control_L</b> (levá klávesa Control), <b>Alt_L</b> (levá
+              klávesa Alt), <b>Pause</b>, <b>Caps_Lock</b>, <b>Escape</b>,
+              <b>Prior</b> (Page Up), <b>Next</b> (Page Down), <b>End</b>,
+              <b>Home</b>, <b>Left</b>, <b>Up</b>, <b>Right</b>, <b>Down</b>,
+              <b>Print</b>, <b>Insert</b>, <b>Delete</b>, <b>F1</b>, <b>F2</b>,
+              <b>F3</b>, <b>F4</b>, <b>F5</b>, <b>F6</b>, <b>F7</b>, <b>F8</b>,
+              <b>F9</b>, <b>F10</b>, <b>F11</b>, <b>F12</b>, <b>Num_Lock</b> a
+              <b>Scroll_Lock</b>.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Key&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Uživatel stiskl jakoukoliv klávesu. Klávesa je poskytnuta v
+              atributu <b>char</b> události, která se předává volané funkci. (u
+              speciálních kláves se jedná o prázdný řetězec).
+            </p>
+          </dd>
+          <dt>
+            <b>a</b>
+          </dt>
+          <dd>
+            <p>
+              Uživatel napsal písmeno <span>"a"</span> . Většina tisknutelných
+              znaků se dá použít tímto způsobem. Výjimkou jsou klávesy mezerník
+              ( <b>&lt;space&gt;</b> ) a "je menší" ( <b>&lt;less&gt;</b> ).
+              <b>1</b> značí vazbu na klávesu "1", zatímco <b>&lt;1&gt;</b> je
+              vazba na myš.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Shift-Up&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Uživatel stiskl šipku nahoru současně s přidrženou klávesou
+              Shift. Jako prefix můžete použít <b>Alt</b>, <b>Shift</b> a
+              <b>Control</b>.
+            </p>
+          </dd>
+          <dt>
+            <b>&lt;Configure&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Udělátko změnilo velikost (na některých platformách umístnění).
+              Nová velikost je poskytována v atributech <b>width</b> a
+              <b>height</b> události, předávané volané funkci.
+            </p>
+          </dd>
+          <dt>
+            <b class="userinput">&lt;Control-Shift-KeyPress-H&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Uživatel stiskl CTRL+SHIFT+H.
+              Záleží na velikosti písmen, tedy např. &lt;Control-KeyPress-H&gt;
+              není stejné jako &lt;Control-KeyPress-h&gt;. U prvního se musí
+              ještě navíc přidržet Shift, aby se dosáhlo velkého písmene "H".
+            </p>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <b class="userinput">&lt;MouseWheel&gt;</b>
+          </dt>
+          <dd>
+            <p>
+              Uživatel roloval s kolečkem myši. Směr posunu je poskytnut v
+              atributu <b>delta</b> události, předávané volané funkci.
+            </p>
+          </dd>
+        </dl>
+        <h3>
+          Objekt události
+        </h3>
+        <p>
+          Událost je obvyklá instance třídy s množstvím atributů, popisujícím
+          událost.
+        </p>
+        <h3>
+          Atributy události
+        </h3>
+        <dl>
+          <dt>
+            <b>widget</b>
+          </dt>
+          <dd>
+            <p>
+              Udělátko, které vyvolalo tuto událost. Toto je platná instance
+              tkinterovského udělátka. Při tisku ovšem získáte přes metodu
+              __str__ pouze jeho jméno. Při porovnávání se však použije daná
+              instance. Tento atribut se nastavuje u všech událostí.
+            </p>
+          </dd>
+          <dt>
+            <b>x, y</b>
+          </dt>
+          <dd>
+            <p>
+              Současná pozice myši, v pixelech.
+            </p>
+          </dd>
+          <dt>
+            <b>x_root, y_root</b>
+          </dt>
+          <dd>
+            <p>
+              Současná pozice myši relativně k levému hornímu rohu obrazovky, v
+              pixelech.
+            </p>
+          </dd>
+          <dt>
+            <b>char</b>
+          </dt>
+          <dd>
+            <p>
+              Kód znaku, jen u klávesnicových událostí, jako řetězec.
+            </p>
+          </dd>
+          <dt>
+            <b>keysym</b>
+          </dt>
+          <dd>
+            <p>
+              Symbol klávesy, jen u klávesnicových událostí.
+            </p>
+          </dd>
+          <dt>
+            <b>keycode</b>
+          </dt>
+          <dd>
+            <p>
+              Kód klávesy, jen u klávesnicových událostí.
+            </p>
+          </dd>
+          <dt>
+            <b>num</b>
+          </dt>
+          <dd>
+            <p>
+              Číslo tlačítka, , jen u myších událostí.
+            </p>
+          </dd>
+          <dt>
+            <b>width, height</b>
+          </dt>
+          <dd>
+            <p>
+              Nová velikost udělátka, v pixelech jen u Configure událostí.
+            </p>
+          </dd>
+          <dt>
+            <b>type</b>
+          </dt>
+          <dd>
+            <p>
+              Typ události.
+            </p>
+          </dd>
+        </dl>
+        <p>
+          Z důvodu přenositelnosti byste se měli držet <b>char</b>,
+          <b>height</b>, <b>width</b>, <b>x</b>, <b>y</b>, <b>x_root</b>,
+          <b>y_root</b> a <b>widget</b>. Pokud samozřejmě si nejste jisti, tím
+          co děláte...
+        </p>
+        <h3>
+          Vázání instancí a tříd
+        </h3>
+        <p>
+          Metodu <b>bind,</b> kterou jsme používali výše, vytvářela vazby na
+          instance. To značí, že vazba se vztahuje na pouze konkrétní udělátko;
+          pokud vytvoříte nová udělátka, vazby se dědit nebudou.
+        </p>
+        <p>
+          Nicméně Tkinter dovoluje vytvářet vazby i na úrovni tříd a aplikací;
+          ve skutečnosti to je tak, že můžete vytvářet vazby na čtyřech
+          úrovních:
+        </p>
+        <ul>
+          <li>
+            <p>
+              instance udělátka -&nbsp; <b>bind</b>.
+            </p>
+          </li>
+          <li>
+            <p>
+              toplevel okno (Toplevel nebo&nbsp; <b>root</b> ) -&nbsp;
+              <b>bind</b>.
+            </p>
+          </li>
+          <li>
+            <p>
+              třída udělátka -&nbsp; <b>bind_class</b>
+            </p>
+          </li>
+          <li>
+            <p>
+              celá aplikace -&nbsp; <b>bind_all</b>.
+            </p>
+          </li>
+        </ul>
+        <p>
+          Můžete například použít&nbsp; <b>bind_all</b>, chcete-li svázat
+          klávesu F1 kompletně v celé aplikaci. Ale co se stane, když vytvoříte
+          opakované vazby pro stejnou klávesu nebo budete chtít mít&nbsp;vazby,
+          které se budou překrývat?
+        </p>
+        <p>
+          Tak za prvé: na každé z těchto čtyř úrovní Tkinter vybírá "nejbližší
+          shodu" z dostupných vazeb. Když například vytvoříte vazby na&nbsp;
+          události <b>&lt;Key&gt;</b> a <b>&lt;Return&gt;</b>, pouze ta druhá
+          vazba bude vyvolána, když stisknete klávesu&nbsp; <b>Enter</b>.
+        </p>
+        <p>
+          Pokud však přidáte vazbu na&nbsp; <b>&lt;Return&gt;</b> na toplevel
+          úrovni, budou volány <i>obě dvě</i> vazby.Tkinter nejprve nejlepší
+          vazbu na úrovni instance, pak na úrovni toplevel, pak nejlepší vazbu
+          na úrovni třídy (což je často standardní) a nakonec nejlepší vazbu na
+          úrovni aplikace.&nbsp; Takže v extrémním případě jediná událost volá
+          4 ovladače událostí.
+        </p>
+        <p>
+          Nejběžnější zmatky nastávají, když si chcete použít vazby tak, abyste
+          přepsali chování standardního widgetu. Můžeme si za příklad vzít
+          požadavek na změnu chování klávesy Enter v udělátku Text, tak, aby
+          uživatel nemohl do textu vkládat řádky. Snad to dokáže tento trik?
+        </p>
+        <pre>
+def ignorace(udalost):
+   pass
+text.bind("&lt;Return&gt;", ignorace)
+</pre>
+        <p>
+          nebo když dáváte přednost jednořádkovým programům:
+        </p>
+        <pre>
+text.bind("&lt;Return&gt;", lambda e: None)
+</pre>
+        <p>
+          (funkce <b>lambda</b> zde přijímá jeden argument a vrací&nbsp;
+          <b>None</b> )
+        </p>
+        <p>
+          Bohužel nové řádky se dají stále ještě vložit, protože výše uvedená
+          vazba se děje jen na úrovni instance a standardní chování je odvozeno
+          od vazby ve třídě.
+        </p>
+        <p>
+          Můžete použít metodu <b>bind_class</b> na změnu vazby úrovně třídy,
+          což však zapřičiní změnu chování <i>všech</i> textových udělátek v
+          aplikaci. Snažší řešením je zabránit Tkinteru v šíření
+          (propagating)&nbsp;události do dalších ovladačů; prostě vraťte
+          "break" z vašeho ovladače události:
+        </p>
+        <pre>
+def ignorace(udalost):
+    return "break"
+text.bind("&lt;Return&gt;", ignorace)
+</pre>
+        <p>
+          nebo
+        </p>
+        <pre>
+text.bind("&lt;Return&gt;", lambda e: "break")
+</pre>
+        <p>
+          Jen tak mimochodem - pokud byste opravdu chtěli změnit chování všech
+          textových udělátek ve vaší aplikace, takto se dá použít metoda&nbsp;
+          <b>bind_class</b> :
+        </p>
+        <pre>
+top.bind_class("Text", "&lt;Return&gt;", lambda e: None)
+</pre>
+        <p>
+          Je ale několik důvodů, proč byste to tak dělat neměli. Například
+          dokonale vám to zamíchá hlavu toho dne, kdy se rozhodnete používat
+          nějaké super malé UI komponenty z webu. Lepší bude, použijete-li své
+          vlastní &nbsp;specializované udělátka Text a standardní vazby Tkinter
+          zachováte netknuté:
+        </p>
+        <pre>
+class MyText(Text):
+   def __init__(self, master, **kw):
+   apply(Text.__init__, (self, master), kw)
+   self.bind("&lt;Return&gt;", lambda e: "break")
+</pre>
+        <h3 id="protocols">
+          Protokoly
+        </h3>
+        <p>
+          Nad událostní vazby Tkinter také podporuje mechanismus nazývaný
+          <i>ovladače protokolu (</i> <i>protocol handlers).</i> Termín
+          protokol se zde vztahuje na spolupráci aplikace a správce oken.
+          Nejpoužívanější protokol se nazývá <b>WM_DELETE_WINDOW</b> a
+          používání na definování toho, co se má stát, když uživatel explicitně
+          uzavírá okno pomocí správce okna (např. Alt+F4, nebo klik na křížek v
+          pravém horním rohu).
+        </p>
+        <p>
+          Můžete použít metodu&nbsp; <b>protocol</b> na instalaci ovladače pro
+          tento protokol (udelatko musí být root nebo Toplevel):
+        </p>
+        <pre>
+udelatko.protocol("WM_DELETE_WINDOW", ovladac)
+</pre>
+        <p>
+          Jakmile toto uděláte, Tkinter přestane automaticky zavírat okno.
+          Namísto toho můžete zobrazovat hlášku, že data nejsou uložena
+          &nbsp;na disk nebo v některých případech, dokonce požadavek zavření
+          ignorovat. Zavření okna z tohot ovladače provedete pomocí metody okna
+          <b>destroy</b> :
+        </p>
+        <div class="example">
+          <b>Zachytávání zavíracích událostí</b>
+          <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+import tkMessageBox
+
+def volanafunkce():
+    if tkMessageBox.askokcancel(u"Ukončení", u"Skutečně chcete skončit?"):
+        hlavni.destroy()
+
+hlavni = Tk()
+hlavni.protocol("WM_DELETE_WINDOW", volanafunkce)
+
+hlavni.mainloop()
+</pre>
+        </div>
+        <h3>
+          Další protokoly
+        </h3>
+        <p>
+          Okenní manažeři byly původně součástí X windows systému (jsou
+          definovány v dokumentu s názvem&nbsp; <i>Inter-Client Communication
+          Conventions Manual</i> &nbsp; neboli ICCCM). Na této platformě můžete
+          instalovat také další protokoly, jako například <b>WM_TAKE_FOCUS</b>
+          a <b>WM_SAVE_YOURSELF</b>. Detaily najdete v dokumentaci ICCCM.
+        </p>
+        <h2>
+          Záložky, Oblíbené
+        </h2>
+        <p>
+          <a href=
+          "javascript:if(confirm('http://infohost.nmt.edu/tcc/help/pubs/tkinter/events.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://infohost.nmt.edu/tcc/help/pubs/tkinter/events.html'" tppabs="http://infohost.nmt.edu/tcc/help/pubs/tkinter/events.html">http://infohost.nmt.edu/tcc/help/pubs/tkinter/events.html</a>
+        </p>
+        <p>
+          <a href=
+          "javascript:if(confirm('http://tmml.sourceforge.net/doc/tk/bind.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://tmml.sourceforge.net/doc/tk/bind.html'" tppabs="http://tmml.sourceforge.net/doc/tk/bind.html">http://tmml.sourceforge.net/doc/tk/bind.html</a>
+        </p>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

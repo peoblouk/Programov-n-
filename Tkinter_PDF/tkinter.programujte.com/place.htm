@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from effbot.org/tkinterbook/place.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 24 Mar 2006 21:56:09 GMT -->
+<head>
+<meta name="generator" content="HTML Tidy for Solaris (vers 1st November 2003), see www.w3.org" />
+<title>The Tkinter Place Geometry Manager ::: An Introduction to Tkinter ::: www.effbot.org</title>
+<link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media="print" />
+</head>
+<body bgcolor="#FFFFFF">
+<div id="effbot-page">
+<div id="effbot-nav"><a href="javascript:if(confirm('http://effbot.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/'" tppabs="http://effbot.org/"><b>effbot.org</b></a><br />
+&#160;<a href="javascript:if(confirm('http://effbot.org/tkinterbook  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook'" tppabs="http://effbot.org/tkinterbook"><b>an introduction to tkinter</b></a><br />
+&#160;&#160;<b>The Tkinter Place Geometry Manager</b><br />
+<div class="adsense"><script language="JavaScript" type="text/javascript">
+//<![CDATA[
+<!--
+google_ad_client = 'pub-0985106753436081';
+google_ad_width = 160;
+google_ad_height = 600;
+google_ad_format = '160x600_as';
+google_ad_channel ="6557156704";
+google_color_border = "008844";
+google_color_bg = "FFFFFF";
+google_color_link = "004400";
+google_color_url = "index.php-akce=404"/*tpa=http://tkinter.programujte.com/008800.txt*/;
+google_color_text = "000000";
+// -->
+//]]>
+</script> <script language="JavaScript" src="index.php-akce=404" tppabs="http://tkinter.programujte.com/pagead2.googlesyndication.com/pagead/show_ads.js" type="text/javascript">
+</script></div>
+</div>
+<div id="effbot-body">
+<p class="info">An Introduction to Tkinter (Draft Edition)</p>
+<p class='navigate'>[<a href="pack.htm" tppabs="http://tkinter.programujte.com/pack.htm">back</a>] [<a href="bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm">next</a>]</p>
+<h1 class="title">The Tkinter Place Geometry Manager</h1>
+<br />
+<!-- LINK UP tkinter-index.htm -->
+<!-- LINK PREV pack.htm -->
+<!-- LINK NEXT bitmapimage.htm -->
+ <!-- ADSENSE -->
+<p>The <b>Place</b> geometry manager is the simplest of the three general geometry managers provided in Tkinter. It allows you explicitly set the position and size of a window, either in absolute terms, or relative to another window.</p>
+<p>You can access the place manager through the <b>place</b> method which is available for all standard widgets.</p>
+<h2>When to use the Place Manager</h2>
+<p>It is usually not a good idea to use <b>place</b> for ordinary window and dialog layouts; its simply to much work to get things working as they should. Use the <b>pack</b> or <b>grid</b> managers for such purposes.</p>
+<p>However, <b>place</b> has its uses in more specialized cases. Most importantly, it can be used by compound widget containers to implement various custom geometry managers. Another use is to position control buttons in dialogs.</p>
+<h2 id="patterns">Patterns</h2>
+<p>Let's look at some usage patterns. The following command centers a widget in its parent:</p>
+<pre>
+    w.place(relx=0.5, rely=0.5, anchor=CENTER)
+</pre>
+<p>Here's another variant. It packs a <b>Label</b> widget in a frame widget, and then places a <b>Button</b> in the upper right corner of the frame. The button will overlap the label.</p>
+<pre>
+    pane = Frame(master)
+    Label(pane, text="Pane Title").pack()
+    b = Button(pane, width=12, height=12,
+               image=launch_icon, command=self.launch)
+    b.place(relx=1, x=-2, y=2, anchor=NE)
+</pre>
+<p>The following excerpt from a <b>Notepad</b> widget implementation displays a notepad page (implemented as a <b>Frame</b>) in the notepad body frame. It first loops over the available pages, calling <b>place_forget</b> for each one of them. Note that it's not an error to <span>"unplace"</span> a widget that it's not placed in the first case:</p>
+<pre>
+    for w in self.__pages:
+        w.place_forget()
+    self.__pages[index].place(in_=self.__body, x=bd, y=bd)
+</pre>
+<p>You can combine the absolute and relative options. In such cases, the relative option is applied first, and the absolute value is then added to that position. In the following example, the widget <i>w</i> is almost completely covers its parent, except for a 5 pixel border around the widget.</p>
+<pre>
+    w.place(x=5, y=5, relwidth=1, relheight=1, width=-10, height=-10)
+</pre>
+<p>You can also place a widget outside another widget. For example, why not place two widgets on top of each other:</p>
+<pre>
+    w2.place(in_=w1, relx=0.5, y=-2, anchor=S, bordermode="outside")
+</pre>
+<p>Note the use of <b>relx</b> and <b>anchor</b> options to center the widgets vertically. You could also use (relx=0, anchor=SW) to get left alignment, or (relx=1, anchor=SE) to get right alignment.</p>
+<p>By the way, why not combine this way to use the packer with the launch button example shown earlier. The following example places two buttons in the upper right corner of the <i>pane</i>:</p>
+<pre>
+    b1 = DrawnButton(pane, (12, 12), launch_icon, command=self.launch)
+    b1.place(relx=1, x=-2, y=2, anchor=NE)
+    b2 = DrawnButton(pane, (12, 12), info_icon, command=self.info)
+    b2.place(in_=b1, x=-2, anchor=NE, bordermode="outside")
+</pre>
+<p>Finally, let's look at a piece of code from an imaginary <b>SplitWindow</b> container widget. The following piece of code splits <i>frame</i> into two subframes called <i>f1</i> and <i>f2</i>.</p>
+<pre>
+    f1 = Frame(frame, bd=1, relief=SUNKEN)
+    f2 = Frame(frame, bd=1, relief=SUNKEN)
+    split = 0.5
+    f1.place(rely=0, relheight=split, relwidth=1)
+    f2.place(rely=split, relheight=1.0-split, relwidth=1)
+</pre>
+<p>To change the split point, set <i>split</i> to something suitable, and call the <b>place</b> method again. If you haven't changed an option, you don't have to specify it again.</p>
+<pre>
+    f1.place(relheight=split)
+    f2.place(rely=split, relheight=1.0-split)
+</pre>
+<p>You could add a small frame to use as a dragging handle, and add suitable bindings to it, e.g:</p>
+<pre>
+    f3 = Frame(frame, bd=2, relief=RAISED, width=8, height=8)
+    f3.place(relx=0.9, rely=split, anchor=E)
+    f3.bind("B1-Motion&gt;", self.adjust)
+</pre>
+<h2 id="reference">Reference</h2>
+<dl>
+<dt><b>Place</b> (class) [<a href='#Tkinter.Place-class'>#</a>]</dt>
+<dd>
+<p>Place geometry manager. This is an implementation class; all the methods described below are available on all widget classes.</p>
+</dd>
+<dt><a id='Tkinter.Place.place-method' name='Tkinter.Place.place-method'><b>place(**options)</b></a> [<a href='#Tkinter.Place.place-method'>#</a>]</dt>
+<dd>
+<p>Place this widget relative to its parent.</p>
+<dl>
+<dt><i>**options</i></dt>
+<dd>Geometry options.</dd>
+<dt><i>anchor=</i></dt>
+<dd>Default is NW.</dd>
+<dt><i>bordermode=</i></dt>
+<dd>Default is INSIDE.</dd>
+<dt><i>height=</i></dt>
+<dd>No default value.</dd>
+<dt><i>in=</i></dt>
+<dd>Default is ..</dd>
+<dt><i>relheight=</i></dt>
+<dd>No default value.</dd>
+<dt><i>relwidth=</i></dt>
+<dd>No default value.</dd>
+<dt><i>relx=</i></dt>
+<dd>Default is 0.</dd>
+<dt><i>rely=</i></dt>
+<dd>Default is 0.</dd>
+<dt><i>width=</i></dt>
+<dd>No default value.</dd>
+<dt><i>x=</i></dt>
+<dd>Default is 0.</dd>
+<dt><i>y=</i></dt>
+<dd>Default is 0.</dd>
+</dl>
+<br /></dd>
+<dt><a id='Tkinter.Place.place_configure-method' name='Tkinter.Place.place_configure-method'><b>place_configure(**options)</b></a> [<a href='#Tkinter.Place.place_configure-method'>#</a>]</dt>
+<dd>
+<p>Same as <a class="link" href="#place.Place.place-method"><b>place</b></a>.</p>
+</dd>
+<dt><a id='Tkinter.Place.place_forget-method' name='Tkinter.Place.place_forget-method'><b>place_forget()</b></a> [<a href='#Tkinter.Place.place_forget-method'>#</a>]</dt>
+<dd>
+<p>The place_forget method.</p>
+</dd>
+<dt><a id='Tkinter.Place.place_info-method' name='Tkinter.Place.place_info-method'><b>place_info()</b></a> [<a href='#Tkinter.Place.place_info-method'>#</a>]</dt>
+<dd>
+<p>The place_info method.</p>
+</dd>
+<dt><a id='Tkinter.Place.place_slaves-method' name='Tkinter.Place.place_slaves-method'><b>place_slaves()</b></a> [<a href='#Tkinter.Place.place_slaves-method'>#</a>]</dt>
+<dd>
+<p>The place_slaves method.</p>
+</dd>
+<dt><a id='Tkinter.Place.slaves-method' name='Tkinter.Place.slaves-method'><b>slaves()</b></a> [<a href='#Tkinter.Place.slaves-method'>#</a>]</dt>
+<dd>
+<p>Same as <a class="link" href="#place.Place.place_slaves-method"><b>place_slaves</b></a>.</p>
+</dd>
+</dl>
+<div class='navigate'>
+<hr id='zonebar' />
+<p class='navigate'>[<a href="pack.htm" tppabs="http://tkinter.programujte.com/pack.htm">back</a>] [<a href="bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm">next</a>]</p>
+<hr id='zonebar' />
+[<a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">index</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/useredit4bf4.html?name=place">suggest changes</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/edit/index4bf4.html?name=place">edit</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/edit/index568b.html?action=new">new</a>] [<a href="javascript:void(window.open('http://validator.w3.org/check?uri='+escape(document.location.href)))">validate</a>]</div>
+<p class='small'>Copyright &#169; 1997-2005 by Fredrik Lundh.</p>
+</div>
+</div>
+</body>
+
+<!-- Mirrored from effbot.org/tkinterbook/place.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 24 Mar 2006 21:56:10 GMT -->
+</html>

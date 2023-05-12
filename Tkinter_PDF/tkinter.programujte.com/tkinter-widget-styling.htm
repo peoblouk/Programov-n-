@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Vzhled udělátek ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-widget-configuration.htm" tppabs="http://tkinter.programujte.com/tkinter-widget-configuration.htm">předchozí</a> ] [
+          <a href="tkinter-events-and-bindings.htm" tppabs="http://tkinter.programujte.com/tkinter-events-and-bindings.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-widget-styling.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-widget-styling.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-widget-styling.htm">originál</a>
+          ]
+        </p>
+        <h1 class="title">
+          Vzhled udělátek
+        </h1><br>
+        <p>
+          Všechna standardní tkinterovská udělátka poskytují základní sadu
+          stylovacích parametrů, které vám umožňují měnit věci jako barvy,
+          fonty a další parametry vzhledu každého udělátka.
+        </p>
+        <h2>
+          Barvy
+        </h2>
+        <p>
+          Většina udělátek umožňuje měnit barvy použitím <b>background</b>
+          a <b>foreground</b>. K určení barvy můžete použít jednak jméno barvy
+          nebo přímo komponenty RGB.
+        </p>
+        <h3>
+          Jména barev
+        </h3>
+        <p>
+          Tkinter obsahuje databázi, která mapuje běžná jména barev na RGB
+          hodnoty. Jsou v ní jak zcela běžná jména jako <b>Red, Green,
+          Blue, Yellow </b> a <b>LightBlue,</b> ale také exotičtější jako
+          <b>Moccasin, PeachPuff</b>, atd..
+        </p>
+        <p>
+          Na Linuxu pod X window system, jsou jména definována serverem X.
+          Běžně jsou uložena v souboru <b>xrgb.txt</b> společně s jejich RGB
+          hodnotami. Na Windows a Macintosh je tabulka barev zabudována přímo
+          do Tk.
+        </p>
+        <p>
+          Pod Windows můžete také používat systémové barvy, které se dají
+          změnit v Ovládacích panelech:
+        </p>
+        <blockquote class="blockquote">
+          <p>
+            <b>SystemActiveBorder, SystemActiveCaption, SystemAppWorkspace,
+            SystemBackground, SystemButtonFace, SystemButtonHighlight,
+            SystemButtonShadow, SystemButtonText, SystemCaptionText,
+            SystemDisabledText, SystemHighlight, SystemHighlightText,
+            SystemInactiveBorder, SystemInactiveCaption,
+            SystemInactiveCaptionText, SystemMenu, SystemMenuText,
+            SystemScrollbar, SystemWindow, SystemWindowFrame,
+            SystemWindowText.</b>
+          </p>
+        </blockquote>
+        <p>
+          Na Macintoshi jsou dostupné následující barvy:
+        </p>
+        <blockquote class="blockquote">
+          <p>
+            <b>SystemButtonFace, SystemButtonFrame, SystemButtonText,
+            SystemHighlight, SystemHighlightText, SystemMenu, SystemMenuActive,
+            SystemMenuActiveText, SystemMenuDisabled, SystemMenuText,
+            SystemWindowBody.</b>
+          </p>
+        </blockquote>
+        <p>
+          U jmen barev nezáleží na velikosti písmen. Mnoho, ne však všechny,
+          jsou dostupné i s mezerou mezi slovy -
+           např. <span>"lightblue"</span>, <span>"light blue"</span>
+           i <span>"Light Blue"</span> je stále stejná barva.
+        </p>
+        <h3>
+          Specifikace RGB
+        </h3>
+        <p>
+          Pro přesné určení barvy, můžete použít řetězec v formátu:
+        </p>
+        <pre>
+#RRGGBB<br>
+</pre>
+        <p>
+          RR, GG, BB jsou hexadecimální hodnoty červené, zelené a modré. Jak
+          převést desítkové barvy na hexa ve tvaru Tk, ukazuje následující
+          příklad:
+        </p>
+        <pre>
+tk_rgb = "#%02x%02x%02x" % (128, 192, 200)<br>
+</pre>
+        <p>
+          Tk podporuje také formát <span>"<b>#RGB</b>"</span> a
+          <span>"<b>#RRRRGGGGBBBB</b>"</span> při určování barev se 16 nebo
+          65536 barvami.
+        </p>
+        <p>
+          Můžete používat metodu <b>winfo_rgb</b> pro převod jména barvy na
+          trojici:
+        </p>
+        <pre>
+rgb = widget.winfo_rgb("red")<br>red, green, blue = rgb[0]/256, rgb[1]/256, rgb[2]/256<br>
+</pre>
+        <p>
+          Poznámka: <b>winfo_rgb</b> vrací 16-bitovou RGB hodnotu,
+          0-65536. Pro převod na běžnější rozsah 0-255, musíte každou hodnotu
+          dělit 256 (nebo posunou 8 bitů vpravo).
+        </p>
+        <h2>
+          Fonty
+        </h2>
+        <p>
+          Udělátka Tkinter umožňují používat různé fonty. Všechna mají nějaká
+          defaultní nastavení. Zřídka musíte  měnit font např. u štítků
+          nebo tlačítek.
+        </p>
+        <p>
+          Fonty se většinou nastavují pomocí parametru <b>font</b>.
+          Tkinter podporuje různé formáty:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Popisovač fontu
+            </p>
+          </li>
+          <li>
+            <p>
+              Uživatelsky definované jména fontů
+            </p>
+          </li>
+          <li>
+            <p>
+              Systémové fonty
+            </p>
+          </li>
+          <li>
+            <p>
+              Popisovače X font
+            </p>
+          </li>
+        </ul>
+        <p>
+          U Tk &lt; 8.0, jsou dostupné pouze popisovače  <i>X font</i>. Více níže.
+        </p>
+        <h3>
+          Popisovače fontu
+        </h3>
+        <p>
+          Od 8.0 Tkinter podporuje popisovače fontů nezávislé na systému.
+          Můžete specifikovat font jako n-tici, obsahující jméno fontu,
+          velikost a volitelně navíc řetězec s jedním nebo více styly.
+          Příklady:
+        </p>
+        <pre>
+("Times", 10, "bold")<br>("Helvetica", 10, "bold italic")<br>("Symbol", 8)<br>
+</pre>
+        <p>
+          Chcete-li dostat standardní velikost a styl, použijte jen jméno
+          fontu. Neobsahuje-li jméno fontu mezeru, můžete použít i následující
+          formát:
+        </p>
+        <pre>
+"Times 10 bold"<br>"Helvetica 10 bold italic"<br>"Symbol 8"<br>
+</pre>
+        <p>
+          Zde je pár rodin fontů na většině platforem Windows:
+        </p>
+        <p>
+          <b>Arial</b> (odpovídá písmu Helvetica), <b>Courier New</b>
+          (Courier), <b>Comic Sans MS</b>, <b>Fixedsys</b>, <b>MS Sans
+          Serif</b>, <b>MS Serif</b>, <b>Symbol</b>, <b>System</b>, <b>Times
+          New Roman</b> (Times), and <b>Verdana</b>:
+        </p>
+        <p>
+          <img src=
+          "data-tkinter-widget-styling-b3644e69d451cc48a402eb8856bc7f6d.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-widget-styling-b3644e69d451cc48a402eb8856bc7f6d.gif">
+        </p>
+        <p>
+          Poznámka: pokud jméno obsahuje mezery, musíte použít syntaxi s n-ticí.
+        </p>
+        <p>
+          Dostupné styly jsou <b>normal</b>, <b>bold</b>, <b>roman</b>,
+          <b>italic</b>, <b>underline</b> a <b>overstrike</b>.
+        </p>
+        <p>
+          Tk 8.0 automaticky mapuje <b>Courier</b>, <b>Helvetica</b> a
+          <b>Times</b> na jejich odpovídající jména na každé platformě.
+          Specicikace fontu nikdy nevyvolá chybu, pokud se daný font nenalezne,
+          použije nejbližší příbuzný.
+        </p>
+        <h3>
+          Jména fontů
+        </h3>
+        <p>
+          Tk 8.0 umožňuje vytvářet vlastní jména fontů.
+        </p>
+        <p>
+          Modul <b>tkFont</b> poskytuje třídu <a href=
+          "font.txt" tppabs="http://tkinter.programujte.com/font.txt"><b>Font</b></a>, která umožňuje vytvářet instance fontů.
+          Toto můžete využívat kdekoliv v celém Tk. 
+        </p>
+        <pre>
+tkFont.Font(family="Times", size=10, weight=tkFont.BOLD)<br>tkFont.Font(family="Helvetica", size=10, weight=tkFont.BOLD,<br>            slant=tkFont.ITALIC)<br>tkFont.Font(family="Symbol", size=8)<br>
+</pre>
+        <p>
+          Změníte-li pojmenovaný font (za použití metody <b>config</b>), změny
+          jsou automaticky promítnuty do všech udělátek, které daný font
+          používají.
+        </p>
+        <p>
+          <b>Font</b> podporuje následující parametry stylů. Poznámka:
+          konstanty jsou definovány v modulu<b>tkFont</b>:
+        </p>
+        <dl class="odsazeni">
+          <dt>
+            <b>family</b>
+          </dt>
+          <dd>
+            <p>
+              Font rodiny.
+            </p>
+          </dd>
+          <dt>
+            <b>size</b>
+          </dt>
+          <dd>
+            <p>
+              Velikost fontu v bodech. Záporná hodnota značí hodnoty v
+              pixelech.
+            </p>
+          </dd>
+          <dt>
+            <b>weight</b>
+          </dt>
+          <dd>
+            <p>
+              Tloušťka. <b>NORMAL</b> nebo <b>BOLD</b>. Standard je
+              <b>NORMAL</b>.
+            </p>
+          </dd>
+          <dt>
+            <b>slant</b>
+          </dt>
+          <dd>
+            <p>
+              Sklon písma. <b>NORMAL</b> nebo <b>ITALIC</b>. Standard
+              je <b>NORMAL</b>.
+            </p>
+          </dd>
+          <dt>
+            <b>underline</b>
+          </dt>
+          <dd>
+            <p>
+              Podtrhávání. True značí podtržení. Standard je 0 (false).
+            </p>
+          </dd>
+          <dt>
+            <b>overstrike</b>
+          </dt>
+          <dd>
+            <p>
+              Přeškrtnutí. True značí přeškrtnutí. Standard je 0 (false).
+            </p>
+          </dd>
+        </dl>
+        <h3>
+          Systémové fonty
+        </h3>
+        <p>
+          Tk podporuje také specifická jména fontů. 
+        </p>
+        <p>
+          <img alt="" src=
+          "data-tkinter-widget-styling-6f3283f6bf322c795c98d7233a423923.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-widget-styling-6f3283f6bf322c795c98d7233a423923.gif"
+          align="right" height="113" width="284">
+        </p>
+        <p>
+          Pod X to mohou být například <b>fixed</b>, <b>6x10</b>, atd.
+        </p>
+        <p>
+          Pod Windows to jsou <b>ansi</b>, <b>ansifixed</b>, <b>device</b>,
+          <b>oemfixed</b>, <b>system</b> a <b>systemfixed</b>:
+        </p>
+        <p>
+          Pod Macintosh <b>application</b> a <b>system</b>.
+        </p>
+        <p>
+          Poznámka: Systémové fonty jsou plnohodnotná jména, ne jako jména
+          rodin fontů, a tudíž se nemohou kombinovat s velikostí či stylem.
+          Kvůli portabilitě se snažte těchto fontů vyvarovat.
+        </p>
+        <h3>
+          Popisovače X Font
+        </h3>
+        <p>
+          <i>X Font Descriptors</i> are strings having the following format
+          (the asterisks represent fields that are usually not relevant. For
+          details, see the Tk documentation, or an X manual):
+        </p>
+        <pre>
+-*-family-weight-slant-*--*-size-*-*-*-*-charset<br>
+</pre>
+        <p>
+          The font <i>family</i> is typically something like <b>Times</b>,
+          <b>Helvetica</b>, <b>Courier</b> or <b>Symbol</b>.
+        </p>
+        <p>
+          The <i>weight</i> is either <b>Bold</b> or <b>Normal</b>. Slant is
+          either <b>R</b> for <span>"roman"</span> (normal), <b>I</b> for
+          italic, or <b>O</b> for oblique (in practice, this is just another
+          word for italic).
+        </p>
+        <p>
+          <i>Size</i> is the height of the font in decipoints (that is, points
+          multiplied by 10). There are usually 72 points per inch, but some
+          low-resolution displays may use larger <span>"logical"</span> points
+          to make sure that small fonts are still legible. The <i>character
+          set</i>, finally, is usually <b>ISO8859-1</b> (ISO Latin 1), but may
+          have other values for some fonts.
+        </p>
+        <p>
+          The following descriptor requests a 12-point boldface Times font,
+          using the ISO Latin 1 character set:
+        </p>
+        <pre>
+-*-Times-Bold-R-*--*-120-*-*-*-*-ISO8859-1<br>
+</pre>
+        <p>
+          If you don't care about the character set, or use a font like
+          <b>Symbol</b> which has a special character set, you can use a single
+          asterisk as the last component:
+        </p>
+        <pre>
+-*-Symbol-*-*-*--*-80-*<br>
+</pre>
+        <p>
+          A typical X server supports at least <b>Times</b>, <b>Helvetica</b>,
+          <b>Courier</b>, and a few more fonts, in sizes like 8, 10, 12, 14,
+          18, and 24 points, and in normal, bold, and italic (<b>Times</b>) or
+          oblique (<b>Helvetica</b>, <b>Courier</b>) variants. Most servers
+          also support freely scaleable fonts. You can use programs like
+          <b>xlsfonts</b> and <b>xfontsel</b> to check which fonts you have
+          access to on a given server.
+        </p>
+        <p>
+          This kind of font descriptors can also be used on Windows and
+          Macintosh. Note that if you use Tk 4.2, you should keep in mind that
+          the font family must be one supported by Windows (see above).
+        </p>
+        <h2>
+          Formátování textu
+        </h2>
+        <p>
+          Tkinter podporuje také víceřádkový text. Vložte konec řádku (\n)
+          všude tam, kde potřebujete.
+        </p>Můžete využít také parametr <b>wraplength</b> pro nastavení
+        maximální šířky a umožnit udělátku, aby text zalamoval sám. Tkinter se
+        snaží zalamovat podle mezer, ale při úzkém udělátku může dojít i k
+        zalomení uprostřed slova.<br>
+        <p>
+          Standardně jsou řádky centrovány na střed. Změnit to můžete pomocí
+          parametru <b>justify</b>: <b>LEFT</b> nebo <b>RIGHT</b>. Standard
+          je <b>CENTER</b>.
+        </p>
+        <h2>
+          Okraje
+        </h2>
+        <p>
+          Všechna Tk udělátka mají okraje (ačkoliv defaultně nejsou někde
+          vidět). Okraj se skládá z volitelného 3d reliéfu a zvýrazňovací
+          oblasti.
+        </p>
+        <h3>
+          Reliéf
+        </h3>
+        <p>
+          Relief určuje, jak vykreslit okraj:
+        </p>
+        <dl class="odsazeni">
+          <dt>
+            <b>borderwidth</b> (nebo <b>bd</b>)
+          </dt>
+          <dd>
+            <p>
+              Šířka okraje v pixelech. Většinou je standard jeden nebo 2
+              pixely. Málokdy je důvod toto měnit.
+            </p>
+          </dd>
+          <dt>
+            <b>relief</b>
+          </dt>
+          <dd>
+            <p>
+              Jak vykreslit 3D okraj. Může být <b>SUNKEN</b>, <b>RAISED</b>,
+              <b>GROOVE</b>, <b>RIDGE</b> a <b>FLAT</b>.
+            </p>
+          </dd>
+        </dl>
+        <h3>
+          Zvýraznění při získání focusu
+        </h3>
+        <p>
+          Nastavení zvýrazňování určuje, jak se změní vzhled udělátka, když
+          získá focus. Ve většině případů je zvýrazněná oblast mimo vlastní
+          relief. Parametry:
+        </p>
+        <dl class="odsazeni">
+          <dt>
+            <b>highlightcolor</b>
+          </dt>
+          <dd>
+            <p>
+              Jaká bude barva. Většinou černá nebo jiná výrazná barva.
+            </p>
+          </dd>
+          <dt>
+            <b>highlightbackground</b>
+          </dt>
+          <dd>
+            <p>
+              JAká bude barva, když udělátka nebude mít focus. Většinou stejné
+              jako pozadí udělátka.
+            </p>
+          </dd>
+          <dt>
+            <b>highlightthickness</b>
+          </dt>
+          <dd>
+            <p>
+              Šířka zvýrazněné oblasti. Obvykle jeden nebo dva pixely.
+            </p>
+          </dd>
+        </dl>
+        <h2>
+          Kurzory
+        </h2>
+        <dl class="options">
+          <dt>
+            <b>cursor</b>
+          </dt>
+          <dd>
+            <p>
+              Tato volba řídí, jak bude vypadat myší kurzor, když myš
+              bude nad udělátkem. Pokud není nastavena, použije se stejné
+              nastavení, jako u rodiče.  Poznámka: některá udělátka
+              nastavují kurzory podle sebe defaultně - např. <a href=
+              "text.htm" tppabs="http://tkinter.programujte.com/text.htm"><b>Text</b></a> a <a href=
+              "entry.htm" tppabs="http://tkinter.programujte.com/entry.htm"><b>Entry</b></a>.
+            </p>
+          </dd>
+        </dl>
+        <p class="odsazeni">
+          <img src=
+          "data-tkinter-widget-styling-b151db152b02cbed2efbfa925b75b0a8.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-widget-styling-b151db152b02cbed2efbfa925b75b0a8.gif"><a href="javascript:if(confirm('http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html'" tppabs="http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html"></a>
+        </p>
+        <p>
+          <a href=
+          "javascript:if(confirm('http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html'" tppabs="http://infohost.nmt.edu/tcc/help/pubs/tkinter/cursors.html">Jména
+          kurzorů</a>
+        </p>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2007 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

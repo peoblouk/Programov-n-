@@ -1,0 +1,1289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Root a Toplevel ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="text.htm" tppabs="http://tkinter.programujte.com/text.htm">předchozí</a> ] [ <a href="grid.htm" tppabs="http://tkinter.programujte.com/grid.htm">další</a> ]
+          [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/toplevel.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/toplevel.htm'" tppabs="http://effbot.org/tkinterbook/toplevel.htm">originál - Toplevel</a>
+          ] [ <a href="javascript:if(confirm('http://effbot.org/tkinterbook/wm.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/wm.htm'" tppabs="http://effbot.org/tkinterbook/wm.htm">originál - metody
+          Toplevel</a> ]
+        </p>
+        <h1 class="title">
+          Root a Toplevel okno
+        </h1>
+        <p>
+          Tento list obsahuje popis a metody, které jsou dostupné pro hlavní
+          okno (root) i pro jeho případné podokna (Toplevel). Obě dvě udělátka
+          obvykle mohou mít titulkový pruh, menu a další okenní dekorace.
+        </p>
+        <p>
+          Hlavní okno - root - Tk()<br>
+          Podokno - toplevel - Toplevel()
+        </p>
+        <h2>
+          Jak root a toplevel používat
+        </h2>
+        <p>
+          Root by vaše aplikace měla mít jen jedno, pokud si nejste jisti tím,
+          co děláte. Další podokna byste měli vytvářet jako Toplevel, protože
+          pak se dají snadno sdílet proměnné a zdroje. Toplevel se používá na
+          zobrazení dodatečných aplikačních oken, jako dialogů, hlášek a
+          dalších "vyskakovacích" oken.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <h3>
+          Příklad
+        </h3>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+
+def ahoj():
+    top = Toplevel()
+    top.title(u"Pozdrav")
+    top.focus_set()
+    
+    msg = Message(top, text=u"Toto je okno Toplevel")
+    msg.pack()
+    
+    tlZavrit = Button(top, text=u"Zavřít", command=top.destroy)
+    tlZavrit.pack()    
+
+hlavni = Tk()
+
+ram = Frame(hlavni)
+ram.pack()
+
+tlKonec = Button(ram, text="KONEC", fg="red", command=hlavni.destroy)
+tlKonec.pack(side=LEFT)
+
+tlPozdrav = Button(ram, text="Pozdrav!", command=ahoj)
+tlPozdrav.pack(side=LEFT)
+
+mainloop()
+
+</pre>
+        <pre>
+<img alt="" src="data-toplevel-1.png" tppabs="http://tkinter.programujte.com/images/data-toplevel-1.png" height="284" width="305">
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Tk-class" id="Tkinter.Tk-class"></a>Tk(
+            **options)</b> (třída) [<a href=
+            "toplevel.htm#Tkinter.Tk-class" tppabs="http://tkinter.programujte.com/toplevel.htm#Tkinter.Tk-class">#</a>]
+          </dt>
+          <dt>
+            <b><a name="Tkinter.Toplevel-class" id=
+            "Tkinter.Toplevel-class"></a>Toplevel(master=None, **options)</b>
+            (třída) [<a href="toplevel.htm#Tkinter.Toplevel-class" tppabs="http://tkinter.programujte.com/toplevel.htm#Tkinter.Toplevel-class">#</a>]
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                Udělátko - kontejner.
+              </dt>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodič.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Viz <a class="link" href=
+                "#toplevel.Toplevel.config-method"><b>config</b></a>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Toplevel.config-method" name=
+            "Tkinter.Toplevel.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Toplevel.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jednu nebo více parametrů udělátka. Když nejsou zadány žádné
+              parametry, metoda vrací slovník se všemi aktuálními hodnotami
+              parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí, která se použije v tomto okně. Standardně se
+                použije barva pozadí aplikace. Chcete-li zabránit možným
+                změnám, nastavte barvu na prázdný řetězec. (název v databázi
+                parametrů je background, třída je Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka 3D okraje. Standard je (žádný okraj).
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>class=</i>
+              </dt>
+              <dd>
+                Standard je Toplevel. (class/Class)
+              </dd>
+              <dt>
+                <i>colormap=</i>
+              </dt>
+              <dd>
+                Některé displeje podporují pouze 256 barev (některé ještě
+                méně). Tyto displeje obvykle poskytují barevnou mapu, která
+                určuje, kterých 256 barev se dá využívat. Tento parametr vám
+                umožňuje určovat, kterou barevnou mapu pro toto okno a všechna
+                jeho podokna použít. Tento parametr se nedá měnit po vytvoření
+                okna. (colormap/Colormap)
+              </dd>
+              <dt>
+                <i>container=</i>
+              </dt>
+              <dd>
+                Standard je 0. (container/Container)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Jaký kurzor se použije, když je ukazatel myši nad oknem.
+                Standard je systémový ukazatel. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška okna v pixelech. Pokud je vynecháno, výška okna se udělá
+                tak, aby se vše vešlo. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká se použije barva zvýraznění okraje, když udělátko nebude
+                mít focus. Standardní nastavení závisí na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká se použije barva zvýraznění okraje, když udělátko bude mít
+                focus. Standardní nastavení závisí na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standard je 0.
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>menu=</i>
+              </dt>
+              <dd>
+                Menu, které je spojeno s tímto oknem. Na Unixech a Windows je
+                menu umístěno na vrchu okna. Na Mac je menu na vrchu okna,
+                pokud je okno vybráno. (menu/Menu)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Vodorovná výplň. Standard je 0. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Svislá výplň. Standard je 0. (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Dekorace okraje: <b>FLAT</b>, <b>SUNKEN</b>, <b>RAISED</b>,
+                <b>GROOVE</b> nebo <b>RIDGE</b>. Standard je <b>FLAT</b>.
+                (relief/Relief)
+              </dd>
+              <dt>
+                <i>screen=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (screen/Screen)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Určuje, jestli se může uživatel dostat na tento widget pomocí
+                <b>Tab</b>. Standard je False. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>use=</i>
+              </dt>
+              <dd>
+                Žádné standardní nastavení. (use/Use)
+              </dd>
+              <dt>
+                <i>visual=</i>
+              </dt>
+              <dd>
+                Určuje, který vizuální typ použít u tohoto okna. Tato volba se
+                většinou vynechává. V tom případě se vlastnost dědí od rodiče
+                nebo systému. Možné hodnoty jsou: "pseudocolor", "truecolor",
+                "directcolor", "staticcolor", "grayscale" nebo "staticgray".
+                Viz dokumentace X windows. Tato volba se dá nastavit jen při
+                vytvoření okna. (visual/Visual)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka okna v pixelech. Pokud je vynecháno, šířka okna se udělá
+                tak, aby se vše vešlo.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <h2>
+          Metody okna Toplevel a Root
+        </h2>
+        <p>
+          Tato sada metod se používá pro komunikaci s okenním manažerem. Jsou
+          dostupné pod hlavním oknem (<b>Tk</b>) a pod instancemi
+          <b>Toplevel</b>.
+        </p>
+        <p>
+          Poznámka: různí okenní manažeři se chovají různě. Některé například
+          nepodporují okna s ikonami, některé zase skupiny oken, atd.
+        </p>
+        <h2>
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Wm-class" id="Tkinter.Wm-class"></a>Wm</b>
+            (třída) [<a href="#Tkinter.Wm-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Implementační třída Wm. Tato třída je využívání jako společná pro
+              hlavní okno (<b>Tk</b>) a udělátka Toplevel (<span class=
+              "link"><b>Toplevel</b></span>).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.aspect-method" name=
+            "Tkinter.Wm.aspect-method"><b>aspect(minNumer=None, minDenom=None,
+            maxNumer=None, maxDenom=None)</b></a> [<a href=
+            "#Tkinter.Wm.aspect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Určuje poměr stran (poměr mezi šířkou a výškou) tohoto okna.
+              Poměr stran se bude nalézat mezi minNumer/minDenom a
+              maxNumer/maxDenom.
+            </p>
+            <p>
+              Pokud nejsou zadány žádné parametry, tato metoda vrací 4-tici
+              současného poměru, pokud nějaký takový je.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_aspect-method"><b>wm_aspect</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.attributes-method" name=
+            "Tkinter.Wm.attributes-method"><b>attributes(*args)</b></a>
+            [<a href="#Tkinter.Wm.attributes-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací atributy okna. U Pythonu 2.4 je tento
+              wrapper nedokončený, takže aplikace musí používat nestandardní
+              syntaxi, když chce měnit nebo získávat dostupné atributy.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_attributes-method"><b>wm_attributes</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dd>
+                Jeden nebo více atributů. Současná verze nepodporuje
+                pojmenované argumenty. Musíte vložit před jméno atributu
+                pomlčku a hodnotu předat jako samostatný parametr. Chcete-li
+                například nastavit parametr <i>disabled</i>, použijte
+                <b>w.attributes("-disabled", 1)</b> namísto
+                <b>w.attributes(disabled=1)</b>. Pokud je zadán jen atribut,
+                metoda vrací současnou hodnotu. Nejsou-li zadány žádné
+                parametry, metoda vrací současné nastavení parametrů (detaily
+                níže).
+              </dd>
+              <dt>
+                <i>alpha=</i>
+              </dt>
+              <dd>
+                (Windows?, Mac) Ovládá průhlednost okna. 0.0 značí plně
+                průhledné, 1.0 značí plně neprůhledné. Není podporováno na
+                všech systémech; kde to nejde, Tkinter použije vždy 1.0.
+                Poznámka: v této verzi musí být tento atribut předán jako
+                "-alpha".
+              </dd>
+              <dt>
+                <i>disabled=</i>
+              </dt>
+              <dd>
+                (Windows) Pokud je zapnut, vypíná celé okno. Poznámka: v této
+                verzi musí být tento atribut předán jako "-disabled".
+              </dd>
+              <dt>
+                <i>modified=</i>
+              </dt>
+              <dd>
+                (Mac) Pokud je zapnut, okno je označeno jako upravené.
+                Poznámka: v této verzi musí být tento atribut předán jako
+                "-modified".
+              </dd>
+              <dt>
+                <i>titlepath=</i>
+              </dt>
+              <dd>
+                (Mac) Cesta k ikoně okna proxy. Poznámka: v této verzi musí být
+                tento atribut předán jako "-titlepath".
+              </dd>
+              <dt>
+                <i>toolwindow=</i>
+              </dt>
+              <dd>
+                (Windows) Pokud je zapnut, nastavuje styl okna na "nástrojové
+                okno". Poznámka:: v této verzi musí být tento atribut předán
+                jako "-toolwindow".
+              </dd>
+              <dt>
+                <i>topmost=</i>
+              </dt>
+              <dd>
+                (Windows) Pokud je zapnut, je toto okno vždy umístěno navrch
+                všech oken. Poznámka: v této verzi musí být tento atribut
+                předán jako "-topmost".
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pokud byla zadána hodnota parametru je návratová hodnota
+                neurčitá. Pokud byl zadán jeden parametr návratová hodnota je
+                současná hodnota parametru jako řetězec. Pokud nebyly zadány
+                žádné parametry, vrací současné hodnoty všech parametrů jako
+                řetězec ve tvaru "-attribute value -attribute value". Budoucí
+                verze mohou vracet slovník.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.client-method" name=
+            "Tkinter.Wm.client-method"><b>client(name=None)</b></a> [<a href=
+            "#Tkinter.Wm.client-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_CLIENT_MACHINE. Tato vlastnost
+              je používána okenním manažerem X windows system. Na jiných
+              platformách je ignorováno.
+            </p>
+            <p>
+              Chcete-li vlastnost odstranit, použijte prázdný řetězec.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_client-method"><b>wm_client</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dd>
+                Nová hodnota této vlastnosti. Pokud je vynecháno, je vráceno
+                současné nastavení.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.colormapwindows-method" name=
+            "Tkinter.Wm.colormapwindows-method"><b>colormapwindows(*wlist)</b></a>
+            [<a href="#Tkinter.Wm.colormapwindows-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_COLORMAP_WINDOWS. Tato
+              vlastnost je používána okenním manažerem X windows system. Na
+              jiných platformách je ignorováno.
+            </p>
+          </dd>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_colormapwindows-method"><b>wm_colormapwindows</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>wlist</i>
+              </dt>
+              <dd>
+                Nová hodnota této vlastnosti. Pokud je vynecháno, je vráceno
+                současné nastavení.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.command-method" name=
+            "Tkinter.Wm.command-method"><b>command(value=None)</b></a>
+            [<a href="#Tkinter.Wm.command-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_COMMAND. Tato vlastnost je
+              používána okenním manažerem X windows system. Na jiných
+              platformách je ignorováno.
+            </p>
+          </dd>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_command-method"><b>wm_command</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>wlist</i>
+              </dt>
+              <dd>
+                Nová hodnota této vlastnosti. Pokud je vynecháno, je vráceno
+                současné nastavení. Na odstranění vlastnosti použijte prázdný
+                řetězec.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.deiconify-method" name=
+            "Tkinter.Wm.deiconify-method"><b>deiconify()</b></a> [<a href=
+            "#Tkinter.Wm.deiconify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zobrazí okno. Nová okna jsou zobrazována standardně, takže tuto
+              metodu musíte použít pouze v případě, že jste předtím použili
+              <a class="link" href=
+              "#Tkinter.Wm.iconify-method"><b>iconify</b></a> nebo <a class=
+              "link" href="#Tkinter.Wm.withdraw-method"><b>withdraw</b></a>,
+              když jste okno z obrazovky odstranili.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_deiconify-method"><b>wm_deiconify</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.focusmodel-method" name=
+            "Tkinter.Wm.focusmodel-method"><b>focusmodel(model=None)</b></a>
+            [<a href="#Tkinter.Wm.focusmodel-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací focus model.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_focusmodel-method"><b>wm_focusmodel</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.frame-method" name=
+            "Tkinter.Wm.frame-method"><b>frame()</b></a> [<a href=
+            "#Tkinter.Wm.frame-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací řetězec obsahující okenně závislý identifikátor, který
+              odpovídá okennímu nejvyššímu rodiči. U Unixu je to identifikátor
+              okna. U Windows je to celé číslo HWND.
+            </p>
+            <p>
+              Poznámka: pokud nebylo okno zobrazeno okenním manažerem, tato
+              metoda vrací identifikátor okna, který odpovídá samotnému oknu.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_frame-method"><b>wm_frame</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.geometry-method" name=
+            "Tkinter.Wm.geometry-method"><b>geometry(geometry=None)</b></a>
+            [<a href="#Tkinter.Wm.geometry-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací geometrii okna. S argumentem tato metoda
+              mění geometrii. Parametr má mít následující formát:
+            </p>
+            <pre>
+"%dx%d%+d%+d" % (šířka, výška, x-posun, y-posun)
+
+</pre>Bez argumentu tato metoda vrací současnou geometrii okna.
+            <p>
+              Chcete-li převést řetězec do pixelových souřadnic, můžete to
+              udělat nějak takto:
+            </p>
+            <pre>
+import re
+
+def parsegeometry(geometry):
+    m = re.match("(\d+)x(\d+)([-+]\d+)([-+]\d+)", geometry)
+    if not m:
+        raise ValueError("nepodarilo se rozparsovat data")
+    return map(int, m.groups())
+</pre>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_geometry-method"><b>wm_geometry</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.grid-method" name=
+            "Tkinter.Wm.grid-method"><b>grid(baseWidth=None, baseHeight=None,
+            widthInc=None, heightInc=None)</b></a> [<a href=
+            "#Tkinter.Wm.grid-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda grid. Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_grid-method"><b>wm_grid</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.group-method" name=
+            "Tkinter.Wm.group-method"><b>group(window=None)</b></a> [<a href=
+            "#Tkinter.Wm.group-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává okno ke skupině oken, které dané okno řídí. Člen skupiny
+              je obvykle ukryt, když vlastník skupiny je minimalizován nebo
+              schován (withdrawn). Skutečné jednání závisí na daném okenním
+              manažeru.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_group-method"><b>wm_group</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>window</i>
+              </dt>
+              <dd>
+                Vlastník skupiny, Pokud je vynecháno, je vráceno současný
+                vlastník.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconbitmap-method" name=
+            "Tkinter.Wm.iconbitmap-method"><b>iconbitmap(bitmap=None)</b></a>
+            [<a href="#Tkinter.Wm.iconbitmap-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací bitmapu ikony, která se použije při
+              minimalizaci. Tato metoda je některými okenními manažery
+              ignorována (včetně Windows).
+            </p>
+            <p>
+              Poznámka: tato metoda umožňuje zobrazování pouze
+              monochromatických ikon. Chcete-li zobrazit barevnou ikonu,
+              umístěte ji do udělátka Label a zobrazujte ji metodou <a class=
+              "link" href=
+              "#Tkinter.Wm.iconwindow-method"><b>iconwindow</b></a>.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconbitmap-method"><b>wm_iconbitmap</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconify-method" name=
+            "Tkinter.Wm.iconify-method"><b>iconify()</b></a> [<a href=
+            "#Tkinter.Wm.iconify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Minimalizuje okno do ikony (aniž by ho zrušila). Pro opětovné
+              zobrazení použijte <a class="link" href=
+              "#Tkinter.Wm.deiconify-method"><b>deiconify</b></a>. Ve Windows
+              se ikona zobrazí ve hlavní liště.
+            </p>
+            <p>
+              Když je okno ikonifikované, metoda <a class="link" href=
+              "#Tkinter.Wm.state-method"><b>state</b></a> vrací "iconic".
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconify-method"><b>wm_iconify</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconmask-method" name=
+            "Tkinter.Wm.iconmask-method"><b>iconmask(bitmap=None)</b></a>
+            [<a href="#Tkinter.Wm.iconmask-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací masku bitmapy ikony, která se použije při
+              minimalizaci. Tato metoda je některými okenními manažery
+              ignorována (včetně Windows).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconmask-method"><b>wm_iconmask</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconname-method" name=
+            "Tkinter.Wm.iconname-method"><b>iconname(newName=None)</b></a>
+            [<a href="#Tkinter.Wm.iconname-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací jméno ikony, které se použije při
+              minimalizaci. Tato metoda je některými okenními manažery
+              ignorována (včetně Windows).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconname-method"><b>wm_iconname</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconposition-method" name=
+            "Tkinter.Wm.iconposition-method"><b>iconposition(x=None,
+            y=None)</b></a> [<a href="#Tkinter.Wm.iconposition-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací pozici ikony, která se používá při
+              minimalizaci. Tato metoda je některými okenními manažery
+              ignorována (včetně Windows).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconposition-method"><b>wm_iconposition</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.iconwindow-method" name=
+            "Tkinter.Wm.iconwindow-method"><b>iconwindow(window=None)</b></a>
+            [<a href="#Tkinter.Wm.iconwindow-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací okno ikony, které se použije jako ikona,
+              když se okno minimalizuje. Tato metoda je některými okenními
+              manažery ignorována (včetně Windows).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_iconwindow-method"><b>wm_iconwindow</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>window</i>
+              </dt>
+              <dd>
+                Nové okno ikony. Pokud je vynecháno, je vráceno současné okno.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.maxsize-method" name=
+            "Tkinter.Wm.maxsize-method"><b>maxsize(width=None,
+            height=None)</b></a> [<a href="#Tkinter.Wm.maxsize-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací maximální rozměr okna.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_maxsize-method"><b>wm_maxsize</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.minsize-method" name=
+            "Tkinter.Wm.minsize-method"><b>minsize(width=None,
+            height=None)</b></a> [<a href="#Tkinter.Wm.minsize-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací minimální rozměr okna.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_minsize-method"><b>wm_minsize</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.overrideredirect-method" name=
+            "Tkinter.Wm.overrideredirect-method"><b>overrideredirect(flag=None)</b></a>
+            [<a href="#Tkinter.Wm.overrideredirect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací příznak <i>override redirect</i>. Pokud je
+              flag nenulový, zabrání to okennímu manažeru v "dekoraci" okna.
+              Jinými slovy, okno nebude mít záhlaví ani zápatí, a nebude být
+              tak moci být zavřeno či posunuto běžným okenním způsobem.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_overrideredirect-method"><b>wm_overrideredirect</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.positionfrom-method" name=
+            "Tkinter.Wm.positionfrom-method"><b>positionfrom(who=None)</b></a>
+            [<a href="#Tkinter.Wm.positionfrom-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací ovladač pozice.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_positionfrom-method"><b>wm_positionfrom</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.protocol-method" name=
+            "Tkinter.Wm.protocol-method"><b>protocol(name=None,
+            func=None)</b></a> [<a href="#Tkinter.Wm.protocol-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Registruje volanou funkci pro daný protokol. Parametr name je
+              obvykle jedna z následujících funkcí: "WM_DELETE_WINDOW" (okno je
+              zavíráno), "WM_SAVE_YOURSELF" (voláno X window manažerem, když si
+              aplikace má uložit pracovní nastavení) nebo "WM_TAKE_FOCUS"
+              (voláno X window manažerem, když aplikace dostala focus).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_protocol-method"><b>wm_protocol</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.resizable-method" name=
+            "Tkinter.Wm.resizable-method"><b>resizable(width=None,
+            height=None)</b></a> [<a href="#Tkinter.Wm.resizable-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací příznak změny velikosti. Příznak šířky
+              určuje, jestli uživatel může měnit velikost okna v podélném
+              směru. Příznak výšky určuje, jestli uživatel může měnit velikost
+              okna ve svislém směru.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_resizable-method"><b>wm_resizable</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.sizefrom-method" name=
+            "Tkinter.Wm.sizefrom-method"><b>sizefrom(who=None)</b></a>
+            [<a href="#Tkinter.Wm.sizefrom-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací ovladač velikosti okna.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_sizefrom-method"><b>wm_sizefrom</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.state-method" name=
+            "Tkinter.Wm.state-method"><b>state(newstate=None)</b></a> [<a href=
+            "#Tkinter.Wm.state-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací stav okna. Stav okna může být "normal",
+              "iconic" (viz <a class="link" href=
+              "#Tkinter.Wm.iconify-method"><b>iconify)</b></a>, "withdrawn"
+              (viz <a class="link" href=
+              "#Tkinter.Wm.withdraw-method"><b>withdraw</b></a>) nebo "icon"
+              (viz <a class="link" href=
+              "#Tkinter.Wm.iconwindow-method"><b>iconwindow</b></a>).
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_state-method"><b>wm_state</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.title-method" name=
+            "Tkinter.Wm.title-method"><b>title(string=None)</b></a> [<a href=
+            "#Tkinter.Wm.title-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací titulek okna.
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_title-method"><b>wm_title</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>title</i>
+              </dt>
+              <dd>
+                Nový titulek okna. Pokud je vynecháno, je vrácen současný.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.transient-method" name=
+            "Tkinter.Wm.transient-method"><b>transient(master=None)</b></a>
+            [<a href="#Tkinter.Wm.transient-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Učiní okno tzv. dočasným pro daného hlavní okno (je-li vynecháno,
+              za hlavní okno se považuje rodič okna) . Dočasné okno je vždy nad
+              svým hlavním oknem a automaticky se skrývá, když je hlavní okno
+              minimalizováno nebo odstraněno. Pod Windows se dočasná okna
+              nezobrazují na hlavní liště.
+            </p>
+          </dd>
+          <dd>
+            Stejné jako <a class="link" href=
+            "#Tkinter.Wm.wm_transient-method"><b>wm_transient</b></a>.
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.withdraw-method" name=
+            "Tkinter.Wm.withdraw-method"><b>withdraw()</b></a> [<a href=
+            "#Tkinter.Wm.withdraw-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní okno z obrazovky, aniž by ho zavřelo. Pro opětovné
+              zobrazení použijte <a class="link" href=
+              "#Tkinter.Wm.deiconify-method"><b>deiconify</b></a>.
+            </p>
+            <p>
+              Když je okno odstraněno, metoda <a class="link" href=
+              "#Tkinter.Wm.state-method"><b>state</b></a> vrací "withdrawn".
+            </p>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Wm.wm_withdraw-method"><b>wm_withdraw</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_aspect-method" name=
+            "Tkinter.Wm.wm_aspect-method"><b>wm_aspect(minNumer=None,
+            minDenom=None, maxNumer=None, maxDenom=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_aspect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Řídí poměr stran. Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.aspect-method"><b>aspect</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_attributes-method" name=
+            "Tkinter.Wm.wm_attributes-method"><b>wm_attributes(*args)</b></a>
+            [<a href="#Tkinter.Wm.wm_attributes-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací atributy okna. Detaily naleznete u <a class=
+              "link" href=
+              "#Tkinter.Wm.attributes-method"><b>attributes</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_client-method" name=
+            "Tkinter.Wm.wm_client-method"><b>wm_client(name=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_client-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_CLIENT_MACHINE. Detaily
+              naleznete u <a class="link" href=
+              "#Tkinter.Wm.client-method"><b>client</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_colormapwindows-method" name=
+            "Tkinter.Wm.wm_colormapwindows-method"><b>wm_colormapwindows(*wlist)</b></a>
+            [<a href="#Tkinter.Wm.wm_colormapwindows-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_COLORMAP_WINDOWS. Detaily
+              naleznete u <a class="link" href=
+              "#Tkinter.Wm.colormapwindows-method"><b>colormapwindows</b></a> .
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_command-method" name=
+            "Tkinter.Wm.wm_command-method"><b>wm_command(value=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_command-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací vlastnost WM_COMMAND. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.command-method"><b>command</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_deiconify-method" name=
+            "Tkinter.Wm.wm_deiconify-method"><b>wm_deiconify()</b></a>
+            [<a href="#Tkinter.Wm.wm_deiconify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zobrazí okno. Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.deiconify-method"><b>deiconify</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_focusmodel-method" name=
+            "Tkinter.Wm.wm_focusmodel-method"><b>wm_focusmodel(model=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_focusmodel-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací focus model. Detaily naleznete u <a class=
+              "link" href=
+              "#Tkinter.Wm.focusmodel-method"><b>focusmodel</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_frame-method" name=
+            "Tkinter.Wm.wm_frame-method"><b>wm_frame()</b></a> [<a href=
+            "#Tkinter.Wm.wm_frame-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací identifikátor okna, které je nejvyšším rodičem daného okna.
+              Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.frame-method"><b>frame</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_geometry-method" name=
+            "Tkinter.Wm.wm_geometry-method"><b>wm_geometry(newGeometry=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_geometry-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací geometrii okna. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.geometry-method"><b>geometry</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_grid-method" name=
+            "Tkinter.Wm.wm_grid-method"><b>wm_grid(baseWidth=None,
+            baseHeight=None, widthInc=None, heightInc=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_grid-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.grid-method"><b>grid</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_group-method" name=
+            "Tkinter.Wm.wm_group-method"><b>wm_group(pathName=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_group-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává okna do skupiny oken. Detaily naleznete u <a class="link"
+              href="#Tkinter.Wm.group-method"><b>group</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconbitmap-method" name=
+            "Tkinter.Wm.wm_iconbitmap-method"><b>wm_iconbitmap(bitmap=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_iconbitmap-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací bitmapu ikony. Detaily naleznete u <a class=
+              "link" href=
+              "#Tkinter.Wm.iconbitmap-method"><b>iconbitmap</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconify-method" name=
+            "Tkinter.Wm.wm_iconify-method"><b>wm_iconify()</b></a> [<a href=
+            "#Tkinter.Wm.wm_iconify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Minimalizuje okno do ikony. Detaily naleznete u <a class="link"
+              href="#Tkinter.Wm.iconify-method"><b>iconify</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconmask-method" name=
+            "Tkinter.Wm.wm_iconmask-method"><b>wm_iconmask(bitmap=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_iconmask-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací masku bitmapy ikony. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.iconmask-method"><b>iconmask</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconname-method" name=
+            "Tkinter.Wm.wm_iconname-method"><b>wm_iconname(newName=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_iconname-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací jméno ikony. Detaily naleznete u <a class=
+              "link" href="#Tkinter.Wm.iconname-method"><b>iconname</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconposition-method" name=
+            "Tkinter.Wm.wm_iconposition-method"><b>wm_iconposition(x=None,
+            y=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_iconposition-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací pozici ikony. Detaily naleznete u <a class=
+              "link" href=
+              "#Tkinter.Wm.iconposition-method"><b>iconposition</b></a> .
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_iconwindow-method" name=
+            "Tkinter.Wm.wm_iconwindow-method"><b>wm_iconwindow(pathName=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_iconwindow-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací okno ikony. Detaily naleznete u <a class=
+              "link" href=
+              "#Tkinter.Wm.iconwindow-method"><b>iconwindow</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_maxsize-method" name=
+            "Tkinter.Wm.wm_maxsize-method"><b>wm_maxsize(width=None,
+            height=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_maxsize-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací maximální velikost. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.maxsize-method"><b>maxsize</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_minsize-method" name=
+            "Tkinter.Wm.wm_minsize-method"><b>wm_minsize(width=None,
+            height=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_minsize-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací minimální velikost. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.minsize-method"><b>minsize</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_overrideredirect-method" name=
+            "Tkinter.Wm.wm_overrideredirect-method"><b>wm_overrideredirect(boolean=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_overrideredirect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací příznak override redirect. Detaily naleznete
+              u <a class="link" href=
+              "#Tkinter.Wm.overrideredirect-method"><b>overrideredirect</b></a>
+              .
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_positionfrom-method" name=
+            "Tkinter.Wm.wm_positionfrom-method"><b>wm_positionfrom(who=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_positionfrom-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.positionfrom-method"><b>positionfrom</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_protocol-method" name=
+            "Tkinter.Wm.wm_protocol-method"><b>wm_protocol(name=None,
+            func=None)</b></a> [<a href="#Tkinter.Wm.wm_protocol-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Registruje volanou funkci pro daný protokol. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.protocol-method"><b>protocol</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_resizable-method" name=
+            "Tkinter.Wm.wm_resizable-method"><b>wm_resizable(width=None,
+            height=None)</b></a> [<a href=
+            "#Tkinter.Wm.wm_resizable-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací příznak změny velikosti. Detaily naleznete u
+              <a class="link" href=
+              "#Tkinter.Wm.resizable-method"><b>resizable</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_sizefrom-method" name=
+            "Tkinter.Wm.wm_sizefrom-method"><b>wm_sizefrom(who=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_sizefrom-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Detaily naleznete u <a class="link" href=
+              "#Tkinter.Wm.sizefrom-method"><b>sizefrom</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_state-method" name=
+            "Tkinter.Wm.wm_state-method"><b>wm_state(newstate=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_state-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací stav okna. Detaily naleznete u <a class=
+              "link" href="#Tkinter.Wm.state-method"><b>state</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_title-method" name=
+            "Tkinter.Wm.wm_title-method"><b>wm_title(string=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_title-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací titulek okna. Detaily naleznete u <a class=
+              "link" href="#Tkinter.Wm.title-method"><b>title</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_transient-method" name=
+            "Tkinter.Wm.wm_transient-method"><b>wm_transient(master=None)</b></a>
+            [<a href="#Tkinter.Wm.wm_transient-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Učiní okno tzv. dočasným pro dané hlavní okno. Detaily naleznete
+              u <a class="link" href=
+              "#Tkinter.Wm.transient-method"><b>transient</b></a> .
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Wm.wm_withdraw-method" name=
+            "Tkinter.Wm.wm_withdraw-method"><b>wm_withdraw()</b></a> [<a href=
+            "#Tkinter.Wm.wm_withdraw-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní okno z obrazovky. Detaily naleznete u <a class="link"
+              href="#Tkinter.Wm.withdraw-method"><b>withdraw</b></a>.
+            </p>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

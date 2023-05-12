@@ -1,0 +1,41 @@
+<html>import Tkinter
+
+app = Tkinter.Tk()
+text = Tkinter.Text(app)
+text.pack()
+
+def click(event):
+    w = event.widget
+    x, y = event.x, event.y
+    tags = w.tag_names("@%d,%d" % (x, y))
+    for t in tags:
+        if t.startswith("href:"):
+            print "clicked href %s" % t[5:]
+            break
+    else:
+        print "clicked without href"
+    return "break"
+
+def show_hand_cursor(event):
+    event.widget.configure(cursor="hand1")
+def show_arrow_cursor(event):
+    event.widget.configure(cursor="")
+
+# configure text tag
+text.tag_config("a", foreground="blue", underline=1)
+text.tag_bind("a", "<Enter>", show_hand_cursor)
+text.tag_bind("a", "<Leave>", show_arrow_cursor)
+text.tag_bind("a", "<Button-1>", click)
+text.config(cursor="arrow")
+
+#add text
+text.insert(Tkinter.INSERT, "click here!", "a")
+text.insert(Tkinter.INSERT, "\n")
+
+#add a link with data
+href = "http://www.example.com"
+text.insert(Tkinter.END, "this is a ")
+text.insert(Tkinter.END, "link", ("a", "href:"+href))
+
+
+app.mainloop()

@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org" />
+    <title>
+      Udělátko Message ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="menubutton.htm" tppabs="http://tkinter.programujte.com/menubutton.htm">předchozí</a> ] [ <a href=
+          "optionmenu.htm" tppabs="http://tkinter.programujte.com/optionmenu.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/message.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/message.htm'" tppabs="http://effbot.org/tkinterbook/message.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Message
+        </h1>
+        <p>
+          Udělátko <span style="font-weight: bold;">Message</span> (Zpráva) je
+          varianta udělátka <a href="tkinter-label.htm" tppabs="http://tkinter.programujte.com/tkinter-label.htm"><b>Label</b></a>
+          vytvořená pro zobrazení víceřádkových zpráv. Zpráva může zalomit text
+          a přizpůsobit šířku velikosti textu.
+        </p>
+        <h2>
+          Kdy použít udělátko Message:
+        </h2>
+        <p>
+          Toto udělátko může být využito k zobrazení krátkých textových zpráv v
+          jednom druhu písma. Můžete samozřejmě použít udělátko <a href=
+          "tkinter-label.htm" tppabs="http://tkinter.programujte.com/tkinter-label.htm"><b>Label</b></a>. Jestliže potřebujete zobrazit
+          text ve vícero druhách, použijte udělátko <a href=
+          "text.htm" tppabs="http://tkinter.programujte.com/text.htm"><b>Text</b></a>.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          K vytvoření Zprávy musíte pouze určit textový řetězec do udělátka.
+          Jestliže je to potřeba, udělátko automaticky zalomí text do řádků.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+okno = Tk()
+
+w = Message(okno, text=u"Toto je zpráva")
+w.pack()
+
+mainloop()
+
+
+<img style="width: 137px; height: 74px;" alt="" src="message1.png" tppabs="http://tkinter.programujte.com/images/message1.png" />
+</pre>
+        <p>
+          Když neurčíte nic kromě textu, udělátko samo zalomí text. Když se
+          tomuto chování chcete vyhnout, určete parametr <span style=
+          "font-weight: bold;">width</span>:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+okno = Tk()
+
+w = Message(okno, text=u"Toto je relativně dlouhá zpráva",width=50)
+w.pack()
+
+mainloop()
+
+
+<img style="width: 130px; height: 99px;" alt="" src="Message2.png" tppabs="http://tkinter.programujte.com/images/Message2.png" />
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b>Message(master=None, **options)</b> (class) [<a href=
+            "#Tkinter.Message-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Více řádková zpráva.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka, Podívej se na metodu <a class="link" href=
+                "message.htm#message.Message.config-method" tppabs="http://tkinter.programujte.com/message.htm#message.Message.config-method"><b>config</b></a>
+                pro všechny dostupné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Message.config-method" name=
+            "Tkinter.Message.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Message.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Upraví jeden nebo více parametrů udělátka. Když nejsou parametry
+              dány, tato metoda vrací seznam již všech daných parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Tento parametr určuje, kde se zpráva vykreslí. Používejte
+                parametry <b>N</b>, <b>NE</b>, <b>E</b>, <b>SE</b>, <b>S</b>,
+                <b>SW</b>, <b>W</b>, <b>NW</b> nebo <b>CENTER</b>. Standardní
+                nastavení je <b>CENTER</b>.
+              </dd>
+              <dt>
+                <i>aspect=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 150, což znamená, že zpráva bude o 50%
+                širší než vyšší. Když je dán parametr <span style=
+                "font-weight: bold;">width</span>, tento parametr je ignorován.
+                (aspect/Aspect)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí zprávy. Standardní nastavení závisí na systému.
+                (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje. Standardní nastavení je 2 pixely.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Jaký kurzor použít, když se myš nachází nad tlačítkem.
+                Standardní nastavení závisí na systému. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitého ve zprávě. Standardní nastavení závisí na
+                systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když zpráva nebude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když zpráva bude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému (obvykle jeden nebo dva pixely).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Definuje na jakou stranu zarovnat řádky. Používejte parametry
+                <b>LEFT</b>, <b>RIGHT</b> nebo <b>CENTER.</b> Standartní
+                nastavení je <b>LEFT</b>. (justify/Justify)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Horizntální vycpávka mezi okrajem a obsahem udělátka.
+                Standardní nastavení je -1 (bez vycpávky). (padX/Pad)
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vertikální vycpávka mezi okrajem a obsahem udělátka. Standardní
+                nastavení je -1 (bez vycpávky). (padY/Pad)
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Standartní nastavení he <span style=
+                "font-weight: bold;">FLAT</span>. Další možné parametry jsou
+                <b>SUNKEN</b>, <b>RAISED</b>, <b>GROOVE</b> a <b>RIDGE</b>.
+                (relief/Relief)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Jestliže je tento parametr nastaven na true, udělátko přijímá
+                focus klávesou <span style="font-weight: bold;">Tab.</span>
+                (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Text zprávy. (text/Text)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Spojí Tkinterovskou proměnou (obvykle <span style=
+                "font-weight: bold;">StringVar</span>) se zprávou. Jesliže se
+                proměnná změní, zpráva se automaticky změní.
+                (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka udělátka v textových jednotkách. Jestliže je tento
+                parametr vynechán, udělátko přizpůsobí svoji šířku založenou na
+                parametru <span style="font-weight: bold;">aspect</span>.
+                (width/Width)
+              </dd>
+            </dl>
+            <hr class="zonebar" />
+            <p class="info">
+              Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+              <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+              License 1.2</a>
+            </p>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </body>
+</html>

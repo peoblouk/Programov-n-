@@ -1,0 +1,413 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org" />
+    <title>
+      Udělátko Optionmenu ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postaveno na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="message.htm" tppabs="http://tkinter.programujte.com/message.htm">předchozí</a> ] [ <a href=
+          "panedwindow.htm" tppabs="http://tkinter.programujte.com/panedwindow.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/optionmenu.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/optionmenu.htm'" tppabs="http://effbot.org/tkinterbook/optionmenu.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - OptionMenu
+        </h1>
+        <p>
+          Udělátko <span style="font-weight: bold;">OptionMenu</span> vytváří
+          tlačítko, na které když kliknete, tak se vysune menu. Je to velmi
+          podobné combo boxu od windowsů.
+        </p>
+        <p>
+          Chcete-li získat aktuální hodnotu vyskakovací nabídky, musíte spojit
+          vyskakovací nabídku s&nbsp;<a href="variable.htm" tppabs="http://tkinter.programujte.com/variable.htm">tkinterovskou
+          proměnnou</a>. V sekci Pojetí najdete pár příkladů jak na to.
+        </p>
+        <h2>
+          Pojetí
+        </h2>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+okno = Tk()
+
+promenna = StringVar(okno)
+promenna.set(u"jedna") # standardní hodnota
+
+w = OptionMenu(okno, promenna, u"jedna", u"dva", u"tři")
+w.pack()
+
+mainloop()
+<img style="width: 130px; height: 71px;" alt="" src="optionmenu.png" tppabs="http://tkinter.programujte.com/images/optionmenu.png" />
+</pre>
+        <p>
+          K získání aktuální hodnoty vyskakovací nabídky použijte metodu
+          <span style="font-weight: bold;">get</span> na&nbsp;<a href=
+          "variable.htm" tppabs="http://tkinter.programujte.com/variable.htm">proměnnou</a> nebo předaný parametr hodnota:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+def ok(hodnota):
+    u"Volaná funkce při změně hodnoty udělátka 'option'"
+    print u"hodnota je:", promenna.get(), hodnota
+
+okno = Tk()
+
+promenna = StringVar(okno)  # tkinterovská proměnná
+promenna.set(u"jedna")      # počáteční hodnota
+
+option = OptionMenu(okno, promenna, u"jedna", u"dva", u"tři", u"čtyři", command=ok)
+option.pack()
+
+mainloop()
+
+</pre>
+        <p>
+          Následujicí příklad popisuje jak vyrobit tlačítkové menu ze seznamu
+          parametrů:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+PARAMETRY = [
+    u"jedna",
+    u"dva",
+    u"tři"
+]
+
+okno = Tk()
+
+promenna = StringVar(okno)
+promenna.set(PARAMETRY[0]) 
+
+w = OptionMenu(okno, promenna, *PARAMETRY)
+w.pack()
+
+mainloop()
+
+</pre>Další příklad ukazuje, jak upravit udělátko podle vašich představ.
+
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+def ok(hodnota):
+    promenna.set(hodnota)  # tento řádek je zde kvůli dynamicky přidané položce "tři"
+    print u"hodnota je:", promenna.get(), hodnota 
+
+
+okno = Tk()
+
+promenna = StringVar(okno)
+promenna.set(u"jedna")
+
+w = OptionMenu(okno, promenna,u"jedna", u"dva", u"...",command=ok)
+w.pack()
+w.config(font='Times 12',bg='red',fg='blue',relief='groove',pady=5,padx=5,bd=2,
+activebackground='blue',activeforeground='red',width=15)
+
+# dynamicky přidaná položka "tři"
+w["menu"].insert(2, "command", label=u"tři", command=lambda : ok(u"tři"))
+
+mainloop()
+
+<img style="width: 180px; height: 81px;" alt="" src=
+"optionmenu2.png" tppabs="http://tkinter.programujte.com/images/optionmenu2.png" />
+</pre>
+        <h2 id="reference">
+          Referenční příručka 
+        </h2>
+        <h4>(tato není zatím kompletní)</h4>
+        <dl>
+          <dt>
+            <a id="Tkinter.OptionMenu-class"><b> OptionMenu (master=None,
+            **options)</b></a> (class) [<a href=
+            "optionmenu.htm#Tkinter.OptionMenu-class" tppabs="http://tkinter.programujte.com/optionmenu.htm#Tkinter.OptionMenu-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vysunovací nabídka
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské okno.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívej se na metodu <a class="link" href=
+                "optionmenu.htm" tppabs="http://tkinter.programujte.com/optionmenu.htm"><b>config</b></a> pro všechny možné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.OptionMenu.config-method" name=
+            "Tkinter.OptionMenu.config-method"><b>config(**options)</b></a>
+            [<a href="optionmenu.htm#Tkinter.OptionMenu.config-method" tppabs="http://tkinter.programujte.com/optionmenu.htm#Tkinter.OptionMenu.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Modifikuje jeden nebo více parametrů udělátka. Jestliže nejsou
+              parametry dány, tato metoda vrací obsah všech již daných hodnot
+              parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Jakou barvu pozadí použít, když je nad vysunovací nabídkou
+                kurzor. Standardní nastavení závisí na systému.
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Jakou barvu písma použít, když je nad vysunovací nabídkou.
+                Standardní nastavení závisí na systému.
+                (activeForeground/Background)
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kontroluje, kde ve vysunovací nabídce se bude text(nebo
+                obrázek) nacházet. Vybírejte z: <b>N</b>, <b>NE</b>, <b>E</b>,
+                <b>SE</b>, <b>S</b>, <b>SW</b>, <b>W</b>, <b>NW</b>, nebo
+                <b>CENTER</b>. Standardně je nastaven <b>CENTER</b>.
+                (anchor/Anchor)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí vysunovací nabídky. Standardně nastavení závisí na
+                systému. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje vysunovací nabídky. Standardní nastavení závisí na
+                systému, ale obvykle je to 1 nebo 2 pixely.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Funkce nebo metoda, která je zavolána, když je nabídka
+                zmáčknuta. Jestliže nedáte tento parametr, nestane se nic, když
+                uživatel zmáčkne vysunovací nabídku. (command/Command)
+              </dd>
+              <dt>
+                <i>compound=</i>
+              </dt>
+              <dd>
+                Kontroluje jak kombinovat text a obrázek ve vysunovací nabídce.
+                Standardně, je li dán obrázek&nbsp;, je text ignorován.
+                Jestliže je tento parametr nastaven na <span style=
+                "font-weight: bold;">CENTER</span>, text se objeví nad
+                obrázkem. Jestliže je tento parametr nastaven na <b>BOTTOM</b>,
+                <b>LEFT</b>, <b>RIGHT</b> nebo <b>TOP</b>, obrázek je
+                koncipován mimo text (používej <span style=
+                "font-weight: bold;">BOTTOM</span> &nbsp;k posunutí obrázku pod
+                text atd.). Standardní nastavení je <span style=
+                "font-weight: bold;">NONE</span>. (compound/Compound)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Změna kursoru, jestliže se nachází nad vysunovací nabídkou.
+                (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Barva písma, když je vysunovací nabídka zablokovaná (DISABLED)
+                . Standardní nastavení závisí na systému.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitého na text ve vysunovací nabídce.Vysunovací
+                nabídka může obsahovat pouze jeden druh písma. Standardní
+                nastavení závisí na&nbsp;systému (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva pro barvu písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako&nbsp; <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška vysunovací nabídky. Když vysunovací nabídka obsahuje
+                text, výška je dána v textových jednotkách. Když nabídka
+                obsahuje obrázek, výška je dána v pixelech.&nbsp;
+                (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když vysunovací
+                nabídka nebude mít focus. Standardní nastavení záleží na
+                systému. (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když vysunovací
+                nabídka bude mít focus.&nbsp;Standardní nastavení záleží na
+                systému. (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému (obvykle jeden nebo dva pixely).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek do vysunovací nabídky. Když je tento parametr dán, je
+                obrázek vykreslen nad text&nbsp;, jestliže není dán parametr
+                <span style="font-weight: bold;">compound.</span> (image/Image)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Horizontální vycpávka mezi jeho obsahem a okrajem. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vertikální vycpávka mezi obsahem nabídky &nbsp;a jeho okrajem.
+                (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. &nbsp;Možnosti jsou <span style=
+                "font-weight: bold;">RAISED</span>, <span style=
+                "font-weight: bold;">SUNKEN</span>, <span style=
+                "font-weight: bold;">FLAT</span>, <span style=
+                "font-weight: bold;">GROOVE</span>, <span style=
+                "font-weight: bold;">RIDGE.</span> (relief/Relief)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav nabídky: <b>NORMAL</b>, <b>ACTIVE</b> nebo
+                <b>DISABLED</b>. Standardně je nastaven <b>NORMAL</b>.
+                (state/State)
+              </dd>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dd>
+                Který ze znaků z textu podtrhnout. Standardně je nastaveno na
+                -1, což znamená, že žádný znak nebude podtržen.
+                (underline/Underline)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka nabídky. Když vysunovací nabídka obsahuje text, je šířka
+                dána v textových jednotkách. Když vysunovací nabídka obsahuje
+                obrázek, šířka je dána v pixelech. (width/Width)
+              </dd>
+            </dl>
+          </dd>
+               
+               <dt>
+            <b> Různé</b>
+          </dt>
+          <dd>
+            <dl>
+              <dt>
+                <i>w["menu"].insert(index, "command", label=text)</i>
+              </dt>
+              <dd>
+                Dynamické přidávání položek do nabídky. Do udělátka w přidá na pozici <i>index</i> zadaný <i>text</i>.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+
+        <hr id="zonebar" />
+        <div class="navigate">
+          <p class="info">
+            Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+            <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+            License 1.2</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

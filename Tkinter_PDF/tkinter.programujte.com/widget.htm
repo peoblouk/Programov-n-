@@ -1,0 +1,2165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Společné metody všech udělátek ::: Úvod do Tkinter :::
+      tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">předchozí</a> ] [ <a href=
+          "button.htm" tppabs="http://tkinter.programujte.com/button.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/widget.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/widget.htm'" tppabs="http://effbot.org/tkinterbook/widget.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Společné metody všech udělátek
+        </h1>
+        <p>
+          Následující metody jsou společné všem udělátkům včetně okna
+          root/toplevel. Okna root i toplevel poskytují ještě <a href=
+          "toplevel.htm" tppabs="http://tkinter.programujte.com/toplevel.htm">další metody</a>.
+        </p>
+        <h2>
+          Pojetí
+        </h2>
+        <h3>
+          Nastavení
+        </h3>
+        <pre>
+w.config(parametr=hodnota)<br>
+hodnota = w.cget("parametr")
+k = w.keys()
+</pre>
+        <h3>
+          Zpracování událostí
+        </h3>
+        <pre>
+mainloop()
+w.mainloop()
+w.quit()
+w.wait_variable(var)
+w.wait_visibility(window)
+w.wait_window(window)
+w.update()
+w.update_idletasks()
+</pre>
+        <h3>
+          Volání funkcí událostmi
+        </h3>
+        <pre>
+w.bind(udalost, volanafunkce)
+w.unbind(udalost)
+w.bind_class(udalost, volanafunkce)
+w.bindtags()
+w.bindtags(tags)
+</pre>
+        <h3>
+          Ovladače časovačů a další ne-událostní volání funkcí
+        </h3>
+        <pre>
+id = w.after(cas, volanafunkce)
+id = w.after_idle(volanafunkce)
+w.after_cancel(id)
+</pre>
+        <h3>
+          Správa oken
+        </h3>
+        <pre>
+w.lift()
+w.lower()
+</pre>
+        <h3>
+          Informace o oknech
+        </h3>
+        <pre>
+w.winfo_width(), w.winfo_height()
+w.winfo_reqwidth(), w.winfo_reqheight()
+w.winfo_id()
+</pre>
+        <h3>
+          Databáze parametrů
+        </h3>
+        <pre>
+w.option_add(vzor, hodnota)
+w.option_get(jmeno, trida)
+</pre>
+        <h2>
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Widget-class" id=
+            "Tkinter.Widget-class"></a>Widget</b> (třída) [<a href=
+            "#Tkinter.Widget-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Implementační třída udělátek. Tuto třídu se používají všechna
+              udělátka jako mixin (?).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.after-method" name=
+            "Tkinter.Widget.after-method"><b>after(delay_ms, callback=None,
+            *args)</b></a> [<a href="#Tkinter.Widget.after-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zaregistruje volanou funkci, která se zavolá po uplynutí daného
+              času. Program se ale na daném místě nezastaví a pokračuje ve
+              zpracování příkazů normálně dále.
+            </p>
+            <p>
+              Tato metoda zaregistruje volanou funkci tak, že bude zavolána za
+              daný počet milisekund. Tkinter zaručuje, že metoda nebude
+              zavolána dříve než je daná doba; pokud bude systém zaneprázdněn
+              je možné, že to bude později.
+            </p>
+            <p>
+              Volaná funkce je volána jen jednou u každého volání této funkce.
+              Nelze tedy nastavit parametrem např. počet zavolání této funkce.
+              Chcete-li zajistit opakované volání, musíte uvnitř volané funkce
+              provést opětnou registraci sebe sama:
+            </p>
+            <pre>
+class App:
+
+    def __init__(self, master):
+
+        self.master = master
+        self.opakovacka() # zacatek opakovani
+
+    def opakovacka(self):
+</pre>
+          </dd>
+          <dd>
+            <pre>
+        ... něco udělej ...
+        self.master.after(100, self.opakovacka)
+</pre>Můžete zadat jeden nebo více argumentů, které budou předány volané
+funkci. Metoda vrací identifikátor časovače, který se dá použít pro jeho
+zrušení časovače pomocí metody <a class="link" href=
+"#widget.Widget.after_cancel-method"><b>after_cancel</b></a>.
+            <p>
+              Volanou funkci můžete také vynechat. V tom případě metoda prostě
+              počká zadaný počet milisekund, podobně jako
+              <b>time.sleep(delay_ms*0.001))</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>delay_ms</i>
+              </dt>
+              <dd>
+                Prodleva v milisekundách.
+              </dd>
+              <dt>
+                <i>callback</i>
+              </dt>
+              <dd>
+                Volaná funkce. Může být jakýkoliv volatelný objekt.
+              </dd>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dd>
+                Dobrovolné parametry, které budou předány volané funkci.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor časovače.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.after_cancel-method" name=
+            "Tkinter.Widget.after_cancel-method"><b>after_cancel(id)</b></a>
+            [<a href="#Tkinter.Widget.after_cancel-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zruší časovač.
+            </p>
+            <dl>
+              <dt>
+                <i>id</i>
+              </dt>
+              <dd>
+                Identifikátor časovače.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.after_idle-method" name=
+            "Tkinter.Widget.after_idle-method"><b>after_idle(callback,
+            *args)</b></a> [<a href="#Tkinter.Widget.after_idle-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zaregistruje volanou funkci, která se zavolá, až nebude systém
+              zaneprázdněn. Funkce bude zavolána, když nebudou v hlavní smyčce
+              žádné jiné události ke zpracování.Volaná funkce je volána jen
+              jednou u každého volání této funkce.
+            </p>
+            <dl>
+              <dt>
+                <i>callback</i>
+              </dt>
+              <dd>
+                Volaná funkce. Může být jakýkoliv volatelný objekt.
+              </dd>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dd>
+                Nepovinné parametry, které jsou předány volané funkci.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor časovače.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bbox-method" name=
+            "Tkinter.Widget.bbox-method"><b>bbox(column=None, row=None,
+            col2=None, row2=None)</b></a> [<a href=
+            "#Tkinter.Widget.bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda bbox. Vrací ohraničující obdélník, v pixelech (x,y, šířka,
+              výška), který zahrnuje dané řádky a sloupce.
+            </p>
+            <dl>
+              <dt>
+                <i>column</i>
+              </dt>
+              <dt>
+                <i>row</i>
+              </dt>
+              <dt>
+                <i>col2</i>
+              </dt>
+              <dt>
+                <i>row2</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bell-method" name=
+            "Tkinter.Widget.bell-method"><b>bell(displayof=0)</b></a> [<a href=
+            "#Tkinter.Widget.bell-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Generuje zvuk, jehož délka i tvar je závislý na systému. Typicky
+              krátké pípnutí.
+            </p>
+            <dl>
+              <dt>
+                <i>displayof</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bind-method" name=
+            "Tkinter.Widget.bind-method"><b>bind(sequence=None, func=None,
+            add=None)</b></a> [<a href="#Tkinter.Widget.bind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá k tomuto udělátko vazbu na událost. U stejných událostí
+              nové vazby obvykle nahrazují dosavadní. Předáním třetího
+              parametru "+" je nová událost přidána k dosavadním.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bind_all-method" name=
+            "Tkinter.Widget.bind_all-method"><b>bind_all(sequence=None,
+            func=None, add=None)</b></a> [<a href=
+            "#Tkinter.Widget.bind_all-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá na aplikační úrovni vazbu na událost. U stejných událostí
+              nové vazby obvykle nahrazují dosavadní. Předáním třetího
+              parametru "+" je nová událost přidána k dosavadním.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bind_class-method" name=
+            "Tkinter.Widget.bind_class-method"><b>bind_class(className,
+            sequence=None, func=None, add=None)</b></a> [<a href=
+            "#Tkinter.Widget.bind_class-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá k dané třídě udělátek vazbu na událost. U stejných událostí
+              nové vazby obvykle nahrazují dosavadní. Předáním třetího
+              parametru "+" je nová událost přidána k dosavadním.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.bindtags-method" name=
+            "Tkinter.Widget.bindtags-method"><b>bindtags(tagList=None)</b></a>
+            [<a href="#Tkinter.Widget.bindtags-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje nebo vrací u patřičného udělátka pořadí vazeb.
+            </p>
+            <p>
+              Pokud je zavolána bez parametru, metoda vrací n-tici obsahují
+              pořadí vazeb, použitých pro toto udělátko. Standardně tato n-tice
+              obsahuje jméno udělátka (str(self)), třídu udělátka (např.
+              Button), jméno hlavního okna a nakonec speciální jméno, které
+              odkazuje na aplikační úroveň.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.cget-method" name=
+            "Tkinter.Widget.cget-method"><b>cget(key)</b></a> [<a href=
+            "#Tkinter.Widget.cget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací aktuální hodnotu parametru.
+            </p>
+            <p>
+              Metoda vrací vždy řetězec; i v tom případě, když jste při
+              konfiguraci udělátku předávali jako hodnotu parametru např.
+              číslo). Použijte <b>int</b> a <b>float</b>, kde je to nutné.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.clipboard_append-method" name=
+            "Tkinter.Widget.clipboard_append-method"><b>clipboard_append(string,
+            **options)</b></a> [<a href=
+            "#Tkinter.Widget.clipboard_append-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá text do schránky.
+            </p>
+            <dl>
+              <dt>
+                <i>string</i>
+              </dt>
+              <dd>
+                Text, který se má přidat.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.clipboard_clear-method" name=
+            "Tkinter.Widget.clipboard_clear-method"><b>clipboard_clear(**options)</b></a>
+            [<a href="#Tkinter.Widget.clipboard_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vyčistí schránku.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.colormodel-method" name=
+            "Tkinter.Widget.colormodel-method"><b>colormodel(value=None)</b></a>
+            [<a href="#Tkinter.Widget.colormodel-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda colormode.
+            </p>
+            <dl>
+              <dt>
+                <i>value</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.columnconfigure-method" name=
+            "Tkinter.Widget.columnconfigure-method"><b>columnconfigure(index,
+            cnf={}, **kw)</b></a> [<a href=
+            "#Tkinter.Widget.columnconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda columnconfigure.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>cnf</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.config-method" name=
+            "Tkinter.Widget.config-method"><b>config(cnf=None, **kw)</b></a>
+            [<a href="#Tkinter.Widget.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jeden nebo více parametrů udělátek.
+            </p>
+          </dd>
+          <dd>
+            <p>
+              <span class="note">Následující forma změny parametrů se dá
+              používat také: <em class=
+              "replaceable"><code>w</code></em>[<em class=
+              "replaceable"><code>parametr</code></em>] = <em class=
+              "replaceable"><code>hodnota</code></em></span>
+            </p>
+          </dd>
+          <dd>
+            Pokud je zavolána bez parametrů, vrací slovník obsahující současné
+            nastavení všech parametrů daného udělátka. Pro každý slovníkový
+            klíč je hodnota buď&nbsp;
+          </dd>
+        </dl>
+        <blockquote>
+          <ul>
+            <li>pětice <i>(parametr, klíč v databázi parametrů, třída v
+            databázi parametrů, defaultní hodnota, současná hodnota)</i>
+            </li>
+            <li>&nbsp;nebo dvojice <i>(alias parametr, parametr)</i>. Případ
+            dvojice se používá pro aliasy jako <b>bg</b> (background) a
+            <b>bd</b> (borderwidth).
+            </li>
+          </ul>
+        </blockquote>
+        <dl>
+          <dd>
+            <p>
+              Hodnoty polí nejsou korektně formátovány u některých typů
+              parametrů. Pro řešení problému s nimi nahlédněte do metody
+              <a class="link" href="#widget.Widget.keys-method"><b>keys</b></a>
+              a experimentujte.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.configure-method" name=
+            "Tkinter.Widget.configure-method"><b>configure(cnf=None,
+            **kw)</b></a> [<a href="#Tkinter.Widget.configure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#widget.Widget.config-method"><b>config</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.deletecommand-method" name=
+            "Tkinter.Widget.deletecommand-method"><b>deletecommand(name)</b></a>
+            [<a href="#Tkinter.Widget.deletecommand-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda deletecommand.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.destroy-method" name=
+            "Tkinter.Widget.destroy-method"><b>destroy()</b></a> [<a href=
+            "#Tkinter.Widget.destroy-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zničí udělátko. Udělátko je odstraněno z obrazovky a všechny
+              zdroje, spojené s udělátkem, jsou uvolněny.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.event_add-method" name=
+            "Tkinter.Widget.event_add-method"><b>event_add(virtual,
+            *sequences)</b></a> [<a href=
+            "#Tkinter.Widget.event_add-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda event_add.
+            </p>
+            <dl>
+              <dt>
+                <i>virtual</i>
+              </dt>
+              <dt>
+                <i>*sequences</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.event_delete-method" name=
+            "Tkinter.Widget.event_delete-method"><b>event_delete(virtual,
+            *sequences)</b></a> [<a href=
+            "#Tkinter.Widget.event_delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda event_delete.
+            </p>
+            <dl>
+              <dt>
+                <i>virtual</i>
+              </dt>
+              <dt>
+                <i>*sequences</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.event_generate-method" name=
+            "Tkinter.Widget.event_generate-method"><b>event_generate(sequence,
+            **kw)</b></a> [<a href=
+            "#Tkinter.Widget.event_generate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda event_generate.
+            </p>
+            <dl>
+              <dt>
+                <i>sequence</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.event_info-method" name=
+            "Tkinter.Widget.event_info-method"><b>event_info(virtual=None)</b></a>
+            [<a href="#Tkinter.Widget.event_info-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda event_info.
+            </p>
+            <dl>
+              <dt>
+                <i>virtual</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus-method" name=
+            "Tkinter.Widget.focus-method"><b>focus()</b></a> [<a href=
+            "#Tkinter.Widget.focus-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda focus.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus_displayof-method" name=
+            "Tkinter.Widget.focus_displayof-method"><b>focus_displayof()</b></a>
+            [<a href="#Tkinter.Widget.focus_displayof-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda focus_displayof.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus_force-method" name=
+            "Tkinter.Widget.focus_force-method"><b>focus_force()</b></a>
+            [<a href="#Tkinter.Widget.focus_force-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda focus_force.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus_get-method" name=
+            "Tkinter.Widget.focus_get-method"><b>focus_get()</b></a> [<a href=
+            "#Tkinter.Widget.focus_get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda focus_get.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus_lastfor-method" name=
+            "Tkinter.Widget.focus_lastfor-method"><b>focus_lastfor()</b></a>
+            [<a href="#Tkinter.Widget.focus_lastfor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda focus_lastfor.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.focus_set-method" name=
+            "Tkinter.Widget.focus_set-method"><b>focus_set()</b></a> [<a href=
+            "#Tkinter.Widget.focus_set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přesouvá klávesnicový focus na toto udělátko. Zvýrazněno to bude
+              rámečkem kolem widgetu, pokud nestanovíte jinak a znamená to, že
+              všechny klávesnicové události budou nasměrovány do tohoto
+              udělátka.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.getboolean-method" name=
+            "Tkinter.Widget.getboolean-method"><b>getboolean(s)</b></a>
+            [<a href="#Tkinter.Widget.getboolean-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              (Vnitřní) konvertuje Tk řetězec na hodnotu True/False.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.getvar-method" name=
+            "Tkinter.Widget.getvar-method"><b>getvar(name='PY_VAR')</b></a>
+            [<a href="#Tkinter.Widget.getvar-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda getvar.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.grab_current-method" name=
+            "Tkinter.Widget.grab_current-method"><b>grab_current()</b></a>
+            [<a href="#Tkinter.Widget.grab_current-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda grab_current.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.grab_release-method" name=
+            "Tkinter.Widget.grab_release-method"><b>grab_release()</b></a>
+            [<a href="#Tkinter.Widget.grab_release-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Uvolňuje událost grab.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.grab_set-method" name=
+            "Tkinter.Widget.grab_set-method"><b>grab_set()</b></a> [<a href=
+            "#Tkinter.Widget.grab_set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přesměruje všechny události této aplikace na toto udělátko. Pokud
+              vytvoříte podokno Toplevel, standardně se stále můžete přepnout
+              do okna root. Zavoláte-li tuto metodu na podokno, nebude to již
+              možné, dokud podokno nezavřete nebo neuvolníte přesměrování
+              událostí (<a href=
+              "widget.htm#Tkinter.Widget.grab_release-method" tppabs="http://tkinter.programujte.com/widget.htm#Tkinter.Widget.grab_release-method">grab_release</a>).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.grab_set_global-method" name=
+            "Tkinter.Widget.grab_set_global-method"><b>grab_set_global()</b></a>
+            [<a href="#Tkinter.Widget.grab_set_global-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přesměruje události celého okna na toto udělátko.&nbsp;
+            </p>
+            <p>
+              Toto by se mělo využívat jen ve velmi speciálních případech,
+              protože dochází k blokaci všech ostatních aplikací na stejném
+              okně. To pravděpodobně zahrnuje vše vývojové prostředí....
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.grab_status-method" name=
+            "Tkinter.Widget.grab_status-method"><b>grab_status()</b></a>
+            [<a href="#Tkinter.Widget.grab_status-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda grab_status.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.image_names-method" name=
+            "Tkinter.Widget.image_names-method"><b>image_names()</b></a>
+            [<a href="#Tkinter.Widget.image_names-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda image_names.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.image_types-method" name=
+            "Tkinter.Widget.image_types-method"><b>image_types()</b></a>
+            [<a href="#Tkinter.Widget.image_types-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda image_types.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.keys-method" name=
+            "Tkinter.Widget.keys-method"><b>keys()</b></a> [<a href=
+            "#Tkinter.Widget.keys-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací n-tici obsahující parametry dostupné pro toto udělátko.
+              Můžete použít&nbsp;<a class="link" href=
+              "#widget.Widget.cget-method"><b>cget</b></a> chcete-li dostat
+              odpovídající hodnotu pro každý parametr.
+            </p>
+            <p>
+              Všimněte si, že tyto n-tice mohou obsahovat aliasy parametrů
+              (jako&nbsp;<b>bd</b>, <b>bg</b> a <b>fg</b>). Toho se můžete
+              zbavit, použijete-li místo toho metodu <a class="link" href=
+              "#widget.Widget.config-method"><b>config</b></a>. Ta zase má tu
+              nevýhodu, že pro některé typy parametrů (jako například fonty)
+              nevrací platnou hodnotu. Takže nejlepší je obě dvě metody
+              nakombinovat:
+            </p>
+            <pre>
+for item in w.config():
+    if len(item) == 5:
+        option = item[0]
+        value = w.cget(option)
+        print option, value
+
+</pre>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.lift-method" name=
+            "Tkinter.Widget.lift-method"><b>lift(aboveThis=None)</b></a>
+            [<a href="#Tkinter.Widget.lift-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posune udělátko na vrchol okenního zásobníku. Pokud je udělátko
+              potomek okna, je posunut nad okno toplevel. Pokud je to toplevel
+              okno (root nebo Toplevel), je posunuto nad všechna ostatní okna
+              na displeji. Pokud je zadán parametr, je udělátko (okno) posunuto
+              hned nad dané udělátko (okno).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.lower-method" name=
+            "Tkinter.Widget.lower-method"><b>lower(belowThis=None)</b></a>
+            [<a href="#Tkinter.Widget.lower-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posune okno naspod okenního zásobníku. Stejné jako <a class=
+              "link" href="#widget.Widget.lift-method"><b>lift</b></a>, ale
+              posouvá udělátko dospod zásobníku (nebo ho posune hned pod
+              belowThis).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.mainloop-method" name=
+            "Tkinter.Widget.mainloop-method"><b>mainloop(n=0)</b></a> [<a href=
+            "#Tkinter.Widget.mainloop-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              VStupuje do hlavní tkinterovské smyčky událostí. Smyčku můžete
+              opustit metodou <a class="link" href=
+              "#widget.Widget.quit-method"><b>quit</b></a>, okno aplikace
+              zůstane však viditelné. Je tedy často lépe, opouštět smyčku
+              zároveň se zničením okna pomocí metody <b><a href=
+              "#Tkinter.Widget.destroy-method">destroy</a></b>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.nametowidget-method" name=
+            "Tkinter.Widget.nametowidget-method"><b>nametowidget(name)</b></a>
+            [<a href="#Tkinter.Widget.nametowidget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací objekt udělátka z jeho zadaného jména.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dd>
+                Jméno udělátka.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající objekt udělátka, pokud existuje.
+              </dd>
+              <dt>
+                Způsobuje <b>KeyError</b>:
+              </dt>
+              <dd>
+                pokud udělátko není nalezeno.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.option_add-method" name=
+            "Tkinter.Widget.option_add-method"><b>option_add(pattern, value,
+            priority=None)</b></a> [<a href=
+            "#Tkinter.Widget.option_add-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda option_add.
+            </p>
+            <dl>
+              <dt>
+                <i>pattern</i>
+              </dt>
+              <dt>
+                <i>value</i>
+              </dt>
+              <dt>
+                <i>priority</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.option_clear-method" name=
+            "Tkinter.Widget.option_clear-method"><b>option_clear()</b></a>
+            [<a href="#Tkinter.Widget.option_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda option_clear.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.option_get-method" name=
+            "Tkinter.Widget.option_get-method"><b>option_get(name,
+            className)</b></a> [<a href=
+            "#Tkinter.Widget.option_get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda option_get.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dt>
+                <i>className</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.option_readfile-method" name=
+            "Tkinter.Widget.option_readfile-method"><b>option_readfile(fileName,
+            priority=None)</b></a> [<a href=
+            "#Tkinter.Widget.option_readfile-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda option_readfile.
+            </p>
+            <dl>
+              <dt>
+                <i>fileName</i>
+              </dt>
+              <dt>
+                <i>priority</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.propagate-method" name=
+            "Tkinter.Widget.propagate-method"><b>propagate(flag=['_noarg_'])</b></a>
+            [<a href="#Tkinter.Widget.propagate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda propagate.
+            </p>
+            <dl>
+              <dt>
+                <i>flag</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.quit-method" name=
+            "Tkinter.Widget.quit-method"><b>quit()</b></a> [<a href=
+            "#Tkinter.Widget.quit-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda quit.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.register-method" name=
+            "Tkinter.Widget.register-method"><b>register(func, subst=None,
+            needcleanup=1)</b></a> [<a href=
+            "#Tkinter.Widget.register-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zaregistruje pythonovskou volanou funkci do Tcl. Vrací jména
+              odpovídající vzniklé Tcl procedury. Když bude tato procedura
+              zavolána z Tcl programu, zavolá se odpovídající pythonovská
+              funkce s argumenty předané Tcl proceduře. Hodnoty vrácené v
+              pyfunkce budou převedeny na řetězce a předány programu Tcl.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.rowconfigure-method" name=
+            "Tkinter.Widget.rowconfigure-method"><b>rowconfigure(index, cnf={},
+            **kw)</b></a> [<a href="#Tkinter.Widget.rowconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda rowconfigure.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>cnf</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.selection_clear-method" name=
+            "Tkinter.Widget.selection_clear-method"><b>selection_clear(**kw)</b></a>
+            [<a href="#Tkinter.Widget.selection_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda selection_clear.
+            </p>
+            <dl>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.selection_get-method" name=
+            "Tkinter.Widget.selection_get-method"><b>selection_get(**kw)</b></a>
+            [<a href="#Tkinter.Widget.selection_get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda selection_get.
+            </p>
+            <dl>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.selection_handle-method" name=
+            "Tkinter.Widget.selection_handle-method"><b>selection_handle(command,
+            **kw)</b></a> [<a href=
+            "#Tkinter.Widget.selection_handle-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda selection_handle.
+            </p>
+            <dl>
+              <dt>
+                <i>command</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.selection_own-method" name=
+            "Tkinter.Widget.selection_own-method"><b>selection_own(**kw)</b></a>
+            [<a href="#Tkinter.Widget.selection_own-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda selection_own.
+            </p>
+            <dl>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.selection_own_get-method" name=
+            "Tkinter.Widget.selection_own_get-method"><b>selection_own_get(**kw)</b></a>
+            [<a href="#Tkinter.Widget.selection_own_get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda selection_own_get.
+            </p>
+            <dl>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.send-method" name=
+            "Tkinter.Widget.send-method"><b>send(interp, cmd, *args)</b></a>
+            [<a href="#Tkinter.Widget.send-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda send.
+            </p>
+            <dl>
+              <dt>
+                <i>interp</i>
+              </dt>
+              <dt>
+                <i>cmd</i>
+              </dt>
+              <dt>
+                <i>*args</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.setvar-method" name=
+            "Tkinter.Widget.setvar-method"><b>setvar(name='PY_VAR',
+            value='1')</b></a> [<a href="#Tkinter.Widget.setvar-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda setvar.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dt>
+                <i>value</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.size-method" name=
+            "Tkinter.Widget.size-method"><b>size()</b></a> [<a href=
+            "#Tkinter.Widget.size-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda size.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.slaves-method" name=
+            "Tkinter.Widget.slaves-method"><b>slaves()</b></a> [<a href=
+            "#Tkinter.Widget.slaves-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda slaves.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_bisque-method" name=
+            "Tkinter.Widget.tk_bisque-method"><b>tk_bisque()</b></a> [<a href=
+            "#Tkinter.Widget.tk_bisque-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tk_bisque.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_focusFollowsMouse-method" name=
+            "Tkinter.Widget.tk_focusFollowsMouse-method"><b>tk_focusFollowsMouse()</b></a>
+            [<a href="#Tkinter.Widget.tk_focusFollowsMouse-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tk_focusFollowsMouse.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_focusNext-method" name=
+            "Tkinter.Widget.tk_focusNext-method"><b>tk_focusNext()</b></a>
+            [<a href="#Tkinter.Widget.tk_focusNext-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací následující udělátko za aktuálním, které by mělo získat
+              focus při použití klávesy <b>Tab</b>.&nbsp;
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_focusPrev-method" name=
+            "Tkinter.Widget.tk_focusPrev-method"><b>tk_focusPrev()</b></a>
+            [<a href="#Tkinter.Widget.tk_focusPrev-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací předchozí udělátko před aktuálním, které by mělo získat
+              focus při použití klávesy <b>Tab</b>.&nbsp;
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_menuBar-method" name=
+            "Tkinter.Widget.tk_menuBar-method"><b>tk_menuBar(*args)</b></a>
+            [<a href="#Tkinter.Widget.tk_menuBar-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tk_menuBar.
+            </p>
+            <dl>
+              <dt>
+                <i>*args</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_setPalette-method" name=
+            "Tkinter.Widget.tk_setPalette-method"><b>tk_setPalette(*args,
+            **kw)</b></a> [<a href=
+            "#Tkinter.Widget.tk_setPalette-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tk_setPalette.
+            </p>
+            <dl>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tk_strictMotif-method" name=
+            "Tkinter.Widget.tk_strictMotif-method"><b>tk_strictMotif(boolean=None)</b></a>
+            [<a href="#Tkinter.Widget.tk_strictMotif-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tk_strictMotif.
+            </p>
+            <dl>
+              <dt>
+                <i>boolean</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.tkraise-method" name=
+            "Tkinter.Widget.tkraise-method"><b>tkraise(aboveThis=None)</b></a>
+            [<a href="#Tkinter.Widget.tkraise-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tkraise.
+            </p>
+            <dl>
+              <dt>
+                <i>aboveThis</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.unbind-method" name=
+            "Tkinter.Widget.unbind-method"><b>unbind(sequence,
+            funcid=None)</b></a> [<a href=
+            "#Tkinter.Widget.unbind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní u tohoto udělátka jakékoliv vazby pro danou událost.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.unbind_all-method" name=
+            "Tkinter.Widget.unbind_all-method"><b>unbind_all(sequence)</b></a>
+            [<a href="#Tkinter.Widget.unbind_all-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda unbind_all.
+            </p>
+            <dl>
+              <dt>
+                <i>sequence</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.unbind_class-method" name=
+            "Tkinter.Widget.unbind_class-method"><b>unbind_class(className,
+            sequence)</b></a> [<a href=
+            "#Tkinter.Widget.unbind_class-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda unbind_class.
+            </p>
+            <dl>
+              <dt>
+                <i>className</i>
+              </dt>
+              <dt>
+                <i>sequence</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.update-method" name=
+            "Tkinter.Widget.update-method"><b>update()</b></a> [<a href=
+            "#Tkinter.Widget.update-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zpracuje všechny čekající události, zavolá všechny volané funkce,
+              dokončí všechny zobrazování správci rozmístění, překreslí
+              udělátka, pokud je to nutné a zavolá všechny zbylé čekající
+              úkoly.&nbsp;
+            </p>
+          </dd>
+          <dd>
+            <p>
+              Tato metoda by se měla používat s rozmyslem, protože když je
+              zavolána z nevhodného místa, jako např.&nbsp; z volané funkce,
+              může vést k velmi nepříjemným důsledkům. Pokud jste na pochybách,
+              použijte <a class="link" href=
+              "#widget.Widget.update_idletasks-method"><b>update_idletasks</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.update_idletasks-method" name=
+            "Tkinter.Widget.update_idletasks-method"><b>update_idletasks()</b></a>
+            [<a href="#Tkinter.Widget.update_idletasks-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zavolá všechny čekající úkoly bez zpracování jakýchkoliv dalších
+              událostí. Používá při aktualizaci správců rozmístění, které
+              překreslí udělátka, pokud je to nutné, přičemž se nezavolá žádný
+              callback.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.wait_variable-method" name=
+            "Tkinter.Widget.wait_variable-method"><b>wait_variable(name)</b></a>
+            [<a href="#Tkinter.Widget.wait_variable-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Počká, až se tkinterovská proměnná změní. Tato metoda vstoupí do
+              lokální smyčky událostí, takže ostatní části aplikace budou nadále
+              funkční. Lokální smyčka se ukončí, když dojde ke změně proměnné
+              (počítá se i nastavení proměnné na aktuální hodnotu).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.wait_visibility-method" name=
+            "Tkinter.Widget.wait_visibility-method"><b>wait_visibility(window=None)</b></a>
+            [<a href="#Tkinter.Widget.wait_visibility-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Počká, až bude předané udělátko viditelné. Obvykle se tohoto
+              využívá při zobrazování toplevel okna. Podobně jako <a class=
+              "link" href=
+              "#widget.Widget.wait_variable-method"><b>wait_variable</b></a>,
+              tato metoda vstoupí do lokální smyčky událostí, takže ostatní
+              části aplikace budou funkční.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.wait_window-method" name=
+            "Tkinter.Widget.wait_window-method"><b>wait_window(window=None)</b></a>
+            [<a href="#Tkinter.Widget.wait_window-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Počká, až předané udělátko bude zničeno. Obvykle se to používá
+              pro čekání, až dané okno zmizí z obrazovky. Podobně jako&nbsp;
+              <a class="link" href=
+              "#widget.Widget.wait_variable-method"><b>wait_variable</b></a> a
+              <a class="link" href=
+              "#widget.Widget.wait_visibility-method"><b>wait_visibility</b></a>,&nbsp;
+              tato metoda vstoupí do lokální smyčky událostí, takže ostatní
+              části aplikace budou funkční.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.waitvar-method" name=
+            "Tkinter.Widget.waitvar-method"><b>waitvar(name='PY_VAR')</b></a>
+            [<a href="#Tkinter.Widget.waitvar-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda waitvar.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_atom-method" name=
+            "Tkinter.Widget.winfo_atom-method"><b>winfo_atom(name,
+            displayof=0)</b></a> [<a href=
+            "#Tkinter.Widget.winfo_atom-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mapuje daný řetězec na jedinečné číslo. Pokaždé, když zavoláte
+              tuto metodu se stejným řetězcem, dostanete stejné celé číslo.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_atomname-method" name=
+            "Tkinter.Widget.winfo_atomname-method"><b>winfo_atomname(id,
+            displayof=0)</b></a> [<a href=
+            "#Tkinter.Widget.winfo_atomname-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací řetězec, který odpovídá danému celému číslu (získanému
+              pomocí&nbsp; <a class="link" href=
+              "#widget.Widget.winfo_atom-method"><b>winfo_atom</b></a>). Pokud
+              číslo není používáno, Tkinter vyvolá TclError výjimku. Tkinter
+              předdefinovává sadu čísel (typicky 1-80 nebo tak nějak).
+              Zajímá-li vás to víc, můžete tuto metodu použít na zkoumání.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_cells-method" name=
+            "Tkinter.Widget.winfo_cells-method"><b>winfo_cells()</b></a>
+            [<a href="#Tkinter.Widget.winfo_cells-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací počet "buněk" v barevné mapě. Typicky se jedná o hodnotu
+              mezi 2 a 256 (dokonce i pro displeje true color, z jakýchsi
+              záhadných důvodů).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_children-method" name=
+            "Tkinter.Widget.winfo_children-method"><b>winfo_children()</b></a>
+            [<a href="#Tkinter.Widget.winfo_children-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací seznam instancí udělátek všech potomků tohoto udělátka.
+              Instance jsou vráceny v pořadí zásobníku odspodu nahoru.&nbsp;
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_class-method" name=
+            "Tkinter.Widget.winfo_class-method"><b>winfo_class()</b></a>
+            [<a href="#Tkinter.Widget.winfo_class-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací jméno třídy tohoto udělátka. Pokud je udělátko Tkinter base
+              widget, dostanete stejnou informaci také pomocí
+              widget.__class__.__name__.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_colormapfull-method" name=
+            "Tkinter.Widget.winfo_colormapfull-method"><b>winfo_colormapfull()</b></a>
+            [<a href="#Tkinter.Widget.winfo_colormapfull-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pravdu, pokud je barevná mapa tohoto udělátka plná.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_containing-method" name=
+            "Tkinter.Widget.winfo_containing-method"><b>winfo_containing(rootX,
+            rootY, displayof=0)</b></a> [<a href=
+            "#Tkinter.Widget.winfo_containing-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací udělátko na dané pozici nebo None, pokud tam nic není nebo
+              to není &nbsp;udělátko od této aplikace. Souřadnice jsou dány
+              relativně k levému hornímu rohu obrazovky.
+            </p>
+            <dl>
+              <dt>
+                <i>rootX</i>
+              </dt>
+              <dt>
+                <i>rootY</i>
+              </dt>
+              <dt>
+                <i>displayof</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_depth-method" name=
+            "Tkinter.Widget.winfo_depth-method"><b>winfo_depth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_depth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací bitovou hloubku tohoto udělátka. Obvykle se jedná o
+              &nbsp;hodnotu 8 pro 256 barevný displej, 15 nebo 16 pro hicolor
+              displej a 24 nebo 32 pro truecolor displej.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_exists-method" name=
+            "Tkinter.Widget.winfo_exists-method"><b>winfo_exists()</b></a>
+            [<a href="#Tkinter.Widget.winfo_exists-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací true, pokud existuje Tk okno, které odpovídá tomuto
+              udělátku. Pokud neuděláte něco moc divného, měli byste vždy
+              dostávat true.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_fpixels-method" name=
+            "Tkinter.Widget.winfo_fpixels-method"><b>winfo_fpixels(distance)</b></a>
+            [<a href="#Tkinter.Widget.winfo_fpixels-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí danou vzdálenost (v jakékoliv formě, kterou Tkinter
+              přijímá) na odpovídající počet pixelů.
+            </p>
+            <dl>
+              <dt>
+                <i>distance</i>
+              </dt>
+              <dd>
+                Vzdálenost na obrazovce.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající počet pixelů, jako desetinné číslo.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_geometry-method" name=
+            "Tkinter.Widget.winfo_geometry-method"><b>winfo_geometry()</b></a>
+            [<a href="#Tkinter.Widget.winfo_geometry-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací řetězec, popisující geometrii udělátka. Řetězec má
+              následující formát:
+            </p>
+            <pre>
+"%dx%d%+d%+d" % (šířka, výška, xoffset, yoffset)
+
+</pre>kde všechny souřadnice jsou uvedeny v pixelech.
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_height-method" name=
+            "Tkinter.Widget.winfo_height-method"><b>winfo_height()</b></a>
+            [<a href="#Tkinter.Widget.winfo_height-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací výšku udělátka v pixelech. Pokud ale není spravováno
+              správcem rozmístění, tato metoda vrací 1. Možná bude v tomto
+              případě stačit zavolat nejdříve <a class="link" href=
+              "#widget.Widget.update_idletasks-method"><b>update_idletasks</b></a>t.
+              Můžete ale také použít&nbsp;<a class="link" href=
+              "#widget.Widget.winfo_reqheight-method"><b>winfo_reqheight</b></a>
+              (to je, přirozená výška udělátka, jak ji chápe udělátko samo
+              podle svého obsahu).
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Současnou výšku udělátka v pixelech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_id-method" name=
+            "Tkinter.Widget.winfo_id-method"><b>winfo_id()</b></a> [<a href=
+            "#Tkinter.Widget.winfo_id-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací identifikátor okna, který je závislý na systému. U Unixu se
+              jedná o&nbsp;X window identifier. U Windows se jedná o&nbsp;HWND.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor okna.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_interps-method" name=
+            "Tkinter.Widget.winfo_interps-method"><b>winfo_interps(displayof=0)</b></a>
+            [<a href="#Tkinter.Widget.winfo_interps-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_interps.
+            </p>
+            <dl>
+              <dt>
+                <i>displayof</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_ismapped-method" name=
+            "Tkinter.Widget.winfo_ismapped-method"><b>winfo_ismapped()</b></a>
+            [<a href="#Tkinter.Widget.winfo_ismapped-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Kontrolu, jestli bylo udělátko vytvořeno. Tato metoda kontroluje,
+              jestli Tkinter okno odpovídající udělátku v základním systému
+              oken (X windows, Windows HWND, apod).
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pravdu, pokud okno bylo vytvořeno.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_manager-method" name=
+            "Tkinter.Widget.winfo_manager-method"><b>winfo_manager()</b></a>
+            [<a href="#Tkinter.Widget.winfo_manager-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací jméno správce rozmístění, který se stará o zobrazení tohoto
+              udělátka (typicky je to grid, pack, place, canvas nebo text).
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_name-method" name=
+            "Tkinter.Widget.winfo_name-method"><b>winfo_name()</b></a>
+            [<a href="#Tkinter.Widget.winfo_name-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací Tk jméno udělátka. Je stejné jako poslední část plného
+              jména udělátka, které dostáváte z&nbsp; <b>str(widget)</b>.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Jméno udělátka.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_parent-method" name=
+            "Tkinter.Widget.winfo_parent-method"><b>winfo_parent()</b></a>
+            [<a href="#Tkinter.Widget.winfo_parent-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací plné jméno rodičovského udělátka. Tato metoda vrací prázdný
+              řetězec, pokud udělátko nemá rodiče (root, toplevel).
+            </p>
+            <p>
+              Chcete-li však získat spíše instanci rodiče, použijte atribut
+              <b>master</b>. Nebo, pokud chcete, použijte&nbsp;
+              <b>nametowidget</b>, kde namapujete plné jméno udělátka na
+              instanci udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Jméno udělátka jako řetězec.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_pathname-method" name=
+            "Tkinter.Widget.winfo_pathname-method"><b>winfo_pathname(id,
+            displayof=0)</b></a> [<a href=
+            "#Tkinter.Widget.winfo_pathname-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací plné jméno okna pro danou identitu (viz <b>winfo_id</b>).
+              Pokud okno neexistuje nebo nepatří do této aplikace, Tkinter
+              vyvolá výjimku <b>TclError</b>.
+            </p>
+            <p>
+              Chcete-li převést plné jméno na instanci udělátka,
+              používejte&nbsp;<b>nametowidget</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>id</i>
+              </dt>
+              <dd>
+                Identifikátor okna.
+              </dd>
+              <dt>
+                <i>displayof</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_pixels-method" name=
+            "Tkinter.Widget.winfo_pixels-method"><b>winfo_pixels(distance)</b></a>
+            [<a href="#Tkinter.Widget.winfo_pixels-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí danou vzdálenost, v jakékoliv formě, kterou Tkinter umí,
+              na odpovídající počet pixelů.
+            </p>
+            <dl>
+              <dt>
+                <i>distance</i>
+              </dt>
+              <dd>
+                Vzdálenost na obrazovce.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající počet pixelů ve formě celého čísla.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_pointerx-method" name=
+            "Tkinter.Widget.winfo_pointerx-method"><b>winfo_pointerx()</b></a>
+            [<a href="#Tkinter.Widget.winfo_pointerx-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_pointerx.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_pointerxy-method" name=
+            "Tkinter.Widget.winfo_pointerxy-method"><b>winfo_pointerxy()</b></a>
+            [<a href="#Tkinter.Widget.winfo_pointerxy-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_pointerxy.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_pointery-method" name=
+            "Tkinter.Widget.winfo_pointery-method"><b>winfo_pointery()</b></a>
+            [<a href="#Tkinter.Widget.winfo_pointery-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_pointery.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_reqheight-method" name=
+            "Tkinter.Widget.winfo_reqheight-method"><b>winfo_reqheight()</b></a>
+            [<a href="#Tkinter.Widget.winfo_reqheight-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací přirozenou výšku udělátka. Přirozená výška je minimální
+              výška potřebná k plnému zobrazení obsahu, včetně výplní, okrajů,
+              apod. Tuto velikost počítá samo udělátko na základě daných
+              parametrů. Skutečná velikost udělátka je ale určena správcem
+              rozmístění na základě této hodnoty, velikosti rodiče udělátka a
+              parametrů, které správce dostal.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_reqwidth-method" name=
+            "Tkinter.Widget.winfo_reqwidth-method"><b>winfo_reqwidth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_reqwidth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací přirozenou šířku udělátka. Přirozená šířka je minimální
+              šířka potřebná k plnému zobrazení obsahu, včetně výplní, okrajů,
+              apod. Tuto velikost počítá samo udělátko na základě daných
+              parametrů. Skutečná velikost udělátka je ale určena správcem
+              rozmístění na základě této hodnoty, velikosti rodiče udělátka a
+              parametrů, které správce dostal..
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_rgb-method" name=
+            "Tkinter.Widget.winfo_rgb-method"><b>winfo_rgb(color)</b></a>
+            [<a href="#Tkinter.Widget.winfo_rgb-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí řetězec barvy, v jakékoliv formě, kterou Tkinter umí, na
+              n-tici RGB.
+            </p>
+            <dl>
+              <dt>
+                <i>color</i>
+              </dt>
+              <dd>
+                Řetězec barvy. Může se jednat o jméno barvy, řetězec obsahující
+                identifikaci barvy &nbsp;("#rrggbb") nebo jinou syntaxi
+                podporovanou Tkinterem.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Trojici obsahující červenou, zelenou a modrou složku. Trojice
+                obsahuje 16-bitové hodnoty (0..65535).
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_rootx-method" name=
+            "Tkinter.Widget.winfo_rootx-method"><b>winfo_rootx()</b></a>
+            [<a href="#Tkinter.Widget.winfo_rootx-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pixelové souřadnice levé hrany udělátka vzhledem k levé
+              hraně obrazovky.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Souřadnice root.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_rooty-method" name=
+            "Tkinter.Widget.winfo_rooty-method"><b>winfo_rooty()</b></a>
+            [<a href="#Tkinter.Widget.winfo_rooty-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pixelové souřadnice horní hrany udělátka vzhledem k horní
+              hraně obrazovky.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Souřadnice root.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screen-method" name=
+            "Tkinter.Widget.winfo_screen-method"><b>winfo_screen()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screen-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací Jméno obrazovky v X window pro aktuální okno. Jméno
+              obrazovky je řetězec formátu&nbsp;":display.screen", kde display
+              a screen jsou desetinná čísla.
+            </p>
+            <p>
+              Na Windows a&nbsp;Macintosh toto vrací vždy ":0.0".
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Jméno obrazovky.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screencells-method" name=
+            "Tkinter.Widget.winfo_screencells-method"><b>winfo_screencells()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screencells-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací počet barevných buněk v defaultní barevné mapě pro
+              obrazovku tohoto udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Počet barevných buněk.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screendepth-method" name=
+            "Tkinter.Widget.winfo_screendepth-method"><b>winfo_screendepth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screendepth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací defaultní bitovou hloubku pro obrazovku tohoto udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Bitovou hloubku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screenheight-method" name=
+            "Tkinter.Widget.winfo_screenheight-method"><b>winfo_screenheight()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screenheight-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací výšku obrazovky tohoto udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Výška v pixelech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screenmmheight-method" name=
+            "Tkinter.Widget.winfo_screenmmheight-method"><b>winfo_screenmmheight()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screenmmheight-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací výšku obrazovky tohoto udělátka v milimetrech. Nemusí
+              správně fungovat na všech platformách.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Výšku v milimetrech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screenmmwidth-method" name=
+            "Tkinter.Widget.winfo_screenmmwidth-method"><b>winfo_screenmmwidth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screenmmwidth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací šířku obrazovky tohoto udělátka v milimetrech. Nemusí
+              správně fungovat na všech platformách.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Šířka v milimetrech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screenvisual-method" name=
+            "Tkinter.Widget.winfo_screenvisual-method"><b>winfo_screenvisual()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screenvisual-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací "vizuální" typ udělátka. Obvykle je to "pseudocolor" (pror
+              256-barevné displeje) nebo "truecolor" (pro 16- nebo 24-bitové
+              displeje).
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Řetězec obsahující vizuální typ. Jedna z hodnot: "pseudocolor",
+                "truecolor", "directcolor", "staticcolor", "grayscale" nebo
+                "staticgray".
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_screenwidth-method" name=
+            "Tkinter.Widget.winfo_screenwidth-method"><b>winfo_screenwidth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_screenwidth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací výšku obrazovky tohoto udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Šířka v pixelech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_server-method" name=
+            "Tkinter.Widget.winfo_server-method"><b>winfo_server()</b></a>
+            [<a href="#Tkinter.Widget.winfo_server-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_server.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_toplevel-method" name=
+            "Tkinter.Widget.winfo_toplevel-method"><b>winfo_toplevel()</b></a>
+            [<a href="#Tkinter.Widget.winfo_toplevel-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací okno toplevel nebo root pro toto udělátko, jako instanci.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Toplevel rodič. Buď je to instance Tk nebo Toplevel.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_viewable-method" name=
+            "Tkinter.Widget.winfo_viewable-method"><b>winfo_viewable()</b></a>
+            [<a href="#Tkinter.Widget.winfo_viewable-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_viewable.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_visual-method" name=
+            "Tkinter.Widget.winfo_visual-method"><b>winfo_visual()</b></a>
+            [<a href="#Tkinter.Widget.winfo_visual-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako winfo_screenvisual.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_visualid-method" name=
+            "Tkinter.Widget.winfo_visualid-method"><b>winfo_visualid()</b></a>
+            [<a href="#Tkinter.Widget.winfo_visualid-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_visualid.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_visualsavailable-method" name=
+            "Tkinter.Widget.winfo_visualsavailable-method"><b>winfo_visualsavailable(includeids=0)</b></a>
+            [<a href="#Tkinter.Widget.winfo_visualsavailable-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_visualsavailable.
+            </p>
+            <dl>
+              <dt>
+                <i>includeids</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_vrootheight-method" name=
+            "Tkinter.Widget.winfo_vrootheight-method"><b>winfo_vrootheight()</b></a>
+            [<a href="#Tkinter.Widget.winfo_vrootheight-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_vrootheight.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_vrootwidth-method" name=
+            "Tkinter.Widget.winfo_vrootwidth-method"><b>winfo_vrootwidth()</b></a>
+            [<a href="#Tkinter.Widget.winfo_vrootwidth-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_vrootwidth.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_vrootx-method" name=
+            "Tkinter.Widget.winfo_vrootx-method"><b>winfo_vrootx()</b></a>
+            [<a href="#Tkinter.Widget.winfo_vrootx-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_vrootx.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_vrooty-method" name=
+            "Tkinter.Widget.winfo_vrooty-method"><b>winfo_vrooty()</b></a>
+            [<a href="#Tkinter.Widget.winfo_vrooty-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda winfo_vrooty.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_width-method" name=
+            "Tkinter.Widget.winfo_width-method"><b>winfo_width()</b></a>
+            [<a href="#Tkinter.Widget.winfo_width-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací šířku tohoto udělátka v pixelech.&nbsp;Pokud ale není
+              spravováno správcem rozmístění, tato metoda vrací 1. Možná bude v
+              tomto případě stačit zavolat nejdříve <a class="link" href=
+              "widget.htm#widget.Widget.update_idletasks-method" tppabs="http://tkinter.programujte.com/widget.htm#widget.Widget.update_idletasks-method"><b>update_idletasks</b></a>t.
+              Můžete ale také použít <a class="link" href=
+              "#widget.Widget.winfo_reqwidth-method"><b>winfo_reqwidth</b></a>(to
+              je, přirozená šířka udělátka, jak ji chápe udělátko samo podle
+              svého obsahu).
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Aktuální šířku&nbsp;udělátka v pixelech.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_x-method" name=
+            "Tkinter.Widget.winfo_x-method"><b>winfo_x()</b></a> [<a href=
+            "#Tkinter.Widget.winfo_x-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pixelové souřadnice levého hrany udělátka vzhledem k
+              rodičovské levé hraně.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Widget.winfo_y-method" name=
+            "Tkinter.Widget.winfo_y-method"><b>winfo_y()</b></a> [<a href=
+            "#Tkinter.Widget.winfo_y-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pixelové souřadnice horní hrany udělátka vzhledem k
+              rodičovské horní hraně.
+            </p>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

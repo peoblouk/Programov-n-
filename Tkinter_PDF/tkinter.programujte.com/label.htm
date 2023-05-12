@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Udělátko Label ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="frame.htm" tppabs="http://tkinter.programujte.com/frame.htm">předchozí</a> ] [ <a href=
+          "labelframe.htm" tppabs="http://tkinter.programujte.com/labelframe.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/label.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/label.htm'" tppabs="http://effbot.org/tkinterbook/label.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter- Label
+        </h1>
+        <p>
+          Udělátko <span style="font-weight: bold;">Label</span> (dále již jen
+          štítek) je určeno k zobrazení textu nebo obrázku. Štítek může
+          zobrazovat text pouze jednoho druhu, ale text se může rozdělit do
+          více řádku. Mimo jiné, jeden ze znaků může být podtržen, například k
+          označení klávesové zkratky.
+        </p>
+        <h2>
+          Kdy použít udělátko Label
+        </h2>Štítek je používán k zobrazení textu nebo obrázků. Obsah štítku
+        můžete opravit bez velkých potíží. K zobrazení dat se kterými může
+        uživatel manipulovat se lépe hodí udělátko <a href=
+        "canvas.htm" tppabs="http://tkinter.programujte.com/canvas.htm"><b>Canvas</b></a>.
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          K používání štítku stačí, když určíte co se bude uvnitř zobrazovat
+          (může to být text, bitmapa nebo obrázek):
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+
+from Tkinter import *
+hlavni=Tk()
+
+stitek=Label(hlavni, text=u"Ahoj světe!", font="Arial 12")
+stitek.pack(padx=20, pady=10)
+
+hlavni.mainloop()
+</pre><img style="width: 137px; height: 85px;" alt="sory" src=
+"Label.PNG" tppabs="http://tkinter.programujte.com/images/Label.PNG">
+        <p>
+          Když neurčíte velikost, štítek se přizpůsobí na co nejmenší velikost
+          úměrnou jeho obsahu. Pro toto nastavení se hodí použít parametr
+          <span style="font-weight: bold;">height</span> a <span style=
+          "font-weight: bold;">width</span> k určení přesné velikosti. Jestliže
+          zobrazujete ve štítku text, definujte velikost v textových
+          jednotkách. Naproti tomu, když zobrazujete obrázek nebo bitmapu,
+          definujte velikost v pixelech.Podívejte se na udělátko <a href=
+          "tkinter-button.htm" tppabs="http://tkinter.programujte.com/tkinter-button.htm"><b>Button</b></a>, jak lze definovat velikost v
+          pixelech i pro text.
+        </p>
+        <p>
+          Můžete samozřejmě určit barvu písma parametrem (<span style=
+          "font-weight: bold;">foreground</span> nebo <span style=
+          "font-weight: bold;">fg</span>) nebo barvu pozadí tímto parametrem
+          (<span style="font-weight: bold;">background</span> nebo <span style=
+          "font-weight: bold;">bg</span>). Můžete zvolit jaký typ písma chcete
+          použít do štítku.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import*
+okno=Tk()
+
+w = Label(okno, text=u"Červená", fg="red")
+w.pack()
+
+w = Label(okno, text="Helvetica", font=("Helvetica", 16))
+w.pack()
+
+okno.mainloop()
+
+<img style="width: 128px; height: 90px;" alt="sorry" src=
+"Label-font.PNG" tppabs="http://tkinter.programujte.com/images/Label-font.PNG">
+</pre>
+        <p>
+          Štítky mohou zobrazovat víceřádkový text. Můžete použít znaky pro
+          nový řádek, nebo parametr <b>wraplength.</b> Když tento parametr
+          použijete, můžete použít parametry <b>anchor</b> a <b>justify</b>,
+          tak aby štítek vypadal podle vašich představ. Například:<b> </b>
+        </p>
+        <pre>
+w = Label(master, text=dlouhytext, anchor=W, justify=LEFT)
+</pre>
+        <p>
+          Můžete také spojit Tkinterovskou proměnou se štítkem. Když se změní
+          obsah proměnné, štítek se automaticky změní:
+        </p>
+        <pre>
+v = StringVar()
+Label(master, textvariable=v).pack()
+
+v.set("Novy text!")
+</pre>
+        <p>
+          Do štítku lze zobrazovat objekty <a href=
+          "photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm"><b>PhotoImage</b></a> a <a href=
+          "bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm"><b>BitmapImage</b></a><b>. </b>
+        </p>
+        <pre>
+photo = PhotoImage(file="icon.gif")
+w = Label(parent, image=photo)
+w.photo = photo
+w.pack()
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b>Label(master=None, **options)</b> (class) [<a href=
+            "#Tkinter.Label-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zobrazí jeden řádek textu nebo obrázek.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské okno
+              </dd>
+              <dt>
+                <i>**options </i>
+              </dt>
+              <dd>
+                parametry udělátka. Podívej se na na metodu <b><a class="link"
+                href=
+                "label.htm#label.Label.config-method" tppabs="http://tkinter.programujte.com/label.htm#label.Label.config-method">config</a></b> pro
+                všechny dostupné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Label.config-method" name=
+            "Tkinter.Label.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Label.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Modifikuje jeden nebo více parametrů udělátka. Jestliže nejsou
+              parametry dány, tato metoda vrací obsah všech již daných hodnot
+              parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Jakou barvu pozadí použít, když je štítek aktivní (nastavte
+                parametrem <span style="font-weight: bold;">state</span>).
+                Standardní nastavení závisí na systému.
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Jakou barvu písma použít, když je štítek aktivní. Standardní
+                nastavení závisí na systému. (activeForeground/Background)
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kontroluje, kde v štítku se bude text(nebo obrázek) nacházet.
+                Vybírejte z: <b>N</b>, <b>NE</b>, <b>E</b>, <b>SE</b>,
+                <b>S</b>, <b>SW</b>, <b>W</b>, <b>NW</b>, nebo <b>CENTER</b>.
+                Standardně je nastaven <b>CENTER</b>. (anchor/Anchor)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí štítku. Standardní nastavení závisí na systému.
+                (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dd>
+                Zobrazí bitmapu do štítku. Jestliže je dán parametr
+                <span style="font-weight: bold;">image</span>, tento parametr
+                je ignorován. (bitmap/Bitmap)
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje štítku. Standardní nastavení závisí na systému,
+                ale obvykle je to 1 nebo 2 pixely. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>compound=</i>
+              </dt>
+              <dd>
+                Kontroluje jak kombinovat text a obrázek ve štítku. Standardně,
+                je li dán obrázek nebo bitmapa, je text ignorován. Jestliže je
+                tento parametr nastaven na <span style=
+                "font-weight: bold;">CENTER</span>, text se objeví nad
+                obrázkem. Jestliže je tento parametr nastaven na <b>BOTTOM</b>,
+                <b>LEFT</b>, <b>RIGHT</b> nebo <b>TOP</b>, obrázek je
+                koncipován mimo text (používej <span style=
+                "font-weight: bold;">BOTTOM</span>  k posunutí obrázku pod text
+                atd.). Standardní nastavení je <span style=
+                "font-weight: bold;">NONE</span>. (compound/Compound)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Jaký kursor použít, když myš je nad štítkem.Standardní
+                nastavení závisí na systému. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Barva písma, když je štítek zablokovaný (DISABLED) . Standardní
+                nastavení závisí na systému.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitého na text ve štítku.Štítek může obsahovat
+                pouze jeden druh písma .Standardní nastavení závisí na systému
+                (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva pro barvu písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška štítku. Když štítek obsahuje text, výška je dána v
+                textových jednotkách. Když štítek obsahuje obrázek, výška je
+                dána v pixelech.  (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když štítek nebude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když štítek bude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému (obvykle jeden nebo dva pixely).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek do štítku. Když je tento parametr dán, je obrázek
+                vykreslen nad text a bitmapu, jestliže není dán parametr
+                <span style="font-weight: bold;">compound.</span> (image/Image)
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Definuje jak seřadit víceřádkový text. Používejte <span style=
+                "font-weight: bold;">LEFT</span>, <span style=
+                "font-weight: bold;">RIGHT</span> nebo <span style=
+                "font-weight: bold;">CENTER</span>. Standardně je nastaven
+                <span style="font-weight: bold;">CENTER</span>.
+                (justify/Justify)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Horizontální vycpávka mezi obsahem štítku a jeho okrajem.
+                Standardní nastavení je 1 pixel. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vertikální vycpávka mezi obsahem štítku  a jeho okrajem.
+                Standardní nastavení je 1 pixel. (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Obvykle je <span style=
+                "font-weight: bold;">FLAT.</span> Další možnosti jsou
+                <span style="font-weight: bold;">GROOVE</span>, <span style=
+                "font-weight: bold;">RIDGE</span>, <span style=
+                "font-weight: bold;">FLAT</span> a <span style=
+                "font-weight: bold;">SUNKEN</span>. Standardní nastavení je
+                RAISED. (relief/Relief)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav štítku: <b>NORMAL</b>, <b>ACTIVE</b> nebo <b>DISABLED</b>.
+                Standardně je nastaven <b>NORMAL</b>. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, zda může uživatel použít klávesu <span style=
+                "font-weight: bold;">Tab</span> k posunutí na štítek.
+                Standardně  je nastaven prázdný řetězec, který znamená, že
+                štítek přijímá akce, jenom jestliže má nějakou klávesovou
+                vazbu. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Text zobrazovaný v štítku. Text může obsahovat nové řádky. Když
+                je dán parametr bitmapa nebo obrázek, text je ignorován
+                (jestliže nedáte parametr <b>compound</b>). (text/Text)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Připojí Tkinterovskou proměnou (obvykle <span style=
+                "font-weight: bold;">StringVar</span>) k štítku. Jestliže se
+                proměnná změní, text se změní. (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dd>
+                Který ze znaků z <span style="font-weight: bold;">text</span>
+                podtrhnout. Standardně je nastaveno na -1, což znamená, že
+                žádný znak nebude podtržen. (underline/Underline)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka štítku. Když štítek obsahuje text, je šířka dána v
+                textových jednotkách. Když štítek obsahuje obrázek, šířka je
+                dána v pixelech.Jestliže je tento parametr 0, Python se chová
+                jako by tam nebyl a štítek přizpůsobí velikosti obsahu.
+                (width/Width)
+              </dd>
+              <dt>
+                <i>wraplength=</i>
+              </dt>
+              <dd>
+                Vymezuje, kdy je štítek přeměněno na víceřádkový text. Tento
+                parametr je dán v pixelech. Standardně je nastaveno na 0.
+                (wrapLength/WrapLength)
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <div class="navigate">
+          <hr class="zonebar">
+          <p class="info">
+            Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+            <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+            License 1.2</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

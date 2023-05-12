@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Základní části oken ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-events-and-bindings.htm" tppabs="http://tkinter.programujte.com/tkinter-events-and-bindings.htm">předchozí</a> ] [
+          <a href="tkinter-standard-dialogs.htm" tppabs="http://tkinter.programujte.com/tkinter-standard-dialogs.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-application-windows.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-application-windows.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-application-windows.htm">originál</a>
+          ]
+        </p>
+        <h1 class="title">
+          Základní části oken
+        </h1>
+<p>
+          <a href="#hlavni">Hlavní okno</a><br />
+        <a href="#menu">Menu</a><br />
+        <a href="#lista">Nástrojová lišta</a><br />
+        <a href="#status">Stavový řádek</a><br />
+</p>
+        <h2>
+          <a name="hlavni" id="hlavni"></a>Hlavní (základní) okno
+        </h2>
+        <p>
+          V následujícím jednoduchém příkladě je na obrazovce jen jediné okno -
+          hlavní okno. To se vytváří automaticky, když voláte konstruktor
+          <b>Tk</b>:
+        </p>
+        <p>
+          <img alt="" src="data-zaklad-hlavni.png" tppabs="http://tkinter.programujte.com/images/data-zaklad-hlavni.png" height="234" width=
+          "208">
+        </p>
+        <pre>
+from Tkinter import *
+
+hlavni = Tk()
+    
+# vytvořit obsah okna jako potomky hlavního
+    
+hlavni.mainloop()
+</pre>
+        <p>
+          Potřebujete-li vytvořit další podokna hlavního, můžete to udělat
+          pomocí udělátka <b>Toplevel</b>. To jednoduše vytvoří na obrazovce
+          nové okno, které vypadá a chová se velmi stejně jako okno hlavní:
+        </p>
+        <pre>
+from Tkinter import *
+    
+hlavni = Tk()
+    
+# vytvořit obsah hlavního okna ...
+    
+top = Toplevel()
+    
+# vytvořit obsah okna top...
+    
+hlavni.mainloop()
+</pre>
+        <p>
+          Není třeba používat pack na zobrazování okna <b>Toplevel</b>,
+          protože je zobrazováno automaticky správcem rozmístění. Ve
+          skutečnosti dostanete chybu, pokud se pokusíte zapakovat udělátko
+          <b>Toplevel</b>.
+        </p>
+        <h2>
+          <a name="menu" id="menu"></a>Menu
+        </h2>
+        <p>
+          Tkinter nabízí na menu speciální udělátko. Chcete-li vytvořit menu,
+          použijte jednoduše třídu <b>Menu</b> a pomocí metody <b>add</b>, do
+          ní přidávejte položky.
+        </p>
+        <ul>
+          <li>
+            <b>add_command(label=řetězec, command=volanafunkce)</b> přidá
+            běžnou položku menu.
+          </li>
+          <li>
+            <b>add_separator()</b> přidá oddělovač skupin příkazů.
+          </li>
+          <li>
+            <b>add_cascade(label=string, menu=menu instance)</b> přidá podmenu
+            (další instanci <b>Menu</b>). To je buď rozbalovací menu nebo
+            fold-out menu (podle rodiče).
+          </li>
+        </ul>
+        <p>
+          Příklad:
+        </p>
+        <h3>
+          <b>Vytvoření malého menu</b>
+        </h3><img alt="" src="data-zaklad-menu.png" tppabs="http://tkinter.programujte.com/images/data-zaklad-menu.png" height="138" width=
+        "130">
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+def volanafunkce():
+    print u"zde je tělo volané funkce"
+
+hlavni = Tk()
+
+nabidka = Menu(hlavni)
+hlavni.config(menu=nabidka)
+
+menuSoubor = Menu(nabidka)
+nabidka.add_cascade(label="Soubor", menu=menuSoubor)
+menuSoubor.add_command(label=u"Nový", command=volanafunkce)
+menuSoubor.add_command(label=u"Otevřít", command=volanafunkce)
+menuSoubor.add_separator()
+menuSoubor.add_command(label="Konec", command=volanafunkce)
+
+helpMenu = Menu(nabidka)
+nabidka.add_cascade(label=u"Nápověda", menu=helpMenu)
+helpMenu.add_command(label=u"O aplikaci", command=volanafunkce)
+
+mainloop()
+</pre>
+        <p>
+          V tomto příkladě začínáme vytvořením instance <b>Menu</b>
+          <i>nabidka</i>,  a pak jí připojíme k hlavnímu oknu
+          metodou <b>config</b>. Obsah tohoto menu se zobrazí na vrchu
+          hlavního okna. Menu nemusíte balit, je zobrazována automaticky.
+        </p>
+        <p>
+          Pak vytvoříme <i>menuSoubor</i>, jako potomka <i>nabidky</i>, a
+          použijeme metodu <b>add_cascade</b> na vytvoření rozbalovacího
+          menu. Pak již jen
+          pomocí <b>add_command</b> přidáváme položky do menu a používáme
+          <b>add_separator</b> na oddělení skupin položek.
+        </p>
+        <p>
+          Nápovědu vytvoříme velmi podobným způsobem.
+        </p>
+        <h2>
+          <a name="lista" id="lista"></a>Nástrojová lišta
+        </h2>
+        <p>
+          Mnoho aplikací má tzv. nástrojovou lištu hned pod menu, která obvykle
+          obsahuje několik tlačítek pro běžné funkce jako otevřít, tisk, zpět,
+          apod.
+        </p>
+        <p>
+          V následujícím příkladě použijeme udělátko <b>Frame</b> jako
+          základnu pro lištu a jednotlivá tlačítka budeme pakovat v něm.
+        </p>
+        <h3>
+          <b>Vytvoření jednoduché lišty</b>
+        </h3><img alt="" src="data-zaklad-lista.png" tppabs="http://tkinter.programujte.com/images/data-zaklad-lista.png" height="72" width=
+        "123">
+        <pre>
+# -*- coding: UTF-8 -*-
+from Tkinter import *
+
+def volanafunkce():
+    print u"zde je tělo volané funkce"
+
+hlavni=Tk()
+lista=Frame(hlavni)
+lista.pack(fill=BOTH)
+
+img1=PhotoImage(file="new.gif")
+img2=PhotoImage(file="open.gif")
+
+b1=Button(lista,image=img1, command=volanafunkce)
+b1.pack(side=LEFT, fill= BOTH)
+b2=Button(lista, image=img2, command=volanafunkce)
+b2.pack(side=LEFT, fill=BOTH)
+
+mainloop()
+</pre>
+        <p>
+          Tlačítka jsou pakována ke své levé straně a samotná lišta pak ke své
+          straně horní. Parametr <b>fill</b> je u tlačítek <b>BOTH</b>, aby
+          zcela vyplňoval svého rodiče, pokud to bude nutné.
+        </p>
+        <h2>
+          <a name="status" id="status"></a>Stavový řádek
+        </h2>
+        <p>
+          Většina aplikací má dole stavový řádek. Implementace tohoto je v
+          Tkinter triviální. Jednoduše použijte udělátko <b>Label</b> a
+          konfigurujte parametr <b>text</b>. 
+        </p>
+        <h3>
+          Jednoduchý příklad:
+        </h3>
+        <p>
+          <img alt="" src="data-zaklad-status.png" tppabs="http://tkinter.programujte.com/images/data-zaklad-status.png" height="187" width=
+          "362">
+        </p>
+        <pre>
+# -*- coding: UTF-8 -*-
+from Tkinter import *
+
+
+hlavni=Tk()
+
+prac=Text(hlavni, height=10)
+prac.pack(fill=BOTH, expand=1)
+
+status = Label(hlavni, text="", bd=1, relief=SUNKEN, anchor=W)
+status.pack(fill=X)
+status["text"] = u"Hej, já jsem stavový řádek!"
+
+mainloop()
+</pre>
+        <h3>
+          Příklad s vlastní třídou
+        </h3>
+        <p>
+          Chcete-li jít s dobou, použijte následující třídu. Vhodně obaluje
+          udělátko <b>Label</b> - poskytuje metody <b>set</b> a
+          <b>clear</b> na nastavování obsahu stavového řádku.
+        </p>
+        <pre>
+class StatusBar(Frame):
+
+    def __init__(self, master):
+        Frame.__init__(self, master)
+        self.label = Label(self, bd=1, relief=SUNKEN, anchor=W)
+        self.label.pack(fill=X)
+
+    def set(self, format, *args):
+        self.label.config(text=format % args)
+        self.label.update_idletasks()
+
+    def clear(self):
+        self.label.config(text="")
+        self.label.update_idletasks()
+</pre>
+        <p>
+          Metoda <b>set</b> je připravena na použití s formátovacími řetězci.
+          To je výhodné, když potřebujete do stavového řádku zapisovat několik
+          proměnných. Například název a čas zapíšete takto (pokud je máte
+          uloženy v proměnných <code>nazev</code> a <code>cas</code>).
+        </p>
+        <pre>
+status = StatusBar(hlavni)
+status.pack(side=BOTTOM, fill=X)
+status.set("%s - %s" % (nazev, cas))
+</pre>
+        <p>
+          Skutečný trik je však použití dědičnosti z udělátka <b>Frame</b>.
+          Vytvořili jsme tak v podstatě nový typ udělátka, se kterým se dá
+          pracovat, jako s jakýmkoliv jiným.
+        </p>
+        <p>
+          Mohli jsme dědit rovnou z <b>Label</b> a rozšířit ho pouze o metody
+          <b>set</b> a <b>clear</b>, ale toto řešení má několik nevýhod:
+        </p>
+        <ul>
+          <li>
+            <p>
+              Bude obtížnější udržet integritu stavového řádku. Někdo může
+              švindlovat a místo <b>set</b> používat <b>config</b>. Nebyl by to
+              snad velký problém, pokud byste se jednoho dne nerozhodli, že do
+              metody <b>set</b> přidáte ještě něco. A nebo budete chtít místo
+              <b>Label</b> implementovat <b>Canvas</b>.
+            </p>
+          </li>
+          <li>
+            <p>
+              Zvyšuje to riziko, že vaše dodatečné metody budou v konfliktu s
+              parametry nebo metodami Tkinter. Zatímco <b>Frame</b> a
+              <b>Toplevel</b> mají metod relativně málo, další udělátka mají
+              desítky specifických parametrů a metod.
+            </p>
+          </li>
+          <li>
+            <p>
+              Budoucí verze Tkinter mohou používat spíše factory functions
+              namísto tříd u většiny udělátek. Nicméně stále je, víceméně,
+              zaručeno, že <b>Frame</b> a <b>Toplevel</b> třídami
+              zůstanou. Jinými slovy: jistota je lepší než omluva.
+            </p>
+          </li>
+        </ul>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

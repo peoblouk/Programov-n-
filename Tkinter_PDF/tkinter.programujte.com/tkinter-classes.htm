@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+    <meta name="generator" content="HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    
+    <title>Třídy Tkinter ::: Úvod do Tkinter ::: tkinter.programujte.com</title><link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media="print"></head>
+
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro Tkinter - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-hello-again.htm" tppabs="http://tkinter.programujte.com/tkinter-hello-again.htm">předchozí</a> ] [ <a href="tkinter-widget-configuration.htm" tppabs="http://tkinter.programujte.com/tkinter-widget-configuration.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href="javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-classes.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-classes.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-classes.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Třídy Tkinter
+        </h1><br>
+        <h2>
+          <a name="tridy" id="tridy"></a> Třídy udělátek
+        </h2><a href="button.htm" tppabs="http://tkinter.programujte.com/button.htm">Button</a> - Tlačítko<br>
+        <a href="canvas.htm" tppabs="http://tkinter.programujte.com/canvas.htm">Canvas</a> - Plátno<br>
+        <a href="checkbutton.htm" tppabs="http://tkinter.programujte.com/checkbutton.htm">Checkbutton</a> - Zaškrtávací tlačítko<br>
+        <a href="entry.htm" tppabs="http://tkinter.programujte.com/entry.htm">Entry</a> - Vstupní pole<br>
+        <a href="frame.htm" tppabs="http://tkinter.programujte.com/frame.htm">Frame</a> - Rám<br>
+        <a href="label.htm" tppabs="http://tkinter.programujte.com/label.htm">Label</a> - Štítek<br>
+        <a href="labelframe.htm" tppabs="http://tkinter.programujte.com/labelframe.htm">LabelFrame</a> - Rámeček s popisem<br>
+        <a href="listbox.htm" tppabs="http://tkinter.programujte.com/listbox.htm">Listbox</a> - Rozbalený seznam<br>
+        <a href="menu.htm" tppabs="http://tkinter.programujte.com/menu.htm">Menu</a> - Menu, nabídka<br>
+        <a href="menubutton.htm" tppabs="http://tkinter.programujte.com/menubutton.htm">Menubutton</a> - Menu na tlačítku<br>
+        <a href="message.htm" tppabs="http://tkinter.programujte.com/message.htm">Message</a> - Zpráva<br>
+        <a href="optionmenu.htm" tppabs="http://tkinter.programujte.com/optionmenu.htm">OptionMenu</a> - Rozbalovací nabídka<br>
+        <a href="panedwindow.htm" tppabs="http://tkinter.programujte.com/panedwindow.htm">PanedWindow</a> - Panelové okno<br>
+        <a href="radiobutton.htm" tppabs="http://tkinter.programujte.com/radiobutton.htm">Radiobutton</a> - Přepínací tlačítko<br>
+        <a href="scale.htm" tppabs="http://tkinter.programujte.com/scale.htm">Scale</a> - Stupnice<br>
+        <a href="scrollbar.htm" tppabs="http://tkinter.programujte.com/scrollbar.htm">Scrollbar</a> - Posuvník<br>
+        <a href="spinbox.htm" tppabs="http://tkinter.programujte.com/spinbox.htm">Spinbox</a> - Přepínací seznam<br>
+        <a href="text.htm" tppabs="http://tkinter.programujte.com/text.htm">Text</a> - Text<br>
+        <a href="toplevel.htm" tppabs="http://tkinter.programujte.com/toplevel.htm">Toplevel</a> - Toplevel<br>
+        <p>
+          Poznámka: V Tkinter neexistuje žádná hierarchie udělátek; všechny
+          třídy jsou ve stromu dědičnosti sourozenci.
+        </p>
+        <h2>
+          Společné metody udělátek (Mixins)
+        </h2>
+        <p>
+          Všechna udělátka poskytují následující metody:
+        </p>
+        
+    <ul>
+      <li> <a href="#metody-zakladni"><b>základní metody</b></a> </li>
+      <li> <a href="#metody3">metody správce rozmístnění</a> </li>
+      <li> <a href="#metody4">metody konfigurace</a> </li>
+      <li>další specifické metody, které poskytují<a href="#tridy">samotná udělátka</a>. 
+      </li>
+      <br>
+      <li> <b>Toplevel</b> navíc poskytuje <a href="#metody-toplevel">metody okenního 
+        manažeru</a>. </li>
+    </ul>
+    Typicky to tedy znamená, že každý widget má kolem 150 metod. 
+    <p>
+          Modul Tkinter poskytuje třídy odpovídající jednotlivým udělátkům v
+          Tk, dále množství společných metod (mixinů) a dalších pomocných tříd
+          (<i>společná metoda (mixin)</i> je třída vytvořená tak, aby se dala
+          používat s ostatními třídami (metodou vícenásobné dědičnosti). Nikdy
+          byste neměli v Tkinter přistupovat ke společným metodám přímo.
+        </p>
+        <h3>
+          Společné implementační metody
+        </h3>
+        
+    <p> <a name="metody-zakladni" id="metody-zakladni"></a><a href="widget.htm" tppabs="http://tkinter.programujte.com/widget.htm">Základní 
+      metody</a> (třída Widget) jsou společné metody pro hlavní okno a pro jednotlivé 
+      udělátka. Poskytují velký počet služeb na úrovni Tk i oken, čímž jsou přístupné 
+      pro všechny základní tkinterovské udělátka. Implementováno je to pomocí 
+      <i>delegace</i>; udělátko jednoduše přepošle požadavek patřičnému internímu 
+      objektu. </p>
+        
+    <p> <a name="metody-toplevel" id="metody-toplevel"></a><a href="toplevel.htm" tppabs="http://tkinter.programujte.com/toplevel.htm">Toplevel metody</a> 
+      (třída <b>Wm)</b> se používá jako společná metoda pro hlavní a Toplevel 
+      okna. Poskytují okenní služby, implementace rovněž pomocí delegací. </p>
+        <p>
+          Delegace zjednodušují váš kód: jakmile máte udělátko, můžete
+          přistupovat ke všem částem Tkinter použitím jeho metod.
+        </p>
+        <h3>
+          <a name="metody3" id="metody3"></a> Společné metody rozmisťování
+        </h3>
+        <p>
+          Třídy <a href="grid.htm" tppabs="http://tkinter.programujte.com/grid.htm"><b>Grid</b></a>, <a href="pack.htm" tppabs="http://tkinter.programujte.com/pack.htm"><b>Pack</b></a> a <a href="place.htm" tppabs="http://tkinter.programujte.com/place.htm"><b>Place</b></a>
+          používají jako společné metody jednotlivá udělátka. Rovněž pomocí
+          delegací nabízejí přístup k jednotlivým správcům rozmístnění.
+        </p>
+        <dl>
+          <dt>
+            <a href="grid.htm" tppabs="http://tkinter.programujte.com/grid.htm"><b>Grid</b></a>
+          </dt>
+          <dd>
+            Správce rozmístnění <i>grid</i> vám umožňuje vytvářet layouty
+            podobné tabulkám, umisťováním udělátek do dvourozměrné mřížky.
+            Chcete-li tento typ rozmisťování, použijte metodu <b>grid</b>.
+          </dd>
+          <dt>
+            <a href="pack.htm" tppabs="http://tkinter.programujte.com/pack.htm"><b>Pack</b></a>
+          </dt>
+          <dd>
+            Správce rozmístění <i>pack</i> vám umožňuje vytvářet layouty
+            "balením" udělátek do rodičovských udělátek tím, že jsou považovány
+            za čtvercové oblasti umisťované do rámečků. Chcete-li tento typ
+            rozmisťování, použijte na příslušné udělátko metodu <b>pack</b>.
+          </dd>
+          <dt>
+            <a href="place.htm" tppabs="http://tkinter.programujte.com/place.htm"><b>Place</b></a>
+          </dt>
+          <dd>
+            Správce rozmístění <i>pack</i> vám umožňuje umístnit uděláteko na
+            přesně stanovené místo. Chcete-li tento typ rozmisťování, použijte
+            metodu <b>place</b>.
+          </dd>
+        </dl>
+        <h3>
+          <a name="metody4" id="metody4"></a>Společné metody <a href="tkinter-widget-configuration.htm" tppabs="http://tkinter.programujte.com/tkinter-widget-configuration.htm">konfigurace udělátek</a>
+        </h3>
+        <p>
+          Třída <b>Widget</b> spojuje třídu <b>Misc</b> se správcem
+          rozmisťování a přidává možnost změn udělátek pomocí metod <b>cget</b>
+          a <b>configure,</b> stejně jako možnost změn pomocí slovníku.
+          Poslední možnost se používá nastavování a zjisťování jednotlivých
+          parametrů a je také detailně vysvětlena na další stránce.
+        </p>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - <a href="mailto:V.Titl@seznam.cz">Vítězslav
+          Titl</a>, Pavel Kosina - Copyright © 2006 TkinterCZ - <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License
+          1.2</a>
+        </p>
+      </div>
+    </div>
+  </body></html>

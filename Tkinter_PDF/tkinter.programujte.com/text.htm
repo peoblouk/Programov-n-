@@ -1,0 +1,2271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Udělátko Text ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="spinbox.htm" tppabs="http://tkinter.programujte.com/spinbox.htm">předchozí</a> ] [ <a href=
+          "toplevel.htm" tppabs="http://tkinter.programujte.com/toplevel.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/text.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/text.htm'" tppabs="http://effbot.org/tkinterbook/text.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Udělátko Text
+        </h1>
+        <p>
+          Udělátko <b>Text</b> zobrazuje text. Nabízí vám zobrazení a editaci
+          textu v mnoha variantách. Podporuje také vkládání obrázků a oken.
+        </p>
+        <h2>
+          Obsah
+        </h2>
+        <ul>
+          <li>
+            <a href="#kdy">Kdy Text použít</a>
+          </li>
+          <li>
+            <a href="#patterns">Pojetí - vkládání, mazání, čtení, hledání
+            textu</a>
+          </li>
+          <li>
+            <a href="#koncept">Koncept - pozice, značky, tagy</a>
+          </li>
+          <li>
+            <a href="#reference">Referenční příručka</a>
+          </li>
+        </ul>
+        <h2 id="kdy">
+          Kdy Text použít
+        </h2>
+        <p>
+          Udělátko Text použijte, chcete-li zobrazit textové dokumenty, které
+          obsahují čistý nebo formátovaný text (použití nejrůznějších fontů,
+          vložené obrázky a další). Udělátko text může být také použito jako
+          textový editor.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <h3>
+          Vložení textu
+        </h3>
+        <p>
+          Vytvoříte-li nový text, je prázdný. Na vložení textu do udělátku
+          používejte metodu <b>insert</b>. Vkládejte text na pozice
+          <b>INSERT</b> nebo <b>END</b>:
+        </p>
+        <pre>
+from Tkinter import *
+
+root=Tk()
+text=Text()
+text.pack()
+
+text.insert(END, "ahoj, ")
+text.insert(END, "svete")
+
+mainloop() 
+</pre><img alt="" src="text0.png" tppabs="http://tkinter.programujte.com/images/text0.png">
+        <h3>
+          Vložení textu s tagem (stylem)
+        </h3>
+        <p>
+          K nově přidávanému textu můžete přidávat tzv. tagy (styly), které
+          určují vlastnosti textu:
+        </p>
+        <pre>
+from Tkinter import *
+
+root=Tk()
+text=Text()
+text.pack()
+
+text.tag_config("modre", foreground="blue", underline=1)
+text.insert(END, "kliknete zde!", "modre")
+
+text.insert(END, "\n")
+text.insert(END, "anebo zde!", "cervene")
+text.tag_config("cervene", foreground="red", underline=1, font="Arial 20 bold")
+
+mainloop()  
+</pre>
+        <p>
+          <img alt="" src="text1.png" tppabs="http://tkinter.programujte.com/images/text1.png">
+        </p>
+        <h3>
+          Vložení tlačítka
+        </h3>
+        <p>
+          Chcete-li vkládat vložené objekty, použijte metody
+          <b>window_create</b> nebo <b>image_create</b>:
+        </p>
+        <pre>
+def click():
+    print "klik"
+
+button = Button(text, text="Klik", command=click)
+text.window_create(INSERT, window=button)  
+</pre>
+        <h3>
+          Smazání textu
+        </h3>
+        <p>
+          Chcete-li něco smazat, používejte metodu <b>delete</b>. Takto smažete
+          komplet celý text (maže také všechny vložené obrázky a objekty, ale
+          ne značky):
+        </p>
+        <pre>
+text.delete(1.0, END)  
+</pre>
+        <p>
+          Chcete-li smazat jeden znak, případně jeden vložený objekt nebo
+          obrázek, použijte metodu <b>delete</b> s jediným argumentem:
+        </p>
+        <pre>
+text.delete(INSERT)
+text.delete(button)  
+</pre>
+        <h3>
+          Jen pro čtení
+        </h3>
+        <p>
+          Chcete-li změnit udělátko na <i>jen pro čtení</i>, změňte vlastnost
+          <b>state</b> z <b>NORMAL</b> na <b>DISABLED</b>:
+        </p>
+        <pre>
+text.config(state=NORMAL)
+text.delete(1.0, END)
+text.insert(END, text)
+text.config(state=DISABLED)  
+</pre>
+        <p>
+          Budete-li chtít nyní v programu vkládat do udělátka další text,
+          budete muset zpětně nastavit vlastnost na <b>NORMAL</b>. Jinak jsou
+          všechna volání <b>insert</b> a <b>delete</b> tiše ignorována.
+        </p>
+        <h3>
+          Přečtení textu
+        </h3>
+        <p>
+          K načtení textu do proměnné použijte metodu <b>get</b>:
+        </p>
+        <pre>
+obsah = text.get(1.0, END)  
+</pre>
+        <h3>
+          Pozice v textu
+        </h3>
+        <p>
+          Metoda <b>index</b> převádí jakoukoliv pozici jakéhokoli tvaru na
+          formát radka/sloupec. Použijte to, pokud chcete uložit "absolutní"
+          pozici.
+        </p>
+        <pre>
+index = text.index(index)  
+</pre>
+        <p>
+          Chcete-li však mít stálý přehled o pozicích určitého slova (slov) - i
+          když dojde k vložení nebo smazání nějakého jiného textu - měli byste
+          používat značky - <b>marks</b>.
+        </p>
+        <pre>
+text.mark_set("prvniZnacka", index)
+text.mark_unset("prvniZnacka")
+ 
+</pre>
+        <h3>
+          Příklad - sledování změn
+        </h3>
+        <p>
+          Malý návod, jak sledovat, jestli v textu nenastala nějaká změna:
+        </p>
+        <pre>
+import md5
+def novaSifra(obsah):
+    return md5.md5(obsah).digest()
+
+text.insert(END, obsah) # original obsah
+sifra = novaSifra(obsah)
+
+...
+ 
+obsah = text.get(1.0, END)
+if sifra != novaSifra(obsah):
+    print "Obsah se zmenil!"  
+</pre>
+        <h3>
+          Příklad - oblasti s určitým tagem
+        </h3>Následující příklad ukazuje, jak vypsat všechny oblasti s určitým
+        tagem:
+        <pre>
+oblasti = text.tag_ranges(tag)
+for i in range(0, len(oblasti), 2):
+    start = oblasti[i]
+    stop = oblasti[i+1]
+    print tag, repr(text.get(start, stop))  
+</pre>
+        <h3>
+          Příklad - vyhledávání v textu
+        </h3>
+        <p>
+          Metoda <b>search</b> umožňuje vyhledávat v textu. Nabízí se hledání
+          podle přesné shody (default) nebo regulární výrazy ala Tcl (voláno s
+          <b>regexp</b> = True).
+        </p>
+        <pre>
+text.insert(END, "ahoj, svete")
+
+start = 1.0
+while 1:
+    pozice = text.search("o", start, stopindex=END)
+    if not pozice:
+        break
+    print pozice
+    start = pozice + "+1c"  
+</pre>
+        <p>
+          Vynecháte-li volbu <b>stopindex</b>, vyhledání se bude stále
+          opakovat.
+        </p>
+        <h2 id="koncept">
+          Koncept
+        </h2>
+        <p>
+          Udělátko Text ukládá a zobrazuje řádky textu.
+        </p>
+        <p>
+          Tělo textu může obsahovat znaky, značky, vložené okna a obrázky.
+          Různé oblasti se mohou zobrazovat jinak, k oblastem textu se také
+          dají přiřadit události.
+        </p>
+        <p>
+          Normálně můžete text editovat pomocí klávesnice a myši. Nastavte
+          volbu <b>state</b> na <b>DISABLED</b> a docílíte opak (nejde pak
+          vkládat ani pomocí metody <b>insert</b>).
+        </p>
+        <h3>
+          Pozice
+        </h3>
+        <p>
+          Pozice se používají pro označení míst v textu. Podobně jako
+          pythonovské pozice v seznamech, pozice Textu odpovídají místům mezi
+          dvěma znaky.
+        </p>
+        <p>
+          Tkinter nabízí následující typy pozic:
+        </p>
+        <ul>
+          <li>
+            <p>
+              <b>END</b>
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>INSERT</b>
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>CURRENT</b>
+            </p>
+          </li>
+        </ul>
+        <ul>
+          <li>
+            <p>
+              uživatelsky definované značky
+            </p>
+          </li>
+          <li>
+            <p>
+              uživatelsky definované tagy (<span>"tag.first"</span>,
+              <span>"tag.last"</span>)
+            </p>
+          </li>
+          <li>
+            <p>
+              výběry (<b>SEL_FIRST</b>, <b>SEL_LAST</b>)
+            </p>
+          </li>
+          <li>
+            <p>
+              řádka/sloupec ("radka.sloupec")
+            </p>
+          </li>
+          <li>
+            <p>
+              konec řádky ("radek.end")
+            </p>
+          </li>
+          <li>
+            <p>
+              souřadnice okna (<span>"@x,y"</span>)
+            </p>
+          </li>
+          <li>
+            <p>
+              jména vložených objektů (okna, obrázky)
+            </p>
+          </li>
+          <li>
+            <p>
+              výrazy
+            </p>
+          </li>
+        </ul>
+        <h4>
+          Pojmenované pozice
+        </h4>
+        <p>
+          <b>INSERT</b> (nebo <span>"insert"</span>) odpovídá aktuální pozici
+          vkládacího kurzoru.
+        </p>
+        <p>
+          <b>CURRENT</b> (nebo <span>"current"</span>) odpovídá znaku nejblíže
+          k myši. Aktualizuje se však pouze při pohybu samotné myši bet
+          tisknutí pravého či levého tlačítka (aktualizace nastane, jakmile
+          tlačítko myši pustíte).
+        </p>
+        <p>
+          <b>END</b> (nebo <span>"end"</span>) odpovídá pozici hned za
+          posledním znakem.
+        </p>
+        <p>
+          <i>Uživatelsky definovaní značky</i> jsou pojmenované pozice v textu.
+          <b>INSERT</b> a <b>CURRENT</b> jsou předdefinované značky, ale můžete
+          vytvářet také své. Více níže.
+        </p>
+        <p>
+          <i>Uživatelsky definované tagy</i> reprezentují specielní styly a
+          události, které se mohou k vybranému textu přiřadit. Více níže.
+        </p>
+        <p>
+          Na začátek oblasti označené tagem se můžete odkazovat pomocí syntaxe
+          <span>"<i>tag</i><b>.first</b>"</span> (hned před první znak oblasti
+          označené tagem) a <span>"<i>tag</i><b>.last</b>"</span> (hned za
+          poslední znak oblasti označené tagem).
+        </p>
+        <p>
+          <i>Výběr</i> je specielní tag jménem <b>SEL</b> (nebo
+          <span>"sel"</span>), který odpovídá aktuálnímu výběru. Při odkazech
+          na výběr použijte konstanty <b>SEL_FIRST</b> a <b>SEL_LAST</b>
+        </p>
+        <h4>
+          Řádky a sloupce
+        </h4>
+        <p>
+          <i>řádka/sloupec</i> jsou základní poziční typ. Zadávají se jako
+          řetězec, který se skládá z čísla řádky a čísla sloupce spojeného
+          tečkou. Čísla řádku začínají na 1, zatímco čísla sloupců začínají na
+          0. Tyto pozice můžete vytvářet například takto:
+        </p>
+        <pre>
+"%d.%d" % (radka, sloupec)  
+</pre>
+        <p>
+          Není chyba zadat čísla řádek nebo sloupců za současným rozmezím.
+          Taková čísla pak odpovídají řádce za poslední řádkou, respektive za
+          posledním znakem řádku.
+        </p>
+        <p>
+          Všimněte si, že pozice řádka/sloupec vypadají jako desetinná čísla,
+          ale zřídka se dají také zaměnit (zvažte 1.25 vs. 1.3). Výjimku tvoří
+          v tomto smyslu 1.0, které se použít jako zkráceného "1.0".
+        </p>
+        <p>
+          Metoda <b>index</b> převádí všechny typy indexů do typu
+          řádka/sloupec.
+        </p>
+        <h4>
+          Konce řádků
+        </h4>
+        <p>
+          <i>Konec řádku</i> je pozice, která se zadává ve tvaru
+          "cisloRadku<b>.end</b>" a odpovídá znaku nového řádku na konci každé
+          řádky.
+        </p>
+        <h4>
+          Souřadnice
+        </h4>
+        <p>
+          Můžete také používat pozice typu <i>okenní souřadnice</i>. Při
+          událostech můžete například nalézt nejbližší znak u myši pomocí:
+        </p>
+        <pre>
+"@%d,%d" % (udalost.x, udalost.y)  
+</pre>
+        <h4>
+          Vložené objekty
+        </h4>
+        <p>
+          <i>Vložená jména objektů</i> se mohou použít k odkazům na okna a
+          obrázky vložené do textu. Chcete-li se odkazovat na okno, použijte
+          jako pozici odpovídající instanci. Chcete-li se odkazovat na obrázek,
+          použijte odpovídající Tkinter instanci <b>PhotoImage</b> nebo
+          <b>BitmapImage</b>.
+        </p>
+        <h4>
+          Výrazy
+        </h4>
+        <p>
+          <i>Výrazy</i> se používají pro modifikace jakéhokoliv typu pozice.
+          Výrazy se skládají z vlastní pozice a jednoho nebo více modifikátorů
+          z následujícího přehledu:
+        </p>
+        <ul>
+          <li>
+            <p>
+              <span>"<b>+</b> počet <b>chars</b>"</span> posouvá pozici
+              kupředu. Pozice se posouvá přes nové řádky, avšak nikdy za pozici
+              <b>END</b>.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>"<b>-</b> <i>počet</i> <b>chars</b>"</span> posouvá pozici
+              dozadu. Pozice se posouvá přes nové řádky, avšak nikdy před
+              "1.0".
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>"<b>+</b> <i>počet</i> <b>lines</b>"</span> a
+              <span>"<b>-</b> <i>počet</i> <b>lines</b>"</span> posouvá pozici
+              pod celých řádcích dopředu nebo dozadu. Je-li to možná, pozice
+              sloupce se zachovává, je-li řádek příliš krátká, je pozice na
+              konci toho řádku.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>"<b>linestart</b>"</span> a <span>"<b>lineend</b>"</span>
+              posune pozici před první anebo za poslední znak řádku - to je
+              nová řádka.
+            </p>
+          </li>
+          <li>
+            <p>
+              <span>"<b>wordstart</b>"</span> a <span>"<b>wordend</b>"</span>
+              posune pozici na začátek nebo konec slova. Slova jsou
+              posloupnosti znaků, číslic a podtržítka anebo jediného
+              nemezerového znaku.
+            </p>
+          </li>
+        </ul>
+        <p>
+          Klíčová slova se mohou zkracovat a mezery vynechávat. Např.
+          <span>"<b>+ 5 chars</b>"</span> se dá zkrátit na
+          <span>"<b>+5c</b>"</span>.
+        </p>
+        <pre>
+"insert -5c" značí 5 znaků před aktuální pozicí
+"end -1l" značí začátek posledního řádku
+"insert linestart" značí začátek aktuálního řádku
+ 
+</pre>Příklad smazání znaku <i>před</i> kurzorem
+        <pre>
+def backspace(udalost):
+ udalost.widget.delete("%s-1c" % INSERT, INSERT)  
+</pre>
+        <h3>
+          Značky
+        </h3>
+        <p>
+          Značky jsou obvykle neviditelné objekty vložené v textu. Značky jsou
+          umístěny mezi znaky textu a posouvají se s celým textem.
+        </p>
+        <ul>
+          <li>
+            <p>
+              uživatelsky definované značky
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>INSERT</b>
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>CURRENT</b>
+            </p>
+          </li>
+        </ul>
+        <p>
+          Značky jsou obyčejné řetězce, které mohou obsahovat cokoliv kromě
+          mezer. Je však doporučeno používat pouze abecedu plus čísla. K
+          vytvoření nebo přesunu značky slouží metoda <b>mark_set</b>.
+        </p>
+        <p>
+          Tkinter má dvě zvláštní předdefinované značky:
+        </p>
+        <p>
+          <b>INSERT</b> (nebo <span>"insert"</span>) je speciální značka
+          ukazující na místo, kde je vkládací kurzor. Tato značka není úplně
+          neviditelná, protože kurzor je běžně vidět.
+        </p>
+        <p>
+          <b>CURRENT</b> (nebo <span>"current"</span>) je speciální značka
+          ukazují na místo nejblíže k myši. Aktualizuje se však jen když hýbete
+          s myší a nedržíte přitom žádné myšoidní tlačítko.
+        </p>
+        <p>
+          Tyto speciální značky se dají ovládat stejně jako jiné, ale nedají se
+          smazat.
+        </p>
+        <p>
+          Smažete-li nebo vložíte-li text před značku, značka se přesune
+          společně s ostatním textem. Ke smazání značky použijte metodu
+          <b>mark_unset</b>. Smazání okolního textu nemaže automaticky samotnou
+          značku.
+        </p>
+        <p>
+          Vložíte-li na značku text, značka se posune vpravo nebo vlevo v
+          závislosti na nastavené <i>přitažlivosti -</i> <i>gravity</i> -
+          (<b>LEFT</b> nebo <b>RIGHT</b>; default je <b>RIGHT</b>). Na změnu
+          přitažlivosti u jednotlivé značky použijte metodu
+          <b>mark_gravity</b>.
+        </p>
+        <p>
+          V následujícím příkladu je značka "sentinel" použita, aby uchovala
+          původní pozici vkládacího kurzoru:
+        </p>
+        <pre>
+text.mark_set("sentinel", INSERT)
+text.mark_gravity("sentinel", LEFT)  
+</pre>
+        <p>
+          Nyní můžete nechat uživatele vepsat text na místě vkládacího kurzoru
+          a následně použít <b>text.get(sentinel, INSERT)</b>, chcete li se
+          dozvědět, co napsal.
+        </p>
+        <h3>
+          Tagy
+        </h3>
+        <p>
+          Tagy se požívají, pokud chcete používat styly písma (známé například
+          z textových editorů Word, OpenOffice) a/nebo volání událostí na
+          příslušném textu.
+        </p>
+        <ul>
+          <li>
+            <p>
+              uživatelsky definované tagy
+            </p>
+          </li>
+          <li>
+            <p>
+              <b>SEL</b>
+            </p>
+          </li>
+        </ul>
+        <p>
+          Uživatelských tagů můžete mít libovolně mnoho. Každý text může mít
+          přičleněno několik tagů a stejný tag se může použít na více místech.
+          Narozdíl od udělátka <b>Canvas</b>, tagy v udělátku Text nezmizí,
+          pokud nebude existovat žádný text, který je bude používat.
+        </p>
+        <p>
+          Jména tagů jsou obyčejné řetězce, které mohou obsahovat cokoliv mimo
+          mezer.
+        </p>
+        <p>
+          <b>SEL</b> (nebo <span>"sel"</span>) je speciální tag, který odpovídá
+          aktuálnímu výběru. Tag výběru by se měl v textu objevovat maximálně
+          jednou.
+        </p>
+        <p>
+          Následující volby se používají s metodou <b>tag_config</b> k určení
+          "jak bude písmo vypadat", které bude označeno příslušným tagem:
+        </p>
+        <dl class="odsazeni">
+          <dt>
+            <b>background</b> <span>(barva)</span>
+          </dt>
+          <dd>
+            <p>
+              Barva pozadí pro tento tag. Poznámka: bg není background ve
+              spojení s tagem.
+            </p>
+          </dd>
+          <dt>
+            <b>bgstipple</b> <span>(bitmapa)</span>
+          </dt>
+          <dd>
+            <p>
+              Jméno bitmapy, které se použije pro vykreslení pozadí. Obvyklé
+              bitmapy jsou: <span>"gray12"</span>, <span>"gray25"</span>,
+              <span>"gray50"</span> nebo <span>"gray75"</span>. Default je
+              solid brush (žádná bitmapa).
+            </p>
+          </dd>
+          <dt>
+            <b>borderwidth</b> <span>(vzdálenost)</span>
+          </dt>
+          <dd>
+            <p>
+              Šířka okraje textu. Standard je 0 (bez okraje). Poznámka: bd není
+              borderwitdth.
+            </p>
+          </dd>
+          <dt>
+            <b>fgstipple</b> <span>(bitmapa)</span>
+          </dt>
+          <dd>
+            <p>
+              Jméno bitmapy, která se použije pro vykreslení textu. 
+              Obvyklé bitmapy jsou: <span>"gray12"</span>,
+              <span>"gray25"</span>, <span>"gray50"</span> nebo
+              <span>"gray75"</span>. Default je solid brush (žádná bitmapa).
+            </p>
+          </dd>
+          <dt>
+            <b>font</b> <span>(font)</span>
+          </dt>
+          <dd>
+            <p>
+              Font, který se použije pro tento tag. Například 20 tučně arial
+              je: "Arial 20 bold".
+            </p>
+          </dd>
+          <dt>
+            <b>foreground</b> <span>(barva)</span>
+          </dt>
+          <dd>
+            <p>
+              Barva tohoto tagu. Poznámka: fg není foreground.
+            </p>
+          </dd>
+          <dt>
+            <b>justify</b> <span>(konstanta)</span>
+          </dt>
+          <dd>
+            <p>
+              Řídí zarovnávání textu. První znak řádky určuje, jak bude
+              zarovnána celá řádka.  <b>LEFT</b>, <b>RIGHT</b> nebo
+              <b>CENTER</b>. Standard je <b>LEFT</b>.
+            </p>
+          </dd>
+          <dt>
+            <b>lmargin1</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Levý okraj pro první řádku bloku textu s daným tagem. 
+              Standard je 0 (bez okraje).
+            </p>
+          </dd>
+          <dt>
+            <b>lmargin2</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Levý okraj pro všechny řádky kromě první bloku textu s daným
+              tagem.  Standard je 0 (bez okraje).
+            </p>
+          </dd>
+          <dt>
+            <b>offset</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Řídí, jestli bude text pozdvižen nebo ponížen oproti základní
+              lince. Kladná čísla značí  Horní index, záporná Dolní. 
+              Standard je 0 (bez offsetu).
+            </p>
+          </dd>
+          <dt>
+            <b>overstrike</b> <span>(flag)</span>
+          </dt>
+          <dd>
+            <p>
+              Text je přeškrtnut, je-li flag nenulový.  Je lepší však
+              používat přeškrtávání na úrovni fontu.
+            </p>
+          </dd>
+          <dt>
+            <b>relief</b> <span>(constant)</span>
+          </dt>
+          <dd>
+            <p>
+              Ohraničení textu. Použijte <b>SUNKEN</b>, <b>RAISED</b>,
+              <b>GROOVE</b>, <b>RIDGE</b> nebo <b>FLAT</b>. Standard je
+              <b>FLAT</b> (bez ohraničení).
+            </p>
+          </dd>
+          <dt>
+            <b>rmargin</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Pravý okraj. Standard je 0 (bez pravého okraje).
+            </p>
+          </dd>
+          <dt>
+            <b>spacing1</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Mezera nad prvním řádkem. Standard je 0 (žádné odsazení).
+            </p>
+          </dd>
+          <dt>
+            <b>spacing2</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Mezera mezi řádky bloku textu s daným tagem. Standard je 0.
+            </p>
+          </dd>
+          <dt>
+            <b>spacing3</b> <span>(distance)</span>
+          </dt>
+          <dd>
+            <p>
+              Mezera pod poslední řádkou bloku textu. Standard je 0.
+            </p>
+          </dd>
+          <dt>
+            <b>tabs</b> <span>(string)</span>
+          </dt>
+          <dt>
+            <b>underline</b> <span>(flag)</span>
+          </dt>
+          <dd>
+            <p>
+              Text bude podtržen, pokud hodnota flagu bude nenulová. Například
+              klasický odkaz docílíte pomocí (foreground="blue", underline=1).
+              Nejlepší výsledky však dosáhnete spíše pomocí volby font.
+            </p>
+          </dd>
+          <dt>
+            <b>wrap</b> <span>(constant)</span>
+          </dt>
+          <dd>
+            <p>
+              Zarovnávání textu. <b>NONE</b>, <b>CHAR</b> nebo <b>WORD</b>.
+            </p>
+          </dd>
+        </dl>
+        <p>
+          Připojíte-li k textu několik tagů, platí pravidla, že poslední
+          přepíše předchozí. V následujícím příkladu bude modrý text na žlutém
+          pozadí:
+        </p>
+        <pre>
+text.tag_config("n", background="yellow", foreground="red", font="Arial 20")
+text.tag_config("a", foreground="blue")
+text.insert(END, "ahoj", ("n", "a"))  
+</pre>
+        <p>
+          <img alt="" src="text2.png" tppabs="http://tkinter.programujte.com/images/text2.png" height="148" width="171">
+        </p>
+        <p>
+          <b>Nezáleží</b> na pořadí tagů v <b>tag_insert</b>, ale na pořadí, v
+          jakém se uvádějí <b>tag_config</b>. Změnit priority tagů můžete
+          však pomocí <b>tag_raise</b> a <b>tag_lower</b>. Text bude
+          červený, přidáte-li  <b>text.tag_lower("a")</b> k příkladu
+          uvedenému výše.
+        </p>
+        <p>
+          Metoda <b>tag_bind</b> vám umožňuje svázat událost s textem
+          majícím patřičný tag. Tagy mohou přijímat události od myši i
+          klávesnice včetně událostí <b>Enter</b> a <b>Leave</b>. Následující
+          příklad vytváří klasický hypertextový odkaz se vším všudy:
+        </p>
+        <pre>
+from Tkinter import *
+
+def click(udalost):
+    print "Klik!"
+
+def show_hand_cursor(event):
+    event.widget.configure(cursor="hand1")
+def show_arrow_cursor(event):
+    event.widget.configure(cursor="")
+
+root=Tk()
+text=Text()
+text.pack()
+
+text.tag_config("a", foreground="blue", underline=1)
+text.tag_bind("a", "&lt;Enter&gt;", show_hand_cursor)
+text.tag_bind("a", "&lt;Leave&gt;", show_arrow_cursor)
+text.tag_bind("a", "&lt;Button-1&gt;", click)
+text.config(cursor="arrow")
+text.insert(INSERT, "Klikni na me!", "a")
+
+mainloop()
+ 
+</pre><img alt="" src="text5.png" tppabs="http://tkinter.programujte.com/images/text5.png" height="95" width="205">
+        <h4>
+          Složitější příklady s použitím tagů
+        </h4>
+        <p>
+          <a href="text1.py" tppabs="http://tkinter.programujte.com/scripty/text1.py"><img src="text3.png" tppabs="http://tkinter.programujte.com/images/text3.png"></a>
+        </p>
+        <p>
+          <a href="text2.py.htm" tppabs="http://tkinter.programujte.com/scripty/text2.py"><img src="text4.png" tppabs="http://tkinter.programujte.com/images/text4.png"></a>
+        </p>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Text.class" id=
+            "Tkinter.Text.class"></a>Text(master=None, **options)</b> (class)
+            [<a href="#Tkinter.Text.class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Udělátko pro zobrazování a editaci textu.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodič.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívej se na
+                metodu <b>config</b> pro všechny dostupné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.bbox-method" name=
+            "Tkinter.Text.bbox-method"><b>bbox(index)</b></a> [<a href=
+            "#Tkinter.Text.bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Počítá ohraničující box daného znaku.
+            </p>
+            <p>
+              Tato metoda je funkční pouze, když je udělátko aktualizováno.
+              Buďte si jistí a použijte metodu update_idletasks.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice znaku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Čtveřici (x, y, šířka, výška) nebo None, pokud se znak nenajde.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.compare-method" name=
+            "Tkinter.Text.compare-method"><b>compare(index1, op,
+            index2)</b></a> [<a href="#Tkinter.Text.compare-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Porovnává dvě pozice. Parametr <b>op</b> může být "&lt;",
+              "&lt;=", "==", "&gt;=", "&gt;" nebo "!=" (Pythonovské "&lt;&gt;"
+              není podporováno).
+            </p>
+            <dl>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dd>
+                První pozice.
+              </dd>
+              <dt>
+                <i>op</i>
+              </dt>
+              <dd>
+                Operátor (výše).
+              </dd>
+              <dt>
+                <i>index2</i>
+              </dt>
+              <dd>
+                Druhá pozice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                True, pokud je pravda.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.config-method" name=
+            "Tkinter.Text.config-method"><b>config(**options)</b></a> [<a href=
+            "#Tkinter.Text.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Upravuje jeden nebo více parametrů udělátka. Vrací aktuální
+              nastavení ve formě slovníku, pokud je volána bez parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>autoseparators=</i>
+              </dt>
+              <dd>
+                Standard je 1. (autoSeparators/AutoSeparators)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému. (databázové jméno
+                je background, třída je Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako background.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 2. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako borderwidth.
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je "xterm". (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>exportselection=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (exportSelection/ExportSelection)
+              </dd>
+              <dt>
+                <i>font=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako foreground.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 24. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>Standardní nastavení závisí na
+                systému.
+              </dt>
+              <dd>
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0.
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>insertbackground=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (insertBackground/Foreground)
+              </dd>
+              <dt>
+                <i>insertborderwidth=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (insertBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>insertofftime=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 300. (insertOffTime/OffTime)
+              </dd>
+              <dt>
+                <i>insertontime=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 600. (insertOnTime/OnTime)
+              </dd>
+              <dt>
+                <i>insertwidth=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 2. (insertWidth/InsertWidth)
+              </dd>
+              <dt>
+                <i>maxundo=</i>
+              </dt>
+              <dd>
+                Standard je 0. (maxUndo/MaxUndo)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je SUNKEN. (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectborderwidth=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (selectBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>Standardní nastavení závisí na systému.
+              </dt>
+              <dd>
+                (selectForeground/Background)
+              </dd>
+              <dt>
+                <i>setgrid=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (setGrid/SetGrid)
+              </dd>
+              <dt>
+                <i>spacing1=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (spacing1/Spacing)
+              </dd>
+              <dt>
+                <i>spacing2=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (spacing2/Spacing)
+              </dd>
+              <dt>
+                <i>spacing3=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (spacing3/Spacing)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je NORMAL. (state/State)
+              </dd>
+              <dt>
+                <i>tabs=</i>
+              </dt>
+              <dd>
+                Bez standardního nastavení. (tabs/Tabs)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Bez standardního nastavení. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>undo=</i>
+              </dt>
+              <dd>
+                Standard je 0. (undo/Undo)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 80. (width/Width)
+              </dd>
+              <dt>
+                <i>wrap=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je CHAR. (wrap/Wrap)
+              </dd>
+              <dt>
+                <i>xscrollcommand=</i>
+              </dt>
+              <dd>
+                Bez standardního nastavení. (xScrollCommand/ScrollCommand)
+              </dd>
+              <dt>
+                <i>yscrollcommand=</i>
+              </dt>
+              <dd>
+                Bez standardního nastavení. (yScrollCommand/ScrollCommand)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.debug-method" name=
+            "Tkinter.Text.debug-method"><b>debug(boolean=None)</b></a>
+            [<a href="#Tkinter.Text.debug-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zapíná nebo vypíná ladění.
+            </p>
+            <dl>
+              <dt>
+                <i>boolean</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.delete-method" name=
+            "Tkinter.Text.delete-method"><b>delete(start, end=None)</b></a>
+            [<a href="#Tkinter.Text.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže znak (nebo vložený objekt) na dané pozici nebo celý text v
+              daném rozsahu.
+            </p>
+            <dl>
+              <dt>
+                <i>start</i>
+              </dt>
+              <dd>
+                Startovací pozice.
+              </dd>
+              <dt>
+                <i>end</i>
+              </dt>
+              <dd>
+                Konečná pozice. Je-li vynechána, bude smazán jeden znak.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.dlineinfo-method" name=
+            "Tkinter.Text.dlineinfo-method"><b>dlineinfo(index)</b></a>
+            [<a href="#Tkinter.Text.dlineinfo-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Počítá ohraničující box řádky pro daný znak.
+            </p>Tato metoda je funkční pouze, když je udělátko aktualizováno.
+            Buďte si jistí a použijte metodu update_idletasks.
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice znaku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pětice: (x, y, šířka, výška, offset). Poslední člen offset
+                se bere od vršku řádky k jejímu spodku. Pokud řádka je
+                neviditelná, metoda vrací None.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.dump-method" name=
+            "Tkinter.Text.dump-method"><b>dump(index1, index2=None,
+            command=None, **kw)</b></a> [<a href=
+            "#Tkinter.Text.dump-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Výpis obsahu udělátka.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.edit_modified-method" name=
+            "Tkinter.Text.edit_modified-method"><b>edit_modified(arg=None)</b></a>
+            [<a href="#Tkinter.Text.edit_modified-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda edit_modified.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.edit_redo-method" name=
+            "Tkinter.Text.edit_redo-method"><b>edit_redo()</b></a> [<a href=
+            "#Tkinter.Text.edit_redo-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda edit_redo.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.edit_reset-method" name=
+            "Tkinter.Text.edit_reset-method"><b>edit_reset()</b></a> [<a href=
+            "#Tkinter.Text.edit_reset-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda edit_reset.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.edit_separator-method" name=
+            "Tkinter.Text.edit_separator-method"><b>edit_separator()</b></a>
+            [<a href="#Tkinter.Text.edit_separator-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda edit_separator.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.edit_undo-method" name=
+            "Tkinter.Text.edit_undo-method"><b>edit_undo()</b></a> [<a href=
+            "#Tkinter.Text.edit_undo-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda edit_undo.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.get-method" name=
+            "Tkinter.Text.get-method"><b>get(start, end=None)</b></a> [<a href=
+            "#Tkinter.Text.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací znak na dané pozici nebo celý text v daném rozsahu.
+            </p>
+            <dl>
+              <dt>
+                <i>start</i>
+              </dt>
+              <dd>
+                Startovní pozice.
+              </dd>
+              <dt>
+                <i>end</i>
+              </dt>
+              <dd>
+                Konečná pozice. Je-li vynechána, vrací jeden znak.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.image_cget-method" name=
+            "Tkinter.Text.image_cget-method"><b>image_cget(index,
+            option)</b></a> [<a href="#Tkinter.Text.image_cget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací aktuální hodnotu daného parametru. Pokud na dané pozici
+              žádný obrázek není, je vyvolána výjimka <b>TclError</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+              <dt>
+                <i>option</i>
+              </dt>
+              <dd>
+                Parametr obrázku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Hodnota parametru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.image_configure-method" name=
+            "Tkinter.Text.image_configure-method"><b>image_configure(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Text.image_configure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jeden nebo více parametrů. Není-li na pozici žádný obrázek,
+              je vyvolána výjimka <b>TclError</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry obrázku.
+              </dd>
+              <dt>
+                <i>align=</i>
+              </dt>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek. PhotoImage nebo BitmapImage objekt nebo
+                kompatibilní.
+              </dd>
+              <dt>
+                <i>name=</i>
+              </dt>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dt>
+                <i>pady=</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.image_create-method" name=
+            "Tkinter.Text.image_create-method"><b>image_create(index, cnf={},
+            **kw)</b></a> [<a href="#Tkinter.Text.image_create-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá obrázek na danou pozici. Obrázek musí být 
+              <b>PhotoImage</b> nebo <b>BitmapImage</b> instance (nebo instance
+              odpovídající třídy PIL).
+            </p>
+            <p>
+              Tato metoda nefunguje v Tk níže něž 8.0. Obejít se dá vložením
+              obrázku do udělátka Label a použitím  window_create.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry obrázku. Více v image_config.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.image_names-method" name=
+            "Tkinter.Text.image_names-method"><b>image_names()</b></a>
+            [<a href="#Tkinter.Text.image_names-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Hledá jména všech obrázků v textovém udělátku. Tkinter neumožňuje
+              vracet odpovídající objekty <b>PhotoImage</b> a
+              <b>BitmapImage</b>, nicméně můžete si je uchovávat ve slovníku,
+              při použití  <b>str(image)</b> jako klíče.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                N-tici obsahující jména obrázků.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.index-method" name=
+            "Tkinter.Text.index-method"><b>index(index)</b></a> [<a href=
+            "#Tkinter.Text.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací pozici ve tvaru "řádka.sloupec" z jakéhokoliv typu dané
+              pozice.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající řádka/sloupec, předaný jako řetězec
+                "radka.sloupec".
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.insert-method" name=
+            "Tkinter.Text.insert-method"><b>insert(index, text, *tags)</b></a>
+            [<a href="#Tkinter.Text.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá text na danou pozici. Pozice je typicky <b>INSERT</b>
+              nebo <b>END</b>.  Předáte-li jeden nebo více tagů, budou
+              přilípnuty k novému textu.
+            </p>
+            <p>
+              Vložíte-li text na značku, bude značka posunuta podle nastavení
+              gravity.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam vložit text.
+              </dd>
+              <dt>
+                <i>text</i>
+              </dt>
+              <dd>
+                Text ke vložení.
+              </dd>
+              <dt>
+                <i>*tags</i>
+              </dt>
+              <dd>
+                Volitelné tagy připojené k textu.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_gravity-method" name=
+            "Tkinter.Text.mark_gravity-method"><b>mark_gravity(self, name,
+            direction=None)</b></a> [<a href=
+            "#Tkinter.Text.mark_gravity-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje přitažlivost (gravity) pro danou značku. Přitažlivost
+              řídí, jak posunout značku, když je text vložen právě na značku.
+              Značka zůstane na místě, pokud je gravity <b>LEFT</b> (text se
+              vloží za značku). Značka se posune vpravo na konec vkládaného
+              textu, pokud je gravity <b>RIGHT</b> (text se vloží před
+              značku). Standard je  <b>RIGHT</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dd>
+                Jméno značky.
+              </dd>
+              <dt>
+                <i>direction</i>
+              </dt>
+              <dd>
+                Nastavení přitažlivosti (<b>LEFT</b> nebo <b>RIGHT</b>). Je-li
+                vynecháno, metoda vrací současné nastavení. 
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                SOučasné nastavení, pokud je vynechán parametr.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_names-method" name=
+            "Tkinter.Text.mark_names-method"><b>mark_names()</b></a> [<a href=
+            "#Tkinter.Text.mark_names-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Najde všechny značky v udělátku. Zahrnuje i  <b>INSERT</b> a
+              <b>CURRENT</b>, ale ne <b>END</b>, který je speciální
+              pozice, ne značka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                N-tice obsahující jména značek.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_next-method" name=
+            "Tkinter.Text.mark_next-method"><b>mark_next(index)</b></a>
+            [<a href="#Tkinter.Text.mark_next-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda mark_next.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_previous-method" name=
+            "Tkinter.Text.mark_previous-method"><b>mark_previous(index)</b></a>
+            [<a href="#Tkinter.Text.mark_previous-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda mark_previous.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_set-method" name=
+            "Tkinter.Text.mark_set-method"><b>mark_set(name, index)</b></a>
+            [<a href="#Tkinter.Text.mark_set-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posune značku na danou pozici. Pokud značka neexistuje, je
+              vytvořena s přitažlivostí <b>RIGHT</b>. Používejte tuto
+              metodu i pro změnu aktuální pozice značek <b>INSERT</b> a
+              <b>CURRENT</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dd>
+                Jméno značky.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Nová pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.mark_unset-method" name=
+            "Tkinter.Text.mark_unset-method"><b>mark_unset(name)</b></a>
+            [<a href="#Tkinter.Text.mark_unset-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní značku. Značky <b>INSERT</b> a <b>CURRENT</b> se
+              odstranit nedají.
+            </p>
+            <dl>
+              <dt>
+                <i>name</i>
+              </dt>
+              <dd>
+                Jméno značky.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.scan_dragto-method" name=
+            "Tkinter.Text.scan_dragto-method"><b>scan_dragto(x, y)</b></a>
+            [<a href="#Tkinter.Text.scan_dragto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Roluje obsah udělátka. Text je posunut 10x více, než je
+              vzdálenost mezi zarážkou a novou pozicí.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dt>
+                <i>y</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.scan_mark-method" name=
+            "Tkinter.Text.scan_mark-method"><b>scan_mark(x, y)</b></a>
+            [<a href="#Tkinter.Text.scan_mark-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje zarážku. Je používána pro rychlé rolování.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dt>
+                <i>y</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.search-method" name=
+            "Tkinter.Text.search-method"><b>search(pattern, index,
+            stopindex=None, forwards=None, backwards=None, exact=None,
+            regexp=None, nocase=None, count=None)</b></a> [<a href=
+            "#Tkinter.Text.search-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Hledá řetězce nebo regulární výrazy.
+            </p>
+            <dl>
+              <dt>
+                <i>pattern</i>
+              </dt>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>stopindex</i>
+              </dt>
+              <dt>
+                <i>forwards</i>
+              </dt>
+              <dt>
+                <i>backwards</i>
+              </dt>
+              <dt>
+                <i>exact</i>
+              </dt>
+              <dt>
+                <i>regexp</i>
+              </dt>
+              <dt>
+                <i>nocase</i>
+              </dt>
+              <dt>
+                <i>count</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.see-method" name=
+            "Tkinter.Text.see-method"><b>see(index)</b></a> [<a href=
+            "#Tkinter.Text.see-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zajistí, aby daná pozice byla viditelná. Pokud není, bude
+              rolováno, aby byla vidět.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_add-method" name=
+            "Tkinter.Text.tag_add-method"><b>tag_add(tagName, index1,
+            *args)</b></a> [<a href="#Tkinter.Text.tag_add-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_add.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dt>
+                <i>*args</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_bind-method" name=
+            "Tkinter.Text.tag_bind-method"><b>tag_bind(tagName, sequence, func,
+            add=None)</b></a> [<a href="#Tkinter.Text.tag_bind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_bind.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>sequence</i>
+              </dt>
+              <dt>
+                <i>func</i>
+              </dt>
+              <dt>
+                <i>add</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_cget-method" name=
+            "Tkinter.Text.tag_cget-method"><b>tag_cget(tagName, option)</b></a>
+            [<a href="#Tkinter.Text.tag_cget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_cget.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>option</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_config-method" name=
+            "Tkinter.Text.tag_config-method"><b>tag_config(tagName, cnf={},
+            **kw)</b></a> [<a href="#Tkinter.Text.tag_config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_config.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>cnf</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_configure-method" name=
+            "Tkinter.Text.tag_configure-method"><b>tag_configure(tagName,
+            cnf={}, **kw)</b></a> [<a href=
+            "#Tkinter.Text.tag_configure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_configure.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>cnf</i>
+              </dt>
+              <dt>
+                <i>**kw</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_delete-method" name=
+            "Tkinter.Text.tag_delete-method"><b>tag_delete(*tagNames)</b></a>
+            [<a href="#Tkinter.Text.tag_delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_delete.
+            </p>
+            <dl>
+              <dt>
+                <i>*tagNames</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_lower-method" name=
+            "Tkinter.Text.tag_lower-method"><b>tag_lower(tagName,
+            belowThis=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_lower-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_lower.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>belowThis</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_names-method" name=
+            "Tkinter.Text.tag_names-method"><b>tag_names(index=None)</b></a>
+            [<a href="#Tkinter.Text.tag_names-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_names.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_nextrange-method" name=
+            "Tkinter.Text.tag_nextrange-method"><b>tag_nextrange(tagName,
+            index1, index2=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_nextrange-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_nextrange.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dt>
+                <i>index2</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_prevrange-method" name=
+            "Tkinter.Text.tag_prevrange-method"><b>tag_prevrange(tagName,
+            index1, index2=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_prevrange-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_prevrange.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dt>
+                <i>index2</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_raise-method" name=
+            "Tkinter.Text.tag_raise-method"><b>tag_raise(tagName,
+            aboveThis=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_raise-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_raise.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>aboveThis</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_ranges-method" name=
+            "Tkinter.Text.tag_ranges-method"><b>tag_ranges(tagName)</b></a>
+            [<a href="#Tkinter.Text.tag_ranges-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_ranges.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_remove-method" name=
+            "Tkinter.Text.tag_remove-method"><b>tag_remove(tagName, index1,
+            index2=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_remove-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_remove.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dt>
+                <i>index2</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.tag_unbind-method" name=
+            "Tkinter.Text.tag_unbind-method"><b>tag_unbind(tagName, sequence,
+            funcid=None)</b></a> [<a href=
+            "#Tkinter.Text.tag_unbind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda tag_unbind.
+            </p>
+            <dl>
+              <dt>
+                <i>tagName</i>
+              </dt>
+              <dt>
+                <i>sequence</i>
+              </dt>
+              <dt>
+                <i>funcid</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.window_cget-method" name=
+            "Tkinter.Text.window_cget-method"><b>window_cget(index,
+            option)</b></a> [<a href="#Tkinter.Text.window_cget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací současnou hodnotu daného okenního parametru. Pokud nic
+              takového neexistuje, vrací výjimku <b>TclError</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>option</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.window_config-method" name=
+            "Tkinter.Text.window_config-method"><b>window_config(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Text.window_config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jednu nebo více okenního parametrů. Pokud nic takového
+              neexistuje, vrací výjimku <b>TclError</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dt>
+                <i>align=</i>
+              </dt>
+              <dt>
+                <i>create=</i>
+              </dt>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dt>
+                <i>stretch=</i>
+              </dt>
+              <dt>
+                <i>window=</i>
+              </dt>
+              <dd>
+                Window object.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.window_configure-method" name=
+            "Tkinter.Text.window_configure-method"><b>window_configure(index,
+            cnf=None, **kw)</b></a> [<a href=
+            "#Tkinter.Text.window_configure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#text.Text.window_config-method"><b>window_config</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.window_create-method" name=
+            "Tkinter.Text.window_create-method"><b>window_create(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Text.window_create-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá udělátko na danou pozici. Můžete buď nejprve vytvořit
+              udělátko, které by mělo být potomkem samotného textového
+              udělátka, a vložit ho pomocí <b>window</b> nebo
+              poskytnout zpětné volání <b>create</b>, které bude zavoláno, když
+              bude okno poprvé zobrazeno.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry okna. Více viz window_config.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.window_names-method" name=
+            "Tkinter.Text.window_names-method"><b>window_names()</b></a>
+            [<a href="#Tkinter.Text.window_names-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací n-tici, obsahující všechna vložená okna. 
+            </p>
+            <p>
+              Ukázkový příklad, jak převést jména na seznam instancí udělátek:
+            </p>
+            <pre>
+windows = text.window_names()
+try:
+    windows = map(text.nametowidget, windows)
+except TclError:
+    pass  
+</pre>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Seznam jmen oken.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.xview-method" name=
+            "Tkinter.Text.xview-method"><b>xview(*what)</b></a> [<a href=
+            "#Tkinter.Text.xview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda xview.
+            </p>
+            <dl>
+              <dt>
+                <i>*what</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.xview_moveto-method" name=
+            "Tkinter.Text.xview_moveto-method"><b>xview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Text.xview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda xview_moveto.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.xview_scroll-method" name=
+            "Tkinter.Text.xview_scroll-method"><b>xview_scroll(number,
+            what)</b></a> [<a href="#Tkinter.Text.xview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda xview_scroll.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dt>
+                <i>what</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.yview-method" name=
+            "Tkinter.Text.yview-method"><b>yview(*what)</b></a> [<a href=
+            "#Tkinter.Text.yview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda yview.
+            </p>
+            <dl>
+              <dt>
+                <i>*what</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.yview_moveto-method" name=
+            "Tkinter.Text.yview_moveto-method"><b>yview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Text.yview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda yview_moveto.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.yview_pickplace-method" name=
+            "Tkinter.Text.yview_pickplace-method"><b>yview_pickplace(*what)</b></a>
+            [<a href="#Tkinter.Text.yview_pickplace-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda yview_pickplace.
+            </p>
+            <dl>
+              <dt>
+                <i>*what</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Text.yview_scroll-method" name=
+            "Tkinter.Text.yview_scroll-method"><b>yview_scroll(number,
+            what)</b></a> [<a href="#Tkinter.Text.yview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda yview_scroll.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dt>
+                <i>what</i>
+              </dt>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - geon - Copyright © 2007 TkinterCZ - <a href=
+          "javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation License
+          1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

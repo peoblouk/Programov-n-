@@ -1,0 +1,666 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org" />
+    <title>
+      Udělátko Spinbox. Úvod do Tkinter.
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="scrolledtext.htm" tppabs="http://tkinter.programujte.com/scrolledtext.htm">předchozí</a> ] [ <a href=
+          "text.htm" tppabs="http://tkinter.programujte.com/text.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/spinbox.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/spinbox.htm'" tppabs="http://effbot.org/tkinterbook/spinbox.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Spinbox - Přepínací seznam
+        </h1>(nové v Tk 8.4) Udělátko <span style=
+        "font-weight: bold;">Spinbox</span> je varianta udělátka Entry, které
+        může být použito k vybrání čísla z nějakého intervalu.
+        <h2>
+          Kdy použít Přepínací seznam
+        </h2>
+        <p>
+          Udělátko Přepínací seznam se obvykle používá v situacích, kdy
+          potřebujete, aby uživatel mohl vybrat číslo z nějakého intervalu.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Přepínací seznam je velmi podobný udělátku Entry. Hlavní rozdíl je,
+          že zde můžete specifikovat, které hodnoty jsou povolené použitím
+          parametrů <span style="font-weight: bold;">from</span>, <span style=
+          "font-weight: bold;">to</span> anebo <span style=
+          "font-weight: bold;">value</span>.
+        </p>
+        <pre>
+from Tkinter import *<br /><br />master = Tk()<br /><br />w = Spinbox(master, from_=0, to=10)<br />w.pack()<br /><br />mainloop()<br /><br /><img src="data-spinbox-7c6bb4cc0a5283c1cab9812fa695b9dd.png" tppabs="http://tkinter.programujte.com/images/data-spinbox-7c6bb4cc0a5283c1cab9812fa695b9dd.png" /><br />
+</pre>
+        <p>
+          Pomocí n-tice můžete přesně specifikovat hodnoty, které se v
+          přepínacím seznamu objevovat.
+        </p>
+        <pre>
+w = Spinbox(values=(1, 2, 4, 8))<br />w.pack()<br />
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Spinbox-class" id=
+            "Tkinter.Spinbox-class"></a>Spinbox(master=None, **options)</b>
+            (class) [<a href="#Tkinter.Spinbox-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Udělátko přepínací seznam.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Metoda config obsahuje všechny dostupné
+                parametry pro toto udělátko.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.bbox-method" name=
+            "Tkinter.Spinbox.bbox-method"><b>bbox(index)</b></a> [<a href=
+            "#Tkinter.Spinbox.bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací ohraničující obdélník daného znaku.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.config-method" name=
+            "Tkinter.Spinbox.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Spinbox.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Změní jeden nebo více parametrů udělátka. Jestliže zavoláte tuto
+              metodu bez parametru, vrátí slovník se všemi již danými
+              parametry.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (activeBackground/Background)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému. (background/Background)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako&nbsp;<b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje. Standardní nastavení záleží na systému, ale
+                obvykle je to několik pixelů. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>buttonbackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí tlačítka. Standardní nastavení záleží na systému.
+                (Button.background/Background)
+              </dd>
+              <dt>
+                <i>buttoncursor=</i>
+              </dt>
+              <dd>
+                Kurzor, který se objeví, když se myš přesune nad tlačítka
+                přepínacího seznamu. Tento parametr nemá standardní
+                nastavení.&nbsp;(Button.cursor/Cursor)
+              </dd>
+              <dt>
+                <i>buttondownrelief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje horního tlačítka. Standardní nastavení je RAISED.
+                (Button.relief/Relief)
+              </dd>
+              <dt>
+                <i>buttonuprelief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje dolního tlačítka. Standardní nastavení je RAISED.
+                (Button.relief/Relief)
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Funkce, která se zavolá když uživatel zmáčkne tlačítko. Tento
+                parametr nemá standardní nastavení. (command/Command)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Kurzor který se objeví, když se myš dostane nad vstup.
+                Standardní nastavení je klasický vkládací kurzor.&nbsp;(obvykle
+                XTERM). (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledbackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí, které se zobrazí, když je přepínací seznam
+                DISABLED.&nbsp;Standardní nastavení záleží na systému.
+                (disabledBackground/DisabledBackground)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Barva textu, když je udělátko ve stavu
+                DISABLED.&nbsp;Standardní nastavení záleží na systému.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>exportselection=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je True. (exportSelection/ExportSelection)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Typ písma, který se použije v udělátku.&nbsp;Standardní
+                nastavení záleží na systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva textu.&nbsp;Standardní nastavení záleží na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>format=</i>
+              </dt>
+              <dd>
+                Formát řetězce. Tento parametr nemá standardní nastavení.
+                (format/Format)
+              </dd>
+              <dt>
+                <i>from=</i>
+              </dt>
+              <dd>
+                Minimální hodnota. Používejte společně s parametrem
+                <span style="font-weight: bold;">to</span>.<br />
+                <br />
+                Upozornění:&nbsp;<span style="font-weight: bold;">from</span>
+                je klíčové slovo Pythona, takže musíte přidat podtržítko.
+                (<b>from_</b>). (from/From)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní
+                nastavení.&nbsp;(highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>increment=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 1.0. (increment/Increment)
+              </dd>
+              <dt>
+                <i>insertbackground=</i>
+              </dt>
+              <dd>
+                Barva vkládacího kurzoru. (insertBackground/Foreground)
+              </dd>
+              <dt>
+                <i>insertborderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje kurzoru. Je-li nastaven na nenulovou hodnotu, je
+                kurzor vykreslen stylem <b>RAISED</b>.&nbsp;
+                (insertBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>insertofftime=</i>
+              </dt>
+              <dd>
+                Společně s <b>insertontime</b> ovlivňují rychlost blikání
+                vkládacího kurzoru. Obě hodnoty vkládejte v milisekundách.
+                (insertOffTime/OffTime)
+              </dd>
+              <dt>
+                <i>insertontime=</i>
+              </dt>
+              <dd>
+                Podívejte se na <b>insertofftime</b>. (insertOnTime/OnTime)
+              </dd>
+              <dt>
+                <i>insertwidth=</i>
+              </dt>
+              <dd>
+                Šířka vkládacího kurzoru. Obvykle jeden nebo dva pixely.
+                (insertWidth/InsertWidth)
+              </dd>
+              <dt>
+                <i>invalidcommand=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní
+                nastavení.&nbsp;(invalidCommand/InvalidCommand)
+              </dd>
+              <dt>
+                <i>invcmd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>invalidcommand</b>.
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je LEFT. (justify/Justify)
+              </dd>
+              <dt>
+                <i>readonlybackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (readonlyBackground/ReadonlyBackground)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je SUNKEN. (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectborderwidth=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní nastavení.
+                (selectBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení záleží na systému.
+                (selectForeground/Background)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Použijte jedno z NORMAL, DISABLED nebo "readonly". Standardní
+                nastavení je NORMAL. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, že uživatel může použít klávesu Tab k přesunu na toto
+                udělátko. Standardně má hodnotu prázdného řetězce, což znamená,
+                že udělátko přepínací seznam může mít focus jen když má nějaké
+                klávesnicové vazby. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní
+                nastavení.&nbsp;(textVariable/Variable)
+              </dd>
+              <dt>
+                <i>to=</i>
+              </dt>
+              <dd>
+                Podívejte se na <b>from</b>. (to/To)
+              </dd>
+              <dt>
+                <i>validate=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je NONE. (validate/Validate)
+              </dd>
+              <dt>
+                <i>validatecommand=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní nastavení.
+                (validateCommand/ValidateCommand)
+              </dd>
+              <dt>
+                <i>values=</i>
+              </dt>
+              <dd>
+                N-tice obsahující hodnoty do přepínacího seznamu. Přepisuje
+                <b>from/to/increment</b>. (values/Values)
+              </dd>
+              <dt>
+                <i>vcmd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>validatecommand</b>.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka udělátka v znakových jednotkách. Standardní nastavení je
+                20. (width/Width)
+              </dd>
+              <dt>
+                <i>xscrollcommand=</i>
+              </dt>
+              <dd>
+                Používá se k připojení horizontálního scrollbaru k udělátku.
+                (xScrollCommand/ScrollCommand)
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.delete-method" name=
+            "Tkinter.Spinbox.delete-method"><b>delete(first, last=None)</b></a>
+            [<a href="#Tkinter.Spinbox.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Smaže jeden nebo více písmen z přepínacího seznamu.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.get-method" name=
+            "Tkinter.Spinbox.get-method"><b>get()</b></a> [<a href=
+            "#Tkinter.Spinbox.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací aktuální obsah udělátka.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Obsah udělátka jako řetězec.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.icursor-method" name=
+            "Tkinter.Spinbox.icursor-method"><b>icursor(index)</b></a>
+            [<a href="#Tkinter.Spinbox.icursor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posune vkládací kurzor na daný index.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam posunout vkládací kurzor.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.identify-method" name=
+            "Tkinter.Spinbox.identify-method"><b>identify(x, y)</b></a>
+            [<a href="#Tkinter.Spinbox.identify-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Identifikuje, která část udělátka se nachází na daných
+              souřadnicích.&nbsp;
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Jedno z "none", "buttondown", "buttonup" nebo "entry".
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.index-method" name=
+            "Tkinter.Spinbox.index-method"><b>index(index)</b></a> [<a href=
+            "#Tkinter.Spinbox.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací číslo pozice odpovídající danému indexu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající číselný index.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.insert-method" name=
+            "Tkinter.Spinbox.insert-method"><b>insert(index, text)</b></a>
+            [<a href="#Tkinter.Spinbox.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vloží text na daný index. Použijte&nbsp;insert (INSERT,
+              text)&nbsp; k vložení textu na vkládací kurzor a insert (END,
+              text) k vložení textu na konec přepínacího seznamu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam vložit text.
+              </dd>
+              <dt>
+                <i>string</i>
+              </dt>
+              <dd>
+                Text, který se vloží na zadanou pozici.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.invoke-method" name=
+            "Tkinter.Spinbox.invoke-method"><b>invoke(element)</b></a>
+            [<a href="#Tkinter.Spinbox.invoke-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vyvolá tlačítko spiboxu.
+            </p>
+            <dl>
+              <dt>
+                <i>element</i>
+              </dt>
+              <dd>
+                Jaké tlačítko vyvolat. Musí být buď&nbsp;"buttonup" nebo
+                "buttondown".
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.scan_dragto-method" name=
+            "Tkinter.Spinbox.scan_dragto-method"><b>scan_dragto(x)</b></a>
+            [<a href="#Tkinter.Spinbox.scan_dragto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Sets the scanning anchor for fast horizontal scrolling to the
+              given mouse coordinate.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální pozice myši.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.scan_mark-method" name=
+            "Tkinter.Spinbox.scan_mark-method"><b>scan_mark(x)</b></a>
+            [<a href="#Tkinter.Spinbox.scan_mark-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Scrolls the widget contents sideways according to the given mouse
+              coordinate. The text is moved 10 times the distance between the
+              scanning anchor and the new position.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální pozice myši.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.selection_adjust-method" name=
+            "Tkinter.Spinbox.selection_adjust-method"><b>selection_adjust(index)</b></a>
+            [<a href="#Tkinter.Spinbox.selection_adjust-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastaví výběr tak, aby zahrnoval také daný znak. Pokud je index
+              již vybrán, nemá žádný efekt.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+            </dl><br />
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.selection_clear-method" name=
+            "Tkinter.Spinbox.selection_clear-method"><b>selection_clear()</b></a>
+            [<a href="#Tkinter.Spinbox.selection_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní výběr.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Spinbox.selection_element-method" name=
+            "Tkinter.Spinbox.selection_element-method"><b>selection_element(element=None)</b></a>
+            [<a href="#Tkinter.Spinbox.selection_element-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Dá focus danému elementu. Jestliže je tato metoda volána bez
+              parametru, vrací část udělátka s focusem.
+            </p>
+          </dd>
+        </dl>
+        <div class="navigate">
+          <hr id="zonebar" />
+          <div class="navigate">
+            <p class="info">
+              Přeložil a upravil - geon, Jakub Vojáček - Copyright © 2007 TkinterCZ
+              - <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+              License 1.2</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

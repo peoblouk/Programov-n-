@@ -1,0 +1,152 @@
+BODY {
+    background: #e08814;
+    scrollbar-base-color: #ccffcc;
+    font: 100% Georgia, Times, serif;
+}
+
+#effbot-page {
+    margin-left: 0;
+}
+
+#effbot-nav {
+    float: left;
+    width: 180px;
+    margin: 0;
+    padding: 10px;
+}
+
+#effbot-body {
+   background: white;
+   margin-left: 180px;
+   border-left: 2px solid #084;
+   border-bottom: 2px solid #084;
+   border-right: 2px solid #084;
+   border-top: 2px solid #084;
+   
+   padding: 20px;
+   max-width: 50em;
+   -moz-border-radius: 20px 20px 20px 20px;
+}
+
+#effbot-menu {
+    display: none;
+}
+
+.navigate {
+}
+
+.adsense {
+    padding-top: 1em;
+}
+
+P {
+    line-height: 1.3em;
+}
+
+CODE {
+    font: 100% "Courier New", Courier, Monaco, monospace;
+}
+
+PRE {
+    font: 90% "Courier New", Courier, Monaco, monospace;
+    color: #042; margin-left: 40px; 
+}
+
+H1, H2, H3 {
+    font-family: Georgia, Times, serif;
+    color: #084; margin-top: 30px;
+}
+
+H1, H2 {
+    border-top: 2px solid #084;
+}
+
+H4, H5, H6 {
+    font-family: Georgia, Times, serif;
+    color: #084; margin-top: 15px;
+}
+
+HR {
+    height: 2px;
+    color: #084;
+    background-color: #084;
+}
+
+A:link, A:hover { color: #084; }
+A:visited { color: #404040; }
+
+A.nav:link, A.nav:visited { color: white; } 
+A.nav:hover { color: #084; }
+
+UL LI { list-style-type: square; }
+
+.title { margin-bottom: 2px; color: #084; }
+.info { font-size: 80%; color: #084; margin-top: 0px; }
+
+.bluebox { color: #084; margin-top: 10px; }
+
+.highlight { background: #cfc; }
+.mark { color: #084; }
+.small { font-size: 80%; }
+.display { background: #ededed; padding: 20px; }
+
+.note { 
+    background: #efe;
+    border-top: 1px solid #084;
+    border-bottom: 1px solid #084;
+    padding: 2px 20px;
+}
+
+.example {
+    border-top: medium solid #084;
+    border-bottom: medium solid #084;
+    padding: 5px;
+}
+
+.figure {
+    border-top: medium solid #084;
+    border-bottom: medium solid #084;
+    padding: 5px;
+}
+
+.fixme {
+    background: #ededed;
+    border: 1px solid #565656;
+    padding: 2x 20px;
+}
+
+.simpletable {
+    border: 1px solid #084;
+    border-collapse: collapse;
+}
+
+.simpletable TH {
+    text-align: left;
+    background: #cfc;
+    border: 1px solid #084;
+    margin: 0px;
+    padding: 1px 5px;
+}
+
+.simpletable TD {
+    border: 1px solid #084;
+    margin: 0px;
+    padding: 5px;
+}
+
+.computeroutput {
+    background: #ccffcc;
+    border: 1px solid #084;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.new { text-decoration: underline; color: #4c4c4c; background: #f3f3f3; }
+.old { text-decoration: line-through; color: #1d1d1d; background: #f0f0f0; }
+.old2 {color: #1d1d1d; background: #f0f0f0; }
+
+.odsazeni{
+
+  margin-left:50px;
+
+}

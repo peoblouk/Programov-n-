@@ -1,0 +1,870 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 14 February 2006), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Menu ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="listbox.htm" tppabs="http://tkinter.programujte.com/listbox.htm">předchozí</a> ] [ <a href=
+          "menubutton.htm" tppabs="http://tkinter.programujte.com/menubutton.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [
+          <a href="javascript:if(confirm('http://effbot.org/tkinterbook/menu.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/menu.htm'" tppabs="http://effbot.org/tkinterbook/menu.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Menu
+        </h1>
+        <p>
+          Udělátko menu slouží k implementaci menu (hlavních, rozbalovacích i
+          vyskakovacích).
+        </p>
+        <h2>
+          Kdy Menu použít
+        </h2>
+        <p>
+          Toto udělátko se používá k zobrazování menu všech druhů. Neměli byste
+          mít potřebu vytvářet menu jinými způsoby (například tlačítkem),
+          protože toto udělátko obsahuje nativní kód všude, kde je to možné.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Hlavní menu jsou zobrazovány hned pod titulkovým pruhem okna root i
+          toplevel. K vytvoření hlavního menu vytvořte nejprve novou instanci
+          Menu a pak přidávejte příkazy a další položky menu pomocí metody
+          <b>add</b>.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+root = Tk()
+
+def hello():
+    print "Ahoj!"
+
+# vytvoření hlavního menu
+menuLista = Menu(root)
+menuLista.add_command(label="Ahoj!", command=hello)
+menuLista.add_command(label="Pryč!", command=root.destroy)
+
+# zobrazení menu
+root.config(menu=menuLista)
+mainloop()
+
+</pre>
+        <p>
+          <img alt="" src="menu1.png" tppabs="http://tkinter.programujte.com/images/menu1.png" height="55" width="123">
+        </p>
+        <p>
+          Rozbalovací menu (a další podnabídky) se vytvářejí podobným způsobem.
+          Hlavní rozdíl je, že k rodičovskému menu se musí připojit pomocí
+          <b>add_cascade</b>.
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+root = Tk()
+
+def hello():
+    print "Ahoj!"
+
+hlavniMenu = Menu(root)
+
+# vytvořit rozbalovací menu a přidat ho k hlavnímu menu
+menuSoubor = Menu(hlavniMenu, tearoff=0)
+menuSoubor.add_command(label="Otevřít", command=hello)
+menuSoubor.add_command(label="Uložit", command=hello)
+menuSoubor.add_separator()
+menuSoubor.add_command(label="Pryč", command=root.quit)
+hlavniMenu.add_cascade(label="Soubor", menu=menuSoubor)
+
+# další rozbalovací menu
+menuUpravy = Menu(hlavniMenu, tearoff=0)
+menuUpravy.add_command(label="Vyjmout", command=hello)
+menuUpravy.add_command(label="Kopírovat", command=hello)
+menuUpravy.add_command(label="Vložit", command=hello)
+hlavniMenu.add_cascade(label="Upravit", menu=menuUpravy)
+
+menuNapoveda = Menu(hlavniMenu, tearoff=0)
+menuNapoveda.add_command(label="O aplikaci", command=hello)
+hlavniMenu.add_cascade(label="Nápověda", menu=menuNapoveda)
+
+# zobrazení menu
+root.config(menu=hlavniMenu)
+
+mainloop()
+
+</pre>
+        <p>
+          <img alt="" src="menu2.png" tppabs="http://tkinter.programujte.com/images/menu2.png" height="88" width="224">
+        </p>
+        <p>
+          Do třetice - místní nabídka - menu na pravém tlačítku myši - se
+          vytváří podobně, jen se zobrazuje pokaždé nanovo pomocí
+          metody<b>post</b>:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+root = Tk()
+
+def hello():
+    print "Ahoj!"
+
+# vytvoření menu
+menu = Menu(root, tearoff=0)
+menu.add_command(label="Zpět", command=hello)
+menu.add_command(label="Znovu", command=hello)
+
+# vytvoření plochy
+frame = Frame(root, width=300, height=200)
+frame.pack()
+
+def popup(event):
+    menu.post(event.x_root, event.y_root)
+
+# propojení plochy s menu
+frame.bind("&lt;Button-3&gt;", popup)
+
+# menu nezobrazíme
+# root.config(menu=menu)
+
+mainloop()
+</pre>
+        <p>
+          <img alt="" src="menu3.png" tppabs="http://tkinter.programujte.com/images/menu3.png" height="235" width="305">
+        </p>
+        <p>
+          Použijte volání <b>postcommand</b> ke změně (nebo dokonce vytvoření)
+          menu pokaždé, když se zobrazuje:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+counter = 0
+root = Tk()
+
+def update():
+    global counter
+    counter = counter + 1
+    menu.entryconfig(0, label=str(counter))
+
+menubar = Menu(root)
+menu = Menu(menubar, tearoff=0, postcommand=update)
+menu.add_command(label=str(counter))
+menu.add_command(label="Exit", command=root.quit)
+menubar.add_cascade(label="Test", menu=menu)
+root.config(menu=menubar)
+
+mainloop()
+
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Menu.class" id=
+            "Tkinter.Menu.class"></a>Menu(master=None, **options)</b> (class)
+            [<a href="#Tkinter.Menu.class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Menu.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.__init__-method" name=
+            "Tkinter.Menu.__init__-method"><b>__init__(master=None,
+            **options)</b></a> [<a href="#Tkinter.Menu.__init__-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vytvoří menu..
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Popis parametrů najdete v metodě config.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.activate-method" name=
+            "Tkinter.Menu.activate-method"><b>activate(index)</b></a> [<a href=
+            "#Tkinter.Menu.activate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda activate.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add-method" name=
+            "Tkinter.Menu.add-method"><b>add(type, **options)</b></a> [<a href=
+            "#Tkinter.Menu.add-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá, připojí, položku daného typu k menu.
+            </p>
+            <dl>
+              <dt>
+                <i>type</i>
+              </dt>
+              <dd>
+                Jakou položku přidat. Může být <b>"command"</b>,
+                <b>"cascade"</b> (podmenu), <b>"checkbutton"</b>,
+                <b>"radiobutton"</b> nebo <b>"separator"</b>.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry menu.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dt>
+                <i>accelerator=</i>
+              </dt>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dt>
+                <i>columnbreak=</i>
+              </dt>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dt>
+                <i>hidemargin=</i>
+              </dt>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dt>
+                <i>indicatoron=</i>
+              </dt>
+              <dt>
+                <i>label=</i>
+              </dt>
+              <dt>
+                <i>menu=</i>
+              </dt>
+              <dt>
+                <i>offvalue=</i>
+              </dt>
+              <dt>
+                <i>onvalue=</i>
+              </dt>
+              <dt>
+                <i>selectcolor=</i>
+              </dt>
+              <dt>
+                <i>selectimage=</i>
+              </dt>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dt>
+                <i>value=</i>
+              </dt>
+              <dt>
+                <i>variable=</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add_cascade-method" name=
+            "Tkinter.Menu.add_cascade-method"><b>add_cascade(**options)</b></a>
+            [<a href="#Tkinter.Menu.add_cascade-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá podmenu. Viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add_checkbutton-method" name=
+            "Tkinter.Menu.add_checkbutton-method"><b>add_checkbutton(**options)</b></a>
+            [<a href="#Tkinter.Menu.add_checkbutton-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá zaškrtávací tlačítko. Viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add_command-method" name=
+            "Tkinter.Menu.add_command-method"><b>add_command(**options)</b></a>
+            [<a href="#Tkinter.Menu.add_command-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přídá příkaz. Viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add_radiobutton-method" name=
+            "Tkinter.Menu.add_radiobutton-method"><b>add_radiobutton(**options)</b></a>
+            [<a href="#Tkinter.Menu.add_radiobutton-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá radiobutton. Viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.add_separator-method" name=
+            "Tkinter.Menu.add_separator-method"><b>add_separator(**options)</b></a>
+            [<a href="#Tkinter.Menu.add_separator-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá separator. Viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.config-method" name=
+            "Tkinter.Menu.config-method"><b>config(**options)</b></a> [<a href=
+            "#Tkinter.Menu.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jeden nebo více parametrů udělátka. Metoda vrací aktuální
+              nastavení, nepředáte-li žádný parametr.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemHighlight'. (databázové jméno je
+                activeBackground, třída je Foreground)
+              </dd>
+              <dt>
+                <i>activeborderwidth=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (activeBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemHighlightText'.
+                (activeForeground/Background)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemMenu'. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako background.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako borderwidth.
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'arrow'. (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemDisabledText'.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'MS Sans Serif 8'. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemMenuText'.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako foreground.
+              </dd>
+              <dt>
+                <i>postcommand=</i>
+              </dt>
+              <dd>
+                Bez defaultní hodnoty. (postCommand/Command)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'flat'. (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'SystemMenuText'.
+                (selectColor/Background)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 0. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>tearoff=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 1. (tearOff/TearOff)
+              </dd>
+              <dt>
+                <i>tearoffcommand=</i>
+              </dt>
+              <dd>
+                Bez defaultní hodnoty. (tearOffCommand/TearOffCommand)
+              </dd>
+              <dt>
+                <i>title=</i>
+              </dt>
+              <dd>
+                Bez defaultní hodnoty. (title/Title)
+              </dd>
+              <dt>
+                <i>type=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 'normal'. (type/Type)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.delete-method" name=
+            "Tkinter.Menu.delete-method"><b>delete(index1, index2=None)</b></a>
+            [<a href="#Tkinter.Menu.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže jednu nebo více položek menu.
+            </p>
+            <dl>
+              <dt>
+                <i>index1</i>
+              </dt>
+              <dd>
+                První položka ke smazání.
+              </dd>
+              <dt>
+                <i>index2</i>
+              </dt>
+              <dd>
+                Poslední položka ke smazání. Je-li vynecháno, maže se jen
+                jedna.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.entrycget-method" name=
+            "Tkinter.Menu.entrycget-method"><b>entrycget(index, option)</b></a>
+            [<a href="#Tkinter.Menu.entrycget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda entrycget.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>option</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.entryconfig-method" name=
+            "Tkinter.Menu.entryconfig-method"><b>entryconfig(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.entryconfig-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přenastavuje danou položku menu. Mění se jen dané položky, zbytek
+              se nemění. Více viz <a class="link" href=
+              "#menu.Menu.add-method"><b>add</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.entryconfigure-method" name=
+            "Tkinter.Menu.entryconfigure-method"><b>entryconfigure(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.entryconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "link:Entry.entryconfig"><b>entryconfig</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.index-method" name=
+            "Tkinter.Menu.index-method"><b>index(index)</b></a> [<a href=
+            "#Tkinter.Menu.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí index jakéhokoliv typu na celočíselný index. index.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Celočíselný index.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert-method" name=
+            "Tkinter.Menu.insert-method"><b>insert(index, itemType,
+            **options)</b></a> [<a href="#Tkinter.Menu.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá položku daného typu do menu. Je to podobné jako <a class=
+              "link" href="#menu.Menu.add-method"><b>add</b></a>, ale vkládá
+              položky.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>itemType</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert_cascade-method" name=
+            "Tkinter.Menu.insert_cascade-method"><b>insert_cascade(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.insert_cascade-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá submenu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert_checkbutton-method" name=
+            "Tkinter.Menu.insert_checkbutton-method"><b>insert_checkbutton(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.insert_checkbutton-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá checkbutton.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert_command-method" name=
+            "Tkinter.Menu.insert_command-method"><b>insert_command(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.insert_command-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá command.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert_radiobutton-method" name=
+            "Tkinter.Menu.insert_radiobutton-method"><b>insert_radiobutton(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.insert_radiobutton-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá radiobutton.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.insert_separator-method" name=
+            "Tkinter.Menu.insert_separator-method"><b>insert_separator(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Menu.insert_separator-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá separator
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dt>
+                <i>**options</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.invoke-method" name=
+            "Tkinter.Menu.invoke-method"><b>invoke(index)</b></a> [<a href=
+            "#Tkinter.Menu.invoke-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda invoke.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.post-method" name=
+            "Tkinter.Menu.post-method"><b>post(x, y)</b></a> [<a href=
+            "#Tkinter.Menu.post-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zobrazuje menu na dané pozici. Pozice by měla být udána v
+              pixelech, relativně k rodičovskému oknu.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Pozice menu.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Pozice menu.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.type-method" name=
+            "Tkinter.Menu.type-method"><b>type(index)</b></a> [<a href=
+            "#Tkinter.Menu.type-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací typ dané položky menu..
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Typ položky..
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.unpost-method" name=
+            "Tkinter.Menu.unpost-method"><b>unpost()</b></a> [<a href=
+            "#Tkinter.Menu.unpost-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže zobrazené menu.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Menu.yposition-method" name=
+            "Tkinter.Menu.yposition-method"><b>yposition(index)</b></a>
+            [<a href="#Tkinter.Menu.yposition-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací vertikální offset dané položky. Používá se, aby byla daná
+              položka pod myší pokaždé, když je menu zobrazeno.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Svislý offset v souřadnicích okna..
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2007 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

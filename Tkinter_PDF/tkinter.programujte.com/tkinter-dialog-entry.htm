@@ -1,0 +1,527 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Standardní dialogy II. ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-standard-dialogs.htm" tppabs="http://tkinter.programujte.com/tkinter-standard-dialogs.htm">předchozí</a> ] [ <a href=
+          "tkinter-dialog-windows.htm" tppabs="http://tkinter.programujte.com/tkinter-dialog-windows.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://www.pythonware.com/library/tkinter/introduction/x1164-data-entry.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.pythonware.com/library/tkinter/introduction/x1164-data-entry.htm'" tppabs="http://www.pythonware.com/library/tkinter/introduction/x1164-data-entry.htm">
+          originál</a> ]
+        </p>
+        <h1>
+          Data Entry
+        </h1>
+        <p>
+          Modul <i>tkSimpleDialog</i> poskytuje následující dialogy.
+        </p>
+        <div>
+          <h2>
+            <a id="AEN1168" name="AEN1168">Řetězce</a>
+          </h2>
+          <p>
+            Funkce <span style="font-style: italic;">askstring</span> z modulu
+            <span style="font-style: italic;">tkSimpleDialog</span> vyzve
+            uživatele k zadání řetězce. Můžete nastavit titulek okna a výzvu k
+            zadání (prompt). Tato výzva může mít více řádků.
+          </p>
+          <p>
+            <tt>tkSimpleDialog.askstring(title, prompt [,options])</tt>. Vyzve
+            uživatele k zadání řetězce. Při zmáčknutí klávesy Enter nebo
+            tlačítka OK, je vrácena hodnota řetězce. Kliknutím na Cancel tato
+            funkce vrací <span style="font-weight: bold;">None</span>.
+          </p>
+          <pre>
+# -*- coding: cp1250 -*-<br>
+import tkSimpleDialog<br>
+tkSimpleDialog.askstring(u'Jméno',u'Napiš jak se jmenuješ!',initialvalue="Jakub Vojáček")
+</pre>
+          <p>
+            <img style="width: 173px; height: 119px;" src=
+            "askstring.png" tppabs="http://tkinter.programujte.com/images/askstring.png" alt="">
+          </p>
+          <pre>
+         
+</pre>
+          <p>
+            Následujíci parametry mohou být použity s funkcíi <span style=
+            "font-style: italic;">askstring</span>
+          </p>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Parametr
+                  </p>
+                </th>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Typ
+                  </p>
+                </th>
+                <th align="left" valign="top" width="60%">
+                  <p>
+                    Popis
+                  </p>
+                </th>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>initialvalue</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Přednastavená hodnota. Standartní nastavení je prázdný
+                    řetězec.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>parent</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    udělátko
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Okno, které při zavření dialogu dostane focus.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h2>
+            <a id="AEN1211" name="AEN1211">Číselné hodnoty</a>
+          </h2>
+          <p>
+            Funkce <i>askinteger</i> a <i>askfloat</i> jsou podobné funkci
+            <span style="font-style: italic;">askstring</span>, ale přijímají
+            pouze celá čísla nebo čísla s desetinou čárkou. Můžete také
+            nastavit minimální a maximální hodnotu vkládaného čísla:
+          </p>
+          <p>
+            <tt>tkSimpleDialog.askinteger(title, prompt [,options])</tt>. Zeptá
+            se uživatele na celočíselnou hodnotu. Jestliže uživatel vloží něco
+            jiného, objeví se upozornění a dialog se nezavře. Když dialog zavře
+            uživatel, je vrácena hodnota <span style=
+            "font-weight: bold;">None</span>
+          </p>
+          <p>
+            <tt>tkSimpleDialog.askfloat(title, prompt [,options])</tt>. Stejné,
+            ale vrací hodnotu s desetinou čárkou.
+          </p>
+          <p>
+            <img style="width: 172px; height: 118px;" src=
+            "askinteger.png" tppabs="http://tkinter.programujte.com/images/askinteger.png" alt="">
+          </p>
+          <p>
+            <img style="width: 172px; height: 120px;" src="askfloat.png" tppabs="http://tkinter.programujte.com/images/askfloat.png"
+            alt="">
+          </p>
+          <p>
+            Následující parametry mohou být použity s funkcemi <span style=
+            "font-style: italic;">askinteger</span> a <span style=
+            "font-style: italic;">askfloat</span>:
+          </p>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Parametr
+                  </p>
+                </th>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Typ
+                  </p>
+                </th>
+                <th align="left" valign="top" width="60%">
+                  <p>
+                    Popis
+                  </p>
+                </th>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>initialvalue</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    celé číslo (int), nebo číslo s desetinou čárkou (float)
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Přednastavená hodnota. Standartní nastavení je prázdný
+                    řetězec.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>parent</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    udělátko
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Okno, které při zavření dialogu dostane focus.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>minvalue</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    celé číslo (int), nebo číslo s desetinou čárkou (float)
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Minimální hodnota. Jestliže je uživatelem vložená hodnota
+                    menší, dialog se nezavře.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>maxvalue</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    celé číslo (int), nebo číslo s desetinou čárkou (float)
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Maximální hodnota. Jestliže je uživatelem vložená hodnota
+                    větší, dialog se nezavře.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h2>
+            <a id="AEN1277" name="AEN1277">Jména souborů</a>
+          </h2>
+          <p>
+            Modul <i>tkFileDialog</i> umožňuje uživateli vybrat soubor. Tento
+            modul poskytuje 2 funkce, jedna k získání jména již existujícího
+            soubor (<span style="font-style: italic;">askopenfilename</span>) a
+            druhá k vytvoření nového souboru (<span style=
+            "font-style: italic;">asksaveasfilename</span>) pro uložení dat do
+            něj.
+          </p>
+          <p>
+            <tt>tkFileDialog.askopenfilename([options])</tt>. Jestliže je
+            dialog zrušen uživatelem, je vrácena hodnota <span style=
+            "font-weight: bold;">None</span><span style=
+            "font-style: italic; font-weight: bold;">.</span>
+          </p>
+          <p>
+            <tt>tkFileDialog.asksaveasfilename([options])</tt>.
+          </p>
+          <pre>
+# -*- coding: cp1250 -*-
+import tkFileDialog
+tkFileDialog.askopenfilename(title='Vyber soubor',initialdir='C:\Python24\Lib\lib-tk')
+</pre>
+          <p>
+            <img style="width: 570px; height: 422px;" src=
+            "askopenfilename.png" tppabs="http://tkinter.programujte.com/images/askopenfilename.png" alt="">
+          </p>
+          <p>
+            <img style="width: 573px; height: 428px;" src=
+            "asksaveasfilename.png" tppabs="http://tkinter.programujte.com/images/asksaveasfilename.png" alt="">
+          </p>
+          <p>
+            Následující parametry mohou být použity s funkcemi
+            <i>askopenfilename</i> a <i>asksavefilename</i>:
+          </p>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Parametr
+                  </p>
+                </th>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Typ
+                  </p>
+                </th>
+                <th align="left" valign="top" width="60%">
+                  <p>
+                    Popis
+                  </p>
+                </th>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>defaultextension</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Přípona, která bude přidána k souboru, pokud uživatel sám
+                    nespecifikuje příponu. Tento parametr je ignorován při
+                    funkci <span style=
+                    "font-style: italic;">askopenfilename</span>.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>filetypes</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    seznam
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Použijte "*" jako možnost výběru všech souborů.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>initialdir</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Kořenový adresář.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>initialfile</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Vybraný soubor. Tento parametr je ignorován při funkci
+                    <span style="font-style: italic;">askopenfilename</span>
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>parent</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    udělátko
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Okno, které při zavření dialogu dostane focus.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>title</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Titulek okna.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <h2>
+            <a id="AEN1356" name="AEN1356">Barvy</a>
+          </h2>
+          <p>
+            Modul <i>tkColorChooser</i> je využíván ke zjištění RGB vámi
+            vybrané barvy.
+          </p>
+          <p>
+            <tt>tkColorChooser.askcolor([color [,options]])</tt>. Tato metoda
+
+            vrací dvě hodnoty;první je barva ve tvaru RGB (R=red, G=green,
+            B=blue) a druhá je ve tvaru Tk. Barva, která se po zapnutí dialogu
+            zobrazí můžete jednoduše nastavit parametrem <span style=
+            "font-style: italic;">initialcolor.</span>
+          </p>
+          <p>
+            Jestli-že je dialog zrušen uživatelem, je vrácena hodnota
+            <span style="font-weight: bold;">None</span><span style=
+            "font-style: italic; font-weight: bold;">.</span>
+          </p>
+          <p>
+            <img style="width: 463px; height: 347px;" src="askcolor.png" tppabs="http://tkinter.programujte.com/images/askcolor.png"
+            alt="">
+          </p>
+          <p>
+            Následující parametry mohou být použity s funkcí <span style=
+            "font-style: italic;">askcolor</span>:
+          </p>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Parametr
+                  </p>
+                </th>
+                <th align="left" valign="top" width="20%">
+                  <p>
+                    Typ
+                  </p>
+                </th>
+                <th align="left" valign="top" width="60%">
+                  <p>
+                    Popis
+                  </p>
+                </th>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>initialcolor</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    barva
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Barva, která se objeví po zapnutí (tento parametr přijímá
+                    barvu v RGB nebo i v Tk typu.)
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>parent</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    udělátko
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Okno, které při zavření dialogu dostane focus.
+                  </p>
+                </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    <tt>title</tt>
+                  </p>
+                </td>
+                <td align="left" valign="top" width="20%">
+                  <p>
+                    řetězec
+                  </p>
+                </td>
+                <td align="left" valign="top" width="60%">
+                  <p>
+                    Titulek okna.
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <hr class="zonebar">
+          <p class="info">
+            Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+            <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+            License 1.2</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

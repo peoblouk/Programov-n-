@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta content="text/html;charset=windows-1250" http-equiv="Content-Type" />
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org" />
+    <title>
+      Standardní dialogy ::: An Introduction to Tkinter :::
+      www.effbot.org
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-body">
+      <p class="info">
+        An Introduction to Tkinter (Draft Edition)
+      </p>[<a href="tkinter-application-windows.htm" tppabs="http://tkinter.programujte.com/tkinter-application-windows.htm">zpět</a>] [<a href=
+      "tkinter-dialog-entry.htm" tppabs="http://tkinter.programujte.com/tkinter-dialog-entry.htm">další</a>] 
+      <h1>
+        Standard Dialogs
+      </h1>
+      <p>
+        Before we look at what to put in that application work area, let's take
+        a look at another important part of GUI programming: displaying dialogs
+        and message boxes.
+      </p>
+      <p>
+        Starting with Tk 4.2, the Tk library provides a set of standard dialogs
+        that can be used to display message boxes, and to select files and
+        colors. In addition, Tkinter provides some simple dialogs allowing you
+        to ask the user for integers, floating point values, and strings. Where
+        possible, these standard dialogs use platform-specific mechanisms, to
+        get the right look and feel.
+      </p>
+      <h1>
+        Message Boxes
+      </h1>
+      <p>
+        The <b>tkMessageBox</b> module provides an interface to the message
+        dialogs.
+      </p>
+      <p>
+        The easiest way to use this module is to use one of the convenience
+        functions: <b>showinfo</b>, <b>showwarning</b>, <b>showerror</b>,
+        <b>askquestion</b>, <b>askokcancel</b>, <b>askyesno</b>, or
+        <b>askretrycancel</b>. They all have the same syntax:
+      </p>
+      <p>
+        <b>tkMessageBox.function(title, message [, options])</b>.
+      </p>
+      <p>
+        The <i>title</i> argument is shown in the window title, and the message
+        in the dialog body. You can use newline characters ("\n") in the
+        message to make it occupy multiple lines. The options can be used to
+        modify the look; they are explained later in this section.
+      </p>
+      <p>
+        The first group of standard dialogs is used to present information. You
+        provide the title and the message, the function displays these using an
+        appropriate icon, and returns when the user has pressed OK. The return
+        value should be ignored.
+      </p>
+      <p>
+        Here's an example:
+      </p>
+      <pre>
+    try:<br />
+        fp = open(filename)<br />
+    except:<br />
+        tkMessageBox.showwarning(<br />
+            u"Otevírání souboru",<br />
+            u"Nemohu otevřít soubor:\n(%s)" % filename<br />
+        )<br />
+        return<br />
+</pre>
+      <div class="figure">
+        <b>Dialog</b><b> showinfo </b>
+        <p>
+          <img style="width: 166px; height: 133px;" alt="Sorry" src=
+          "info_dialog.png" tppabs="http://tkinter.programujte.com/images/info_dialog.png" />
+        </p>
+      </div>
+      <div class="figure">
+        <b>Dialog showwarning </b>
+        <p>
+          <img style="width: 160px; height: 132px;" alt="sorry" src=
+          "warning_dialog.png" tppabs="http://tkinter.programujte.com/images/warning_dialog.png" />
+        </p>
+      </div>
+      <div class="figure">
+        <b>Dialog</b><b> showerror</b>
+        <p>
+          <img style="width: 155px; height: 133px;" alt="sorry" src=
+          "error_dialog.png" tppabs="http://tkinter.programujte.com/images/error_dialog.png" />
+        </p>
+      </div>
+      <p>
+        The second group is used to ask questions. The <b>askquestion</b>
+        function returns the strings "yes" or "no" (you can use options to
+        modify the number and type of buttons shown), while the others return a
+        true value of the user gave a positive answer (<b>ok</b>, <b>yes</b>,
+        and <b>retry</b>, respectively).
+      </p>
+      <pre>
+    if tkMessageBox.askyesno("Print", "Print this report?"):<br />
+        report.print()<br />
+</pre>
+      <div class="figure">
+        <b>Dialog</b><b> askquestion</b>
+        <p>
+          <img style="width: 190px; height: 132px;" alt="sorry" src=
+          "askquestion_dialog.png" tppabs="http://tkinter.programujte.com/images/askquestion_dialog.png" />
+        </p>
+      </div>
+      <div class="figure">
+        <b>Dialog</b><b> askokcancel </b>
+        <p>
+          <img style="width: 191px; height: 133px;" alt="sorry" src=
+          "askokcancel_dialog.png" tppabs="http://tkinter.programujte.com/images/askokcancel_dialog.png" />
+        </p>
+      </div>
+      <div class="figure">
+        <b>Dialog</b><b> askyesno</b>
+        <p>
+          <img style="width: 192px; height: 134px;" alt="sorry" src=
+          "askyesno_dialog.png" tppabs="http://tkinter.programujte.com/images/askyesno_dialog.png" />
+        </p>
+      </div>
+      <div class="figure">
+        <b>Dialog</b><b> askretrycancel dialog</b>
+        <p>
+          <img style="width: 189px; height: 132px;" alt="sorry" src=
+          "askretrycancel_dialog.png" tppabs="http://tkinter.programujte.com/images/askretrycancel_dialog.png" />
+        </p>
+      </div>
+      <h2>
+        Options Message Box
+      </h2>
+      <p>
+        If the standard message boxes are not appropriate, you can pick the
+        closest alternative (<b>askquestion</b>, in most cases), and use
+        options to change it to exactly suit your needs. You can use the
+        following options (note that <b>message</b> and <b>title</b> are
+        usually given as arguments, not as options).
+      </p>
+      <div class="option">
+        <p>
+          <b>default</b> <span>constant</span>
+        </p>
+        <p>
+          Which button to make default: <b>ABORT</b>, <b>RETRY</b>,
+          <b>IGNORE</b>, <b>OK</b>, <b>CANCEL</b>, <b>YES</b>, or <b>NO</b>
+          (the constants are defined in the <b>tkMessageBox</b> module).
+        </p>
+      </div>
+      <div class="option">
+        <p>
+          <b>icon</b> <span>(</span><span>constant</span><span>)</span>
+        </p>
+        <p>
+          Which icon to display: <b>ERROR</b>, <b>INFO</b>, <b>QUESTION</b>, or
+          <b>WARNING</b>
+        </p>
+      </div>
+      <div class="option">
+        <p>
+          <b>message</b> <span>(string)</span>
+        </p>
+        <p>
+          The message to display (the second argument to the convenience
+          functions). May contain newlines.
+        </p>
+      </div>
+      <div class="option">
+        <p>
+          <b>parent</b> <span>(widget)</span>
+        </p>
+        <p>
+          Which window to place the message box on top of. When the message box
+          is closed, the focus is returned to the parent window.
+        </p>
+      </div>
+      <div class="option">
+        <p>
+          <b>title</b> <span>(</span><span>string</span><span>)</span>
+        </p>
+        <p>
+          Message box title (the first argument to the convenience functions).
+        </p>
+      </div>
+      <div class="option">
+        <p>
+          <b>type</b> <span>(</span><span>constant</span><span>)</span>
+        </p>
+        <p>
+          Message box type; that is, which buttons to display:
+          <b>ABORTRETRYIGNORE</b>, <b>OK</b>, <b>OKCANCEL</b>,
+          <b>RETRYCANCEL</b>, <b>YESNO</b>, or <b>YESNOCANCEL</b>.
+        </p>
+      </div>
+      <div class="navigate">
+        <hr id="zonebar" />
+        <p class="navigate">
+          [<a href="tkinter-application-windows.htm" tppabs="http://tkinter.programujte.com/tkinter-application-windows.htm">zpět</a>] [<a href=
+          "tkinter-dialog-windows.htm" tppabs="http://tkinter.programujte.com/tkinter-dialog-windows.htm">další</a>]  [<a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">index</a>]
+        </p>
+        <hr id="zonebar" />
+      </div>
+    </div>
+  </body>
+</html>

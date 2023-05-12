@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Zaškrtávací tlačítko ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="canvas.htm" tppabs="http://tkinter.programujte.com/canvas.htm">předchozí</a> ] [ <a href=
+          "entry.htm" tppabs="http://tkinter.programujte.com/entry.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/checkbutton.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/checkbutton.htm'" tppabs="http://effbot.org/tkinterbook/checkbutton.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Checkbutton
+        </h1>
+        <p>
+          <b>Zaškrtávací tlačítko</b> je udělátko Tkinteru určené k vypínání -
+          zapínání. Zaškrtávací tlačítko může obsahovat text nebo obrázek a
+          spojuje se s pythonovskou funkcí nebo metodou. Když je zaškrtávací
+          tlačítko aktivováno, Tkinter automaticky zavolá funkci nebo metodu.
+        </p>Zaškrtávací tlačítko může sice zobrazovat pouze jednodruhový text,
+        ale ten může být rozdělen do více řádků. Například první znak může být
+        podtrhnutý jako značka pro klávesovou zkratku. Standardně je
+        nastavena klávesa <b>Tab</b> na posunutí fokusu na tlačítko. Každé
+        zaškrtávací tlačítko by mělo být spojeno s tkinterovskou proměnou.
+        <h2>
+          Kdy použít zaškrtávacího tlačítko
+        </h2>
+        <p>
+          Zaškrtávací tlačítko je používáno k vybrání mezi dvěma různými
+          hodnotami. K vybrání z více hodnot použijte udělátka <a href=
+          "radiobutton.htm" tppabs="http://tkinter.programujte.com/radiobutton.htm"><b>Radiobutton</b></a> a <a href=
+          "listbox.htm" tppabs="http://tkinter.programujte.com/listbox.htm"><b>Listbox</b></a><b>.</b>
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          K používání zaškrtávacího tlačítka musíte vytvořit Tkinterovskou
+          proměnou.
+        </p>
+        <pre>
+from Tkinter import * 
+
+hlavni = Tk()
+exp = IntVar() 
+
+c = Checkbutton(hlavni, text="Expand", variable=exp) 
+c.pack() 
+ 
+mainloop() 
+ 
+<img src="data-checkbutton-bf3bc988201ee8e020b8dfa0456979e8.png" tppabs="http://tkinter.programujte.com/images/data-checkbutton-bf3bc988201ee8e020b8dfa0456979e8.png">
+</pre>
+        <p>
+          Standardně je tkinterovská proměnná nastavena na 1, když je tlačítko
+          zapnuté, jinak je 0. Tyto hodnoty můžete změnit změnou parametrů
+          <b>onvalue</b> a <b>offvalue</b>. Proměnná nemusí být celé číslo:
+        </p>
+        <pre>
+barva = StringVar() 
+c = Checkbutton(hlavni, text=u"Barva obrázku", 
+                variable=barva,onvalue="RGB", offvalue="L") 
+</pre>
+        <p>
+          Potřebujete-li hlídat jak proměnnou, tak udělátko, můžete si
+          zjednodušit život připojením proměnné k udělátku:
+        </p>
+        <pre>
+v = IntVar() 
+c = Checkbutton(master, text=u"Nezobrazovat", variable=v) 
+c.var = v 
+</pre>
+        <p>
+          Pokud máte kód umístěný ve třídě (což byste měli), bude čistějším
+          řešením uschovat proměnnou jako atribut a používat na zpětné volání
+          metodu:
+        </p>
+        <pre>
+    def __init__(self, master): 
+        self.var = IntVar() 
+        c = Checkbutton( 
+            master, text="Enable Tab", 
+            variable=self.var, 
+            command=self.cb) 
+        c.pack() 
+ 
+    def cb(self, event): 
+        print "variable is", self.var.get() 
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Checkbutton-class" id=
+            "Tkinter.Checkbutton-class"></a>Checkbutton(master=None,
+            **options)</b> (class) [<a href="#Tkinter.Checkbutton-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přepínací tlačítko. 
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívejte se na metodu <a class="link"
+                href="checkbutton.htm#checkbutton.Checkbutton.config-method" tppabs="http://tkinter.programujte.com/checkbutton.htm#checkbutton.Checkbutton.config-method"><b>
+                config</b></a> pro všechny dostupné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.config-method" name=
+            "Tkinter.Checkbutton.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Checkbutton.config-method">#</a>]
+          </dt>
+          <dd>
+            Modifikuje jeden nebo více parametrů udělátka. Jestliže parametr
+            není dán, tato metoda vrací seznam již všech daných parametrů.
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí, když je zaškrtávací tlačítko aktivní. Standardní
+                nastavení závisí na systému.
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Barva písma, když je zaškrtávací tlačítko aktivní. Standardní
+                nastavení závisí na systému. (activeForeground/Background)
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kontroluje kde se bude nacházet text nebo obrázek v
+                zaškrtávacím tlačítku. Používejte parametry <b>N</b>,
+                <b>NE</b>, <b>E</b>, <b>SE</b>, <b>S</b>, <b>SW</b>, <b>W</b>,
+                <b>NW</b> nebo <b>CENTER</b>. Standardní nastavení je
+                <b>CENTER</b>. (anchor/Anchor)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí zaškrtávacího tlačítka. (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dd>
+                Jaká bitmapa se má v udělátku zobrazit. Pokud je zadán
+                parametr <b>image</b>, je tato volba ignorována. Můžete
+                používat jak vestavěné bitmapy, tak načíst bitmapu z XBM
+                souboru. Ze souboru načtete bitmapu tak, že před název souboru
+                dáte zavináč (například "@priklad.xbm"). (bitmap/Bitmap)<br>
+                <br>
+                Upozornění: bitmapa v pojetí Tkinter rozhodně není *.bmp nebo
+                podobné. Jedná se o starý formát X11 bitmap. Na dnešní běžné
+                typy obrázků používejte spíše parametr <i>image</i>, kde se
+                používá formáty z  <a href=
+                "photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm"><b>PhotoImage</b></a>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje zaškrtávacího tlačítka. Standardní nastavení
+                závisí na systému, ale obvykle je to 1 nebo 2 pixely.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Funkce nebo metoda volaná, když je zaškrtávací tlačítko
+                zmáčknuté. Tento parametr nemá standardní nastavení.
+                (command/Command)
+              </dd>
+              <dt>
+                <i>compound=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je None. (compound/Compound)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Kurzor, který bude vidět, když se myš posune nad tlačítko.
+                (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Barva pozadí, když je tlačítko vypnuté.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitý v zaškrtávacím tlačítku. Tlačítko může
+                obsahovat pouze jeden druh písma. Standardní nastavení závisí
+                na systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška zaškrtávacího tlačítka. Jestliže tlačítko obsahuje text,
+                je tento parametr v textových jednotkách. Jestliže tlačítko
+                obsahuje obrázek, je tento parametr dán v pixelech. Jestliže je
+                tento parametr nezadán, výška a šířka je vypočítaná podle
+                obsahu. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                 (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Standardní nastavení závisí na systému.
+                 (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je 1.
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek zobrazovaný v tlačítku. Jestliže je dán parametr
+                <b>bitmap</b> nebo <b>text</b>, obrázek se vykreslí nad ně.
+                Tento parametr nemá standardní nastavení. (image/Image)
+              </dd>
+              <dt>
+                <i>indicatoron=</i>
+              </dt>
+              <dd>
+                Určuje, je se indikátor má nebo nemá vykreslit. Standardně se
+                vykresluje. Nastavení na False značí, že reliéf bude použit
+                jako indikátor. Když je tlačítko vybráno, bude vykresleno jako
+                <b>SUNKEN</b> namísto <b>RAISED</b>. (indicatorOn/IndicatorOn)
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Definuje, jak zarovnat více řádkový text. Používejte parametry
+                <b>LEFT</b>, <b>RIGHT</b> nebo <b>CENTER.</b> (justify/Justify)
+              </dd>
+              <dt>
+                <i>offrelief=</i>
+              </dt>
+              <dd>
+                Standardní nastavení je <b>RAISED</b>.
+                (offRelief/OffRelief)
+              </dd>
+              <dt>
+                <i>offvalue=</i>
+              </dt>
+              <dd>
+                Proměnná korespondující s vypnutým tlačítkem. Standardní
+                nastavení je 0. (offValue/Value)
+              </dd>
+              <dt>
+                <i>onvalue=</i>
+              </dt>
+              <dd>
+                Proměnná korespondující se zapnutým tlačítkem. Standardní
+                nastavení je 1. (onValue/Value)
+              </dd>
+              <dt>
+                <i>overrelief=</i>
+              </dt>
+              <dd>
+                Tento parametr nemá standardní nastavení.
+                (overRelief/OverRelief)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Vycpávka okraje. Standardní nastavení je 1. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vycpávka okraje. Standardní nastavení je 1. (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Standardní nastavení je <b>FLAT</b>, pokud tedy
+                nepoužívá tlačítko okraj jako indikátor (viz parametr
+                <b>indicatoron</b>). (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectcolor=</i>
+              </dt>
+              <dd>
+                Barva samotného zaškrtávátka. Standardní nastavení závisí
+                na systému. (selectColor/Background)
+              </dd>
+              <dt>
+                <i>selectimage=</i>
+              </dt>
+              <dd>
+                Obrázek, který se použije na samotné zaškrtávátko. Žádná
+                standardní hodnota. (selectImage/SelectImage)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav tlačítka. Používejte parametry <b>NORMAL</b>,
+                <b>ACTIVE</b> nebo <b>DISABLED</b>. Standardní nastavení je
+                <b>NORMAL.</b> (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje zda může uživatel použít klávesu <b>Tab</b> k přesunu
+                na tlačítko. Standardní nastavení je prázdný řetězec, což
+                znamená, že zaškrtávací tlačítko přijme fokus , jenom když má
+                nějakou klávesovou vazbu. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Text do zaškrtávacího tlačítka. Tlačítko může mít více řádkový
+                text. Jestliže je dán parametr <b>bitmap</b> nebo <b>image</b>,
+                parametr <b>text</b> je ignorován. (text/Text)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Spojuje tlačítko s tkinterovskou proměnnou (obvykle
+                <b>StringVar</b>). Když se proměnná změní, změní se také text
+                tlačítka. Viz také parametr <b>variable</b>n.
+                (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dd>
+                Který ze znaků má být podtržen. Standardní nastavení je -1 (bez
+                podtrhnutí). (underline/Underline)
+              </dd>
+              <dt>
+                <i>variable=</i>
+              </dt>
+              <dd>
+                Spojí Tkinterovskou proměnou se zaškrtávacím tlačítkem. Když je
+                tlačítko zaškrtáváno a odškrtáváno, proměnná je měněna
+                mezi <b>offvalue</b> a <b>onvalue</b>. (variable/Variable)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka tlačítka. Podívejte se na parametr <b>height</b> pro více
+                detailů. (width/Width)
+              </dd>
+              <dt>
+                <i>wraplength=</i>
+              </dt>
+              <dd>
+                Určuje, kdy se má text na tlačítku zalomit na další řádky.
+                Zadává se v obrazovkových jednotkách. Standardně je žádné
+                zalamování. (wrapLength/WrapLength)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.deselect-method" name=
+            "Tkinter.Checkbutton.deselect-method"><b>deselect()</b></a>
+            [<a href="#Tkinter.Checkbutton.deselect-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odškrtává tlačítko, tzn. nastavuje ho na hodnotu <b>offvalue</b>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.flash-method" name=
+            "Tkinter.Checkbutton.flash-method"><b>flash()</b></a> [<a href=
+            "#Tkinter.Checkbutton.flash-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Několikrát tlačítko překreslí mezi hodnotami aktivního a
+              normálního vzhledu.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.invoke-method" name=
+            "Tkinter.Checkbutton.invoke-method"><b>invoke()</b></a> [<a href=
+            "#Tkinter.Checkbutton.invoke-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zavolá příkaz spojený s tlačítkem.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.select-method" name=
+            "Tkinter.Checkbutton.select-method"><b>select()</b></a> [<a href=
+            "#Tkinter.Checkbutton.select-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zaškrtne tlačítko, tzn. nastaví ho na hodnotu <b>onvalue</b>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Checkbutton.toggle-method" name=
+            "Tkinter.Checkbutton.toggle-method"><b>toggle()</b></a> [<a href=
+            "#Tkinter.Checkbutton.toggle-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přepne tlačítko.
+            </p>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Blujacker, Pavel Kosina - Copyright © 2006
+          TkinterCZ - <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free
+          Documentation License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

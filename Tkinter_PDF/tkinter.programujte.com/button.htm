@@ -1,0 +1,516 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org" />
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>
+      Udělátko Button ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen" />
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print" />
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+ [ <a href="widget.htm" tppabs="http://tkinter.programujte.com/widget.htm">předchozí</a> ]
+
+          [ <a href="canvas.htm" tppabs="http://tkinter.programujte.com/canvas.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ]
+          [ <a href="javascript:if(confirm('http://effbot.org/tkinterbook/button.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/button.htm'" tppabs="http://effbot.org/tkinterbook/button.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - Button
+        </h1>
+        <p>
+          <b>Button</b> je udělátko Tkinteru používané k vytvoření různých
+          druhů tlačítek. Tlačítko může obsahovat text nebo obrázek a vy můžete
+          přidělit každému tlačítku funkci nebo metodu. Když je tlačítko
+          zmáčknuté, Python automaticky zavolá funkci nebo metodu.
+        </p>
+        <p>
+          Tlačítko je schopno zobrazit text pouze stejného druhu a velikosti,
+          ale text může být rozdělen do více řádků. Mimo jiné jeden ze znaků
+          může být podtržen k označení klávesové zkratky. <font size=
+          "3">Standardně se klávesa <span style="font-weight: bold;">TAB</span>
+          používá k přemístění se na tlačítko.</font>
+        </p>
+        <h2 id="when-to-use">
+          Kdy použít udělátko Button?
+        </h2>Udělátko Button je snadné používat a Python jí rozumí jako "Teď
+        udělej to!," kde <span style="font-style: italic;">to</span> je určeno
+        buď textem nebo obrázkem na tlačítku. Tlačítka jsou obvykle využívána v
+        nástrojových lištách, v oknech a k přijetí nebo zamítnutí dat v
+        dialogovém okně. Pro tlačítka vhodné k vložení dat se podívej na
+        udělátka <a href="checkbutton.htm" tppabs="http://tkinter.programujte.com/checkbutton.htm"><b>Checkbutton</b></a> a <a href=
+        "radiobutton.htm" tppabs="http://tkinter.programujte.com/radiobutton.htm"><b>Radiobutton.</b></a>
+        <h2 id="patterns">
+          Pojetí
+        </h2>Tlačítka jsou velmi jednoduchá k použití. Všechno, co musíte
+        udělat, je určit náplň tlačítka (text, bitmapu nebo obrázek) a jakou
+        funkci nebo metodu zavolat, když je tlačítko zmáčknuté:
+        <pre>
+from Tkinter import *
+
+master = Tk()
+
+def callback():
+    print "Kliknul jsi!"
+
+b = Button(master, text="OK", command=callback)
+b.pack()
+
+mainloop()
+
+</pre><img src="data-button-dfce3056fb8fa98247f640b9d3794997.png" tppabs="http://tkinter.programujte.com/images/data-button-dfce3056fb8fa98247f640b9d3794997.png"
+        height="57" width="123" />
+        <p>
+          Tlačítko bez volání je zbytečné; je samozřejmé, že když takové
+          tlačítko zmáčknete, nic se nestane. Můžete si přát použít tlačítek v
+          rozvíjející aplikaci, v této situaci je správné tlačítko zablokovat:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import*
+
+okno=Tk()
+
+b = Button(okno, text=u"Zablokovaný")
+b.pack(fill=BOTH, expand=1)
+b.config(state=DISABLED)
+
+okno.mainloop()
+
+</pre><img style="width: 128px; height: 62px;" alt="sorry" src=
+"Button-disabled.PNG" tppabs="http://tkinter.programujte.com/images/Button-disabled.PNG" />
+        <p>
+          Když neurčíte velikost, velikost tlačítka se přizpůsobí na minimální
+          velikost úměrnou obsahu. Můžete použít <b>padx</b> a <b>pady</b> k
+          přidání místa mezi obsahem a okrajem tlačítka.
+        </p>
+        <p>
+          Můžete také použít parametry <b>height</b> a <b>width</b> k nastavení
+          velikosti. Když zobrazujete do tlačítka text, tyto parametry definují
+          velikost tlačítka v textových jednotkách. Když zobrazujete bitmapu
+          nebo obrázek parametry definují velikost v pixelech. Můžete určit
+          velikost v pixelech pro tlačítka s textem, ale musíte použít trochu
+          magie. Tady je jedna z možných cest:
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import*
+okno=Tk()
+f = Frame(okno, height=32, width=32)
+
+f.pack_propagate(0) # nesraž se
+f.pack()
+
+b = Button(f, text=u"Jistě!")
+b.pack(fill=BOTH, expand=1)
+okno.mainloop()
+
+
+</pre><img style="width: 128px; height: 73px;" alt="" src=
+"Button.PNG" tppabs="http://tkinter.programujte.com/images/Button.PNG" />
+        <p>
+          Tlačítka mohou obsahovat víceřádkový text (ale pouze jednoho druhu a
+          velikosti). Můžete použít znaky pro nový řádek, nebo parametr
+          <span style="font-weight: bold;">wraplenght</span> pro samo zalomení
+          textu. Když dáte tento parametr, použijte <span style=
+          "font-weight: bold;">anchor</span>, <span style=
+          "font-weight: bold;">justify</span> a <span style=
+          "font-weight: bold;">možná</span> i <span style=
+          "font-weight: bold;">padx</span> parametry, aby tlačítko vypadalo
+          podle vašeho přání. Příklad:
+        </p>
+        <pre>
+b = Button(master, text=u"dlouhýtext", anchor=W, justify=LEFT, padx=2)
+</pre>
+        <p>
+          Když chcete vytvořit tlačítko, tak aby vypadalo jako zmáčknuté,
+          použijte jednoduše změnu reliefu z RAISED na SUNKEN:
+        </p>
+        <pre>
+b.config(relief=SUNKEN)
+</pre>
+        <p>
+          V prvních verzích Tkinteru se parametr <span style=
+          "font-weight: bold;">image</span> vykresloval nad <span style=
+          "font-weight: bold;">text.</span> Když se nastavily oba parametry,
+          zobrazil se pouze obrázek. V posledních verzích můžete použít
+          parametr <b>compound</b> ke změně tohoto chování. Například k
+          zobrazení textu nad obrázek nastavte <b>compound</b> na
+          <b>CENTER</b>:
+        </p>
+        <pre>
+b = Button(master, text="Klikni!", image=pattern, compound=CENTER)
+</pre>
+        <p>
+          K zobrazení ikony spolu s textem nastavte tento parametr na
+          <b>LEFT</b>, <b>RIGHT</b>, <b>TOP</b>, nebo <b>BOTTOM</b>:
+        </p>
+        <pre>
+# vloží ikonu nalevo od textu
+b = Button(compound=LEFT, image=icon, text="Akce")
+
+# <i>vloží ikonu nad text</i>
+b = Button(compound=TOP, image=icon, text="Konec")
+</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <b>Button(master=None, **options)</b> (class) [<a href=
+            "#Tkinter.Button-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Příkazové tlačítko
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské okno.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Podívej se na metodu <a class="link" href=
+                "button.htm#button.Button.config-method" tppabs="http://tkinter.programujte.com/button.htm#button.Button.config-method"><b>config</b></a> pro
+                všechny možné parametry.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Button.config-method" name=
+            "Tkinter.Button.config-method"><b>config(**options)</b></a>
+            [<a href="#Tkinter.Button.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Modifikuje jeden nebo více parametrů udělátka. Jestliže nejsou
+              parametry dány, tato metoda vrací obsah všech již daných hodnot
+              parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry udělátka
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dd>
+                Jakou barvu pozadí použít, když je tlačítko aktivní. Standardní
+                nastavení závisí na systému.
+              </dd>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dd>
+                Jakou barvu písma použít, když je tlačítko aktivní. Standardní
+                nastavení závisí na systému. (activeForeground/Background)
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kontroluje, kde v tlačítku se bude text(nebo obrázek) nacházet.
+                Vybírejte z: <b>N</b>, <b>NE</b>, <b>E</b>, <b>SE</b>,
+                <b>S</b>, <b>SW</b>, <b>W</b>, <b>NW</b>, nebo <b>CENTER</b>.
+                Standardně je nastaven <b>CENTER</b>. (anchor/Anchor)
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí tlačítka. Standardně nastavení závisí na systému.
+                (background/Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dd>
+                Zobrazí bitmapu do tlačítka. Jestliže je dán parametr image,
+                tento parametr je ignorován. (bitmap/Bitmap)
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje tlačítka. Standardní nastavení závisí na systému,
+                ale obvykle je to 1 nebo 2 pixely. (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>command=</i>
+              </dt>
+              <dd>
+                Funkce nebo metoda, která je zavolána, když je tlačítko
+                zmáčknuto. Jestliže nedáte tento parametr, nestane se nic, když
+                uživatel zmáčkne tlačítko. (command/Command)
+              </dd>
+              <dt>
+                <i>compound=</i>
+              </dt>
+              <dd>
+                Kontroluje jak kombinovat text a obrázek v tlačítku.
+                Standardně, je li dán obrázek nebo bitmapa, je text ignorován.
+                Jestliže je tento parametr nastaven na <span style=
+                "font-weight: bold;">CENTER</span>, text se objeví nad
+                obrázkem. Jestliže je tento parametr nastaven na <b>BOTTOM</b>,
+                <b>LEFT</b>, <b>RIGHT</b> nebo <b>TOP</b>, obrázek je
+                koncipován mimo text (používej <span style=
+                "font-weight: bold;">BOTTOM</span> k posunutí obrázku pod text
+                atd.). Standardní nastavení je <span style=
+                "font-weight: bold;">NONE</span>. (compound/Compound)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Změna kursoru, jestliže se nachází nad tlačítkem.
+                (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dd>
+                Barva písma, když je tlačítko zablokované (DISABLED) .
+                Standardní nastavení závisí na systému.
+                (disabledForeground/DisabledForeground)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Druh písma použitého na text v tlačítku.Tlačítko může obsahovat
+                pouze jeden druh písma .Standardní nastavení závisí na systému
+                (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva pro barvu písma. Standardní nastavení závisí na systému.
+                (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška tlačítka. Když tlačítko obsahuje text, výška je dána v
+                textových jednotkách. Když tlačítko obsahuje obrázek, výška je
+                dána v pixelech. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když tlačítko
+                nebude mít focus. Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když tlačítko bude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému (obvykle jeden nebo dva pixely).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Obrázek do tlačítka. Když je tento parametr dán, je obrázek
+                vykreslen nad text a bitmapu, jestliže není dán parametr
+                <span style="font-weight: bold;">compound.</span> (image/Image)
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Definuje jak seřadit víceřádkový text. Používejte <span style=
+                "font-weight: bold;">LEFT</span>, <span style=
+                "font-weight: bold;">RIGHT</span> nebo <span style=
+                "font-weight: bold;">CENTER</span>. Standardně je nastaven
+                <span style="font-weight: bold;">CENTER</span>.
+                (justify/Justify)
+              </dd>
+              <dt>
+                <i>overrelief=</i>
+              </dt>
+              <dd>
+                Alternativní relief, který se použije, jestliže je myš nad
+                tlačítkem. Jestliže nedáte tento parametr, bude vždy použita
+                hodnota reliefu. (overRelief/OverRelief)
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Horizontální vycpávka mezi jeho obsahem a okrajem. (padX/Pad)
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Vertikální vycpávka mezi obsahem tlačítka a jeho okrajem.
+                (padY/Pad)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Okrasa okraje. Obvykle je tlačítko <span style=
+                "font-weight: bold;">RAISED,</span> a když je zmáčknuto, změní
+                se relief na <span style="font-weight: bold;">SUNKEN.</span>
+                Další možnosti jsou <span style=
+                "font-weight: bold;">GROOVE</span>, <span style=
+                "font-weight: bold;">RIDGE</span> a <span style=
+                "font-weight: bold;">FLAT</span>. Standardní nastavení je
+                RAISED. (relief/Relief)
+              </dd>
+              <dt>
+                <i>repeatdelay=</i>
+              </dt>
+              <dd>
+                (repeatDelay/RepeatDelay)
+              </dd>
+              <dt>
+                <i>repeatinterval=</i>
+              </dt>
+              <dd>
+                (repeatInterval/RepeatInterval)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav tlačítka: <b>NORMAL</b>, <b>ACTIVE</b> nebo
+                <b>DISABLED</b>. Standardně je nastaven <b>NORMAL</b>.
+                (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, zda může uživatel použít klávesu <span style=
+                "font-weight: bold;">Tab</span> k posunutí na tlačítko.
+                Standardně je nastaven prázdný řetězec, který znamená, že
+                tlačítko přijímá akce, jenom jestliže má nějakou klávesovou
+                vazbu. (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Text zobrazovaný v tlačítku. Text může obsahovat nové řádky.
+                Když je dán parametr bitmapa nebo obrázek, text je ignorován
+                (jestliže nedáte parametr <b>compound</b>). (text/Text)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Připojí Tkinterovskou proměnnou (obvykle <span style=
+                "font-weight: bold;">StringVar</span>) k tlačítku. Jestliže se
+                proměnná změní, text se změní. (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>underline=</i>
+              </dt>
+              <dd>
+                Který ze znaků z textu podtrhnout. Standardně je nastaveno na
+                -1, což znamená, že žádný znak nebude podtržen.
+                (underline/Underline)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka tlačítka. Když tlačítko obsahuje text, je šířka dána v
+                textových jednotkách. Když tlačítko obsahuje obrázek, šířka je
+                dána v pixelech. (width/Width)
+              </dd>
+              <dt>
+                <i>wraplength=</i>
+              </dt>
+              <dd>
+                Vymezuje, kdy je tlačítko přeměněno na víceřádkový text. Tento
+                parametr je dán v pixelech. Standardně je nastaveno na 0.
+                (wrapLength/WrapLength)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Button.flash-method" name=
+            "Tkinter.Button.flash-method"><b>flash()</b></a> [<a href=
+            "#Tkinter.Button.flash-method">#</a>]
+          </dt>
+          <dd>
+            Probleskující tlačítko. Tato metoda přepíná mezi normálním a
+            aktivním stavem tlačítka.
+          </dd>
+          <dt>
+            <a id="Tkinter.Button.invoke-method" name=
+            "Tkinter.Button.invoke-method"><b>invoke()</b></a> [<a href=
+            "#Tkinter.Button.invoke-method">#</a>]
+          </dt>
+          <dt>
+            Zavolá funkci nebo metodu spojenou s tlačítkem
+          </dt>
+        </dl>
+        <div class="navigate">
+          <hr class="zonebar" />
+          <p class="info">
+            Přeložil a upravil - Jakub Vojáček - Copyright © 2006 TkinterCZ -
+            <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+            License 1.2</a>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="cs">
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Vstupní pole ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="checkbutton.htm" tppabs="http://tkinter.programujte.com/checkbutton.htm">předchozí</a> ] [ <a href=
+          "frame.htm" tppabs="http://tkinter.programujte.com/frame.htm">další</a> ] [ <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/entry.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/entry.htm'" tppabs="http://effbot.org/tkinterbook/entry.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Udělátko Vstupní pole (Widget Entry)
+        </h1>
+        <p>
+          Udělátko <b>Entry</b> je standardní udělátko Tkinter, které se
+          používá k zadávání nebo zobrazování jedné řádky textu.
+        </p>
+        <h2>
+          Kdy Entry používat
+        </h2>
+        <p>
+          Udělátko Entry se používá, potřebujete-li zadávat text. Umožňuje vám
+          zadat jednu řádku textu v jednom fontu.
+        </p>
+        <p>
+          Chcete-li zadávat víceřádkový text, používejte widget <a href=
+          "text.htm" tppabs="http://tkinter.programujte.com/text.htm"><b>Text</b></a>.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          <b>Tento příklad</b> vytvoří Vstupní pole a Tlačítko, které tiskne
+          jeho obsah:
+        </p>
+        <pre>
+<img alt="" src="entry.png" tppabs="http://tkinter.programujte.com/images/entry.png" height="74" width="134">
+</pre>
+        <pre>
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+hlavni = Tk()
+
+vstup = Entry(hlavni)
+vstup.pack()
+vstup.focus_set()
+
+def volanafunkce():
+    print vstup.get()
+
+tlacitko = Button(hlavni, text=u"přečti", width=10, command=volanafunkce, font="ArialNarrow 10")
+tlacitko.pack()
+
+mainloop()
+</pre>
+        <p>
+          <b>Tento příklad</b> ukáže, jak vytvořit formulář na jméno a heslo.
+          Heslo se bude zobrazovat jako *, a provedeme hromadné nastavení změny
+          fontu:
+        </p><img src="entry2.png" tppabs="http://tkinter.programujte.com/images/entry2.png">
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+hlavni = Tk()
+hlavni.option_add('*Font', 'Arial 9')
+
+
+def radek(rodic, text, **parametry):
+    stitek=Label(rodic, text=text).pack(side=LEFT)
+    vstup=Entry(rodic, **parametry)
+    vstup.pack(side=LEFT)
+    return vstup
+   
+def tiskni():
+    print uzivatel.get()
+    print heslo.get()
+
+uzivatel=radek(hlavni, u"Uživatelské jméno: ")
+heslo=radek(hlavni, u"Heslo: ", show="*")
+Button(hlavni, text=u"přečti", width=10, command=tiskni).pack()
+
+mainloop()
+
+</pre><b>Tento příklad</b> ukáže možnost spojení s tkProměnnou a ověřování
+obsahu:
+        <pre>
+<img alt="" src="entry3.png" tppabs="http://tkinter.programujte.com/images/entry3.png" height="53" width="374">
+
+# -*- coding: utf-8 -*- 
+from Tkinter import *
+
+def overeni():
+    print "nyni overuji text"
+    return 1
+
+def cteni():
+    print vstupObsah.get()   # pristup pres tkPromennou
+    print vstup.get()        # pristup pres metodu get instance Entry
+
+hlavni = Tk()
+hlavni.option_add('*Font', 'Arial 9')  # aby byl lepsi font
+
+vstupObsah=StringVar()
+vstupObsah.set("Žluťoučký kůň pěl ďáleské ódy.")
+
+# obsah je napojen na tkProměnnou vstupObsah 
+# a při každém písmení probíhá ověřování
+vstup = Entry(hlavni, textvariable=vstupObsah, width=40, validate="key", 
+              validatecommand=overeni)
+vstup.pack(side=LEFT)
+vstup.focus_set()           # aby se dalo hned psát
+vstup.icursor(END)          # aby byl kurzor na konci
+vstup.selection_range(0, END)
+  
+tlacitko = Button(hlavni, text=u"přečti", width=10, command=cteni)
+tlacitko.pack()
+
+mainloop()
+</pre>
+        <h2>
+          Koncepty
+        </h2>
+        <h3>
+          Pozice kurzoru (indexování)
+        </h3>
+        <p>
+          Udělátko <i>Entry</i> umožňuje nastavovat/číst pozici znaku několika
+          způsoby:
+        </p>
+        <ul>
+          <li>Číselný index
+          </li>
+          <li>
+            <b>ANCHOR</b>
+          </li>
+          <li>
+            <b>END</b>
+          </li>
+          <li>
+            <b>INSERT</b>
+          </li>
+          <li>Souřadnice myši ("@x")
+          </li>
+        </ul>
+        <p>
+          <b>Číselné indexy</b> fungují jako indexování pythonovských seznamů.
+          Znaky v řetězci jsou očíslovány od 0 výše. Můžete určovat rozsahy
+          stejně jako slices u seznamů: například (0, 5) odpovídá prvním pěti
+          znakům ve vstupním poli.
+        </p>
+        <p>
+          <b>ANCHOR</b> (nebo také řetězec"anchor" - česky KOTVA) odpovídá
+          začátku výběru, pokud nějaký je. Můžete použít metodu
+          <b>select_from</b>, chcete-li to programově změnit.
+        </p>
+        <p>
+          <b>END</b> (nebo "end" - česky KONEC) odpovídá pozici hned za
+          posledním znakem ve vstupním poli. Rozsah (0, END) pak logicky
+          odpovídá všem znakům ve slově.
+        </p>
+        <p>
+          <b>INSERT</b> (nebo "insert" - česky VLOŽENÍ) odpovídá současné
+          pozici textového kurzoru. Můžete použít metodu <b>icursor</b>,
+          chcete-li to programově změnit.
+        </p>
+        <p>
+          No a konečně můžete použít i myš k určení indexu, třeba takto:
+        </p>
+        <pre>
+    "@%d" % x
+</pre>
+        <p>
+          kde x je pixelová vzdálenost od levé hrany vstupního pole.
+        </p>
+        <h2 id="reference">
+          Reference
+        </h2>
+        <dl>
+          <dt>
+            <b><a name="Tkinter.Entry-class" id=
+            "Tkinter.Entry-class"></a>Entry(master=None, **parametry)</b>
+            (class) [<a href="#Tkinter.Entry-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vstupní textové pole.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodič udělátka.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry udělátka. Detaily najdete v metodě <a class="link"
+                href="#Tkinter.Entry.config-method"><b>config</b></a>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.config-method" name=
+            "Tkinter.Entry.config-method"><b>config(**parametry)</b></a>
+            [<a href="#Tkinter.Entry.config-method">#</a>]
+          </dt>
+        </dl>
+        <dl>
+          <dd>
+            <p>
+              Mění jeden nebo více parametrů udělátka. Pokud nejsou zadány
+              žádné parametry, metoda vrací slovník s aktuálním nastavením.
+            </p>
+            <dl>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Pozadí udělátka. Základní nastavení je závislé na systému.
+                (jméno v database option je background, třída je Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje. Základní nastavení je závislé na
+                systému, obvykle je několik málo pixelů.
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Kurzor udělátka. Základní je textový vstupní kurzor(typicky
+                tvar "I", např. kurzor xterm). (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>disabledbackground=</i>
+              </dt>
+              <dd>
+                Jaké použít pozadí, když je udělátko vypnuté. Pokud je
+                vynecháno nebo prázdné, použije se standardní pozadí.
+                (disabledBackground/DisabledBackground)
+              </dd>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+            </dl>
+            <dl>
+              <dd>
+                Jakou použít barvu písma, když je udělátko vypnuté. Pokud je
+                vynecháno nebo prázdné, použije se standardní barva písma.
+                (disabledForeground/DisabledForeground)
+              </dd>
+            </dl>
+            <dl>
+              <dt>
+                <i>exportselection=</i>
+              </dt>
+              <dd>
+                Pokud je pravda, vybraný text se automaticky exportován do
+                schránky. Standardně je true. (exportSelection/ExportSelection)
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Font udělátka. Widget font. Základní nastavení je závislé na
+                systému. (font/Font)
+              </dd>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva textu. (foreground/Foreground)
+              </dd>
+              <dt>
+                <i>fg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>foreground</b>.
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Společně s <b>highlightcolor</b> určuje tento parametr jak
+                vykreslovat okraj při focusu. Tento parametr se použije, pokud
+                udělátka focus nemá. Základní nastavení je závislé na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>highlightbackground</b>, ale použije se, když
+                udělátko focus má. (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného kraje při focusu. Standardně je několik málo
+                pixelů, pokud však systém neindikuje focus změnou samotného
+                udělátka (jako na Windows).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>insertbackground=</i>
+              </dt>
+              <dd>
+                Barva vkládacího kurzoru. (insertBackground/Foreground)
+              </dd>
+              <dt>
+                <i>insertborderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje vkládacího kurzoru. Pokud je tento nastaven na
+                nenulovou hodnotu, bude kurzor vykreslen reliefem
+                <b>RAISED</b>. (insertBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>insertofftime=</i>
+              </dt>
+              <dd>
+                Společně s <b>insertontime</b> tato volba řídící rychlost
+                blikání kurzoru. Obě hodnoty se zadávají v milisekundách.
+                (insertOffTime/OffTime)
+              </dd>
+              <dt>
+                <i>insertontime=</i>
+              </dt>
+              <dd>
+                Viz <b>insertofftime</b>. (insertOnTime/OnTime)
+              </dd>
+              <dt>
+                <i>insertwidth=</i>
+              </dt>
+              <dd>
+                Šířka vkládacího kurzoru. Obvykle jeden nebo dva pixely.
+                (insertWidth/InsertWidth)
+              </dd>
+              <dt>
+                <i>invalidcommand=</i>
+              </dt>
+              <dd>
+                DOPLNIT. Žádné standardní nastavení.
+                (invalidCommand/InvalidCommand)
+              </dd>
+              <dt>
+                <i>invcmd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>invalidcommand</b>.
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Jak zarovnat text uvnitř vstupního pole. Použijte jedno z
+                <b>LEFT</b>, <b>CENTER</b> nebo <b>RIGHT</b>. Standard je
+                <b>LEFT</b>. (justify/Justify)
+              </dd>
+              <dt>
+                <i>readonlybackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí, která se použije, když je stav "readonly". Pokud
+                je vynecháno nebo prázdné, použijte standardní pozadí.
+                (readonlyBackground/ReadonlyBackground)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Styl okraje. Standardně je <b>SUNKEN</b>. Další možnosti jsou
+                <b>FLAT</b>, <b>RAISED</b>, <b>GROOVE</b> a <b>RIDGE</b>.
+                (relief/Relief)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí při výběru. Základní nastavení je závislé na
+                systému a displeji. (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectborderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje při výběru. Základní nastavení je závislé na
+                systému. (selectBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>
+              </dt>
+              <dd>
+                Barva písma při výběru.  Základní nastavení je závislé na
+                systému. (selectForeground/Background)
+              </dd>
+              <dt>
+                <i>show=</i>
+              </dt>
+              <dd>
+                Určuje, jak se bude zobrazovat obsah udělátka. Pokud je
+                nenulový, udělátko bude zobrazovat zadaný znak namísto skutečně
+                psaného obsahu. Používá se o polí s hesly = nastavte tuto volbu
+                na  "*". (show/Show)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav vstupu: <b>NORMAL</b>, <b>DISABLED</b> nebo 
+                "readonly" (stejné jako <b>DISABLED</b>, avšak obsah se může
+                vybírat a kopírovat). Standardní je <b>NORMAL</b>. Pokud
+                nastavíte stav na <b>DISABLED</b> nebo "readonly", všechna
+                volání  <a class="link" href=
+                "#Tkinter.Entry.insert-method"><b>insert</b></a> a <a class=
+                "link" href="#Tkinter.Entry.delete-method"><b>delete</b></a>
+                jsou ignorována. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, jestli se může uživatel na toto udělátko dostat
+                pomocí klávesy <b>Tab</b>. Standard je prázdný řetězec, což
+                značí, je vstupní pole může dostat focus jen když má nějaké
+                klávesnicové vazby (což, jinými slovy, značí že standard je
+                zapnuto).  (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>textvariable=</i>
+              </dt>
+              <dd>
+                Spojuje tkProměnnou (obvykle <b>StringVar</b>) s obsahem
+                vstupního pole. (textVariable/Variable)
+              </dd>
+              <dt>
+                <i>validate=</i>
+              </dt>
+              <dd>
+                Určuje, kdy se má konat ověřování. Použijete-li "focus",
+                ověření obsahu nastane vždy, když udělátko získá nebo ztratí
+                focus. "focusin" ověřuje jen při získání focusu, "focusout"
+                naopak jen když focus ztratí, "key" při jakékoliv změně a ALL
+                pro všechny předchozí situace. Standard je <b>NONE</b> (žádné
+                ověřování). (validate/Validate)
+              </dd>
+              <dt>
+                <i>validatecommand=</i>
+              </dt>
+              <dd>
+                Funkce nebo metoda, která se volá na ověření, jestli je obsah v
+                pořádku. Funkce by měla vrátit pravdu, pokud je obsah v
+                pořádku, nebo false, pokud není. Tato volba se použije jen když
+                parametr <b>validate</b> není <b>NONE</b>.
+                (validateCommand/ValidateCommand)
+              </dd>
+              <dt>
+                <i>vcmd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>validatecommand</b>.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka vstupního pole v jednotkách "znak". Tento parametr určuje
+                velikost na obrazovce; neomezuje počet znaků, které se dají do
+                vstupního pole napsat. Standard je 20 znaků. 
+                (width/Width)
+              </dd>
+              <dt>
+                <i>xscrollcommand=</i>
+              </dt>
+              <dd>
+                Používá na spojení vstupního pole a vodorovným posuvníkem. Tento
+                parametr by měl být nastaven na metodu <b>set</b> příslušného
+                posuvníku. (xScrollCommand/ScrollCommand)
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <dl>
+          <dt>
+            <a id="Tkinter.Entry.delete-method" name=
+            "Tkinter.Entry.delete-method"><b>delete(first, last=None)</b></a>
+            [<a href="#Tkinter.Entry.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže znak na pozici nebo v zadaném rozsahu. Na smazání všeho
+              použijte (0, END).
+            </p>
+            <dl>
+              <dt>
+                <i>first</i>
+              </dt>
+              <dd>
+                Začátek výběru.
+              </dd>
+              <dt>
+                <i>last</i>
+              </dt>
+              <dd>
+                Dobrovolný konec výběru. Pokud je vynecháno, maže se jen jediný
+                znak.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.get-method" name=
+            "Tkinter.Entry.get-method"><b>get()</b></a> [<a href=
+            "#Tkinter.Entry.get-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací současný obsah vstupního pole.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Obsah udělátka ve formě řetězce.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.icursor-method" name=
+            "Tkinter.Entry.icursor-method"><b>icursor(index)</b></a> [<a href=
+            "#Tkinter.Entry.icursor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posouvá vkládací kurzor na danou pozici. Tímto se také nastavuje
+              pozice <b>INSERT</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam posunout kurzor.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.index-method" name=
+            "Tkinter.Entry.index-method"><b>index(index)</b></a> [<a href=
+            "#Tkinter.Entry.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací číselnou pozici, která odpovídá danému indexu.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Odpovídající číselný index.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.insert-method" name=
+            "Tkinter.Entry.insert-method"><b>insert(index, string)</b></a>
+            [<a href="#Tkinter.Entry.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Na danou pozici vkládá text. Na vložení textu na pozici kurzoru
+              použijte  insert(INSERT, text)  a na vložení textu na
+              konec pak  insert(END, text).
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam vložit text.
+              </dd>
+              <dt>
+                <i>string</i>
+              </dt>
+              <dd>
+                Jaký text se má vložit.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.scan_dragto-method" name=
+            "Tkinter.Entry.scan_dragto-method"><b>scan_dragto(x)</b></a>
+            [<a href="#Tkinter.Entry.scan_dragto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje kotvu viditelnosti pro vodorovný posun na danou
+              souřadnici myši.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Současná horizontální pozice myši.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.scan_mark-method" name=
+            "Tkinter.Entry.scan_mark-method"><b>scan_mark(x)</b></a> [<a href=
+            "#Tkinter.Entry.scan_mark-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje bočně obsah udělátka podle souřadnice myši. Text se
+              posunuje o 10 x vzdálenost mezi kotvou viditelnosti a novou
+              pozicí.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Současná horizontální pozice myši.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_adjust-method" name=
+            "Tkinter.Entry.select_adjust-method"><b>select_adjust(index)</b></a>
+            [<a href="#Tkinter.Entry.select_adjust-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_adjust-method"><b>selection_adjust</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_clear-method" name=
+            "Tkinter.Entry.select_clear-method"><b>select_clear()</b></a>
+            [<a href="#Tkinter.Entry.select_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_clear-method"><b>selection_clear</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_from-method" name=
+            "Tkinter.Entry.select_from-method"><b>select_from(index)</b></a>
+            [<a href="#Tkinter.Entry.select_from-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_from-method"><b>selection_from</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_present-method" name=
+            "Tkinter.Entry.select_present-method"><b>select_present()</b></a>
+            [<a href="#Tkinter.Entry.select_present-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_present-method"><b>selection_present</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_range-method" name=
+            "Tkinter.Entry.select_range-method"><b>select_range(start,
+            end)</b></a> [<a href="#Tkinter.Entry.select_range-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_range-method"><b>selection_range</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.select_to-method" name=
+            "Tkinter.Entry.select_to-method"><b>select_to(index)</b></a>
+            [<a href="#Tkinter.Entry.select_to-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Entry.selection_to-method"><b>selection_to</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_adjust-method" name=
+            "Tkinter.Entry.selection_adjust-method"><b>selection_adjust(index)</b></a>
+            [<a href="#Tkinter.Entry.selection_adjust-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastaví výběr tak, aby zahrnoval také daný znak. Pokud již je ve
+              zahrnut ve výběru, nedělá nic.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pozice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_clear-method" name=
+            "Tkinter.Entry.selection_clear-method"><b>selection_clear()</b></a>
+            [<a href="#Tkinter.Entry.selection_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Ruší výběr.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_from-method" name=
+            "Tkinter.Entry.selection_from-method"><b>selection_from(index)</b></a>
+            [<a href="#Tkinter.Entry.selection_from-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje začátek nového výběru. Také nastavuje index
+              <b>ANCHOR</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_present-method" name=
+            "Tkinter.Entry.selection_present-method"><b>selection_present()</b></a>
+            [<a href="#Tkinter.Entry.selection_present-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Kontrola, jestli existuje výběr.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pravdu, pokud je nějaká část textu ve výběru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_range-method" name=
+            "Tkinter.Entry.selection_range-method"><b>selection_range(start,
+            end)</b></a> [<a href=
+            "#Tkinter.Entry.selection_range-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Explicitně nastavuje výběr. Start musí být menší než konec (end).
+              Na výběr všeho textu používejte  <b>selection_range(0,
+              END)</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>start</i>
+              </dt>
+              <dd>
+                Začátek výběru.
+              </dd>
+              <dt>
+                <i>end</i>
+              </dt>
+              <dd>
+                Konec.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.selection_to-method" name=
+            "Tkinter.Entry.selection_to-method"><b>selection_to(index)</b></a>
+            [<a href="#Tkinter.Entry.selection_to-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vybere všechen text mezi <b>ANCHOR</b> a daným indexem.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.xview-method" name=
+            "Tkinter.Entry.xview-method"><b>xview(index)</b></a> [<a href=
+            "#Tkinter.Entry.xview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zajistí, aby byl daný index viditelný. Pokud j e to nutné, posune
+              se pohled na vstupní pole.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.xview_moveto-method" name=
+            "Tkinter.Entry.xview_moveto-method"><b>xview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Entry.xview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastaví pohled na vstupní pole tak, aby daný offset byl u levého
+              kraje. Offset 0.0 je levý kraj, 1.0 konec.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Entry.xview_scroll-method" name=
+            "Tkinter.Entry.xview_scroll-method"><b>xview_scroll(number,
+            what)</b></a> [<a href="#Tkinter.Entry.xview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Roluje pohled na vstupní pole vodorovně na dané číslo.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dd>
+                Počet jednotek.
+              </dd>
+              <dt>
+                <i>what</i>
+              </dt>
+              <dd>
+                Jaké jednotky použít. Může být buď  <b>"units"</b> (znaky)
+                nebo <b>"pages"</b> (větší kroky).
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

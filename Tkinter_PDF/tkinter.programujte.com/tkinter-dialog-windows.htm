@@ -1,0 +1,303 @@
+<?xml version='1.0' encoding='us-ascii'?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<!-- Mirrored from effbot.org/tkinterbook/tkinter-dialog-windows.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 24 Mar 2006 21:55:44 GMT -->
+<head>
+<meta name="generator" content="HTML Tidy for Solaris (vers 1st November 2003), see www.w3.org" />
+<title>Dialog Windows ::: An Introduction to Tkinter ::: www.effbot.org</title>
+<link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media="print" />
+</head>
+<body bgcolor="#FFFFFF">
+<div id="effbot-page">
+<div id="effbot-nav"><a href="javascript:if(confirm('http://effbot.org/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/'" tppabs="http://effbot.org/"><b>effbot.org</b></a><br />
+&#160;<a href="javascript:if(confirm('http://effbot.org/tkinterbook  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook'" tppabs="http://effbot.org/tkinterbook"><b>an introduction to tkinter</b></a><br />
+&#160;&#160;<b>Dialog Windows</b></div>
+<div id="effbot-body">
+<p class="info">An Introduction to Tkinter (Draft Edition)</p>
+<p class='navigate'>[<a href="tkinter-dialog-entry.htm" tppabs="http://tkinter.programujte.com/tkinter-dialog-entry.htm">back</a>] [<a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">next</a>]</p>
+<h1 class="title">Dialog Windows</h1>
+<br />
+<!-- LINK PREV tkinter-standard-dialogs.htm -->
+<!-- LINK NEXT tkinter-index.htm -->
+<p>While the standard dialogs described in the previous section may be sufficient for many simpler applications, most larger applications require more complicated dialogs. For example, to set configuration parameters for an application, you will probably want to let the user enter more than one value or string in each dialog.</p>
+<p>Basically, creating a dialog window is no different from creating an application window. Just use the <b>Toplevel</b> widget, stuff the necessary entry fields, buttons, and other widgets into it, and let the user take care of the rest. (By the way, don't use the <b>ApplicationWindow</b> class for this purpose; it will only confuse your users).</p>
+<p>But if you implement dialogs in this way, you may end up getting both your users and yourself into trouble. The standard dialogs all returned only when the user had finished her task and closed the dialog; but if you just display another toplevel window, everything will run in parallel. If you're not careful, the user may be able to display several copies of the same dialog, and both she and your application will be hopelessly confused.</p>
+<p>In many situations, it is more practical to handle dialogs in a synchronous fashion; create the dialog, display it, wait for the user to close the dialog, and then resume execution of your application. The <b>wait_window</b> method is exactly what we need; it enters a local event loop, and doesn't return until the given window is destroyed (either via the <b>destroy</b> method, or explicitly via the window manager):</p>
+<pre>
+widget.wait_window(window)
+</pre>
+<p>(Note that the method waits until the window given as an argument is destroyed; the only reason this is a method is to avoid namespace pollution).</p>
+<p>In the following example, the <b>MyDialog</b> class creates a <b>Toplevel</b> widget, and adds some widgets to it. The caller then uses <b>wait_window</b> to wait until the dialog is closed. If the user clicks OK, the entry field's value is printed, and the dialog is then explicitly destroyed.</p>
+<div class='example'><b>Creating a simple dialog</b>
+<pre>
+from Tkinter import *
+
+class MyDialog:
+
+    def __init__(self, parent):
+
+        top = self.top = Toplevel(parent)
+
+        Label(top, text="Value").pack()
+
+        self.e = Entry(top)
+        self.e.pack(padx=5)
+
+        b = Button(top, text="OK", command=self.ok)
+        b.pack(pady=5)
+
+    def ok(self):
+
+        print "value is", self.e.get()
+
+        self.top.destroy()
+
+
+root = Tk()
+Button(root, text="Hello!").pack()
+root.update()
+
+d = MyDialog(root)
+
+root.wait_window(d.top)
+</pre></div>
+<p>If you run this program, you can type something into the entry field, and then click <b>OK</b>, after which the program terminates (note that we didn't call the <b>mainloop</b> method here; the local event loop handled by <b>wait_window</b> was sufficient). But there are a few problems with this example:</p>
+<ul>
+<li>
+<p>The root window is still active. You can click on the button in the root window also when the dialog is displayed. If the dialog depends on the current application state, letting the users mess around with the application itself may be disastrous. And just being able to display multiple dialogs (or even multiple copies of one dialog) is a sure way to confuse your users.</p>
+</li>
+<li>
+<p>You have to explicitly click in the entry field to move the cursor into it, and also click on the OK button. Pressning <b>Enter</b> in the entry field is not sufficient.</p>
+</li>
+<li>
+<p>There should be some controlled way to cancel the dialog (and as we learned earlier, we really should handle the <b>WM_DELETE_WINDOW</b> protocol too).</p>
+</li>
+</ul>
+<p>To address the first problem, Tkinter provides a method called <b>grab_set</b>, which makes sure that no mouse or keyboard events are sent to the wrong window.</p>
+<p>The second problem consists of several parts; first, we need to explicitly move the keyboard focus to the dialog. This can be done with the <b>focus_set</b> method. Second, we need to bind the <b>Enter</b> key so it calls the <b>ok</b> method. This is easy, just use the <b>bind</b> method on the <b>Toplevel</b> widget (and make sure to modify the <b>ok</b> method to take an optional argument so it doesn't choke on the event object).</p>
+<p>The third problem, finally, can be handled by adding an additional <b>Cancel</b> button which calls the <b>destroy</b> method, and also use <b>bind</b> and <b>protocol</b> to do the same when the user presses <b>Escape</b> or explicitly closes the window.</p>
+<p>The following <b>Dialog</b> class provides all this, and a few additional tricks. To implement your own dialogs, simply inherit from this class and override the <b>body</b> and <b>apply</b> methods. The former should create the dialog body, the latter is called when the user clicks OK.</p>
+<div class='example'><b>A dialog support class (File: tkSimpleDialog.py)</b>
+<pre>
+from Tkinter import *
+import os
+
+class Dialog(Toplevel):
+
+    def __init__(self, parent, title = None):
+
+        Toplevel.__init__(self, parent)
+        self.transient(parent)
+
+        if title:
+            self.title(title)
+
+        self.parent = parent
+
+        self.result = None
+
+        body = Frame(self)
+        self.initial_focus = self.body(body)
+        body.pack(padx=5, pady=5)
+
+        self.buttonbox()
+
+        self.grab_set()
+
+        if not self.initial_focus:
+            self.initial_focus = self
+
+        self.protocol("WM_DELETE_WINDOW", self.cancel)
+
+        self.geometry("+%d+%d" % (parent.winfo_rootx()+50,
+                                  parent.winfo_rooty()+50))
+
+        self.initial_focus.focus_set()
+
+        self.wait_window(self)
+
+    #
+    # construction hooks
+
+    def body(self, master):
+        # create dialog body.  return widget that should have
+        # initial focus.  this method should be overridden
+
+        pass
+
+    def buttonbox(self):
+        # add standard button box. override if you don't want the
+        # standard buttons
+
+        box = Frame(self)
+
+        w = Button(box, text="OK", width=10, command=self.ok, default=ACTIVE)
+        w.pack(side=LEFT, padx=5, pady=5)
+        w = Button(box, text="Cancel", width=10, command=self.cancel)
+        w.pack(side=LEFT, padx=5, pady=5)
+
+        self.bind("&lt;Return&gt;", self.ok)
+        self.bind("&lt;Escape&gt;", self.cancel)
+
+        box.pack()
+
+    #
+    # standard button semantics
+
+    def ok(self, event=None):
+
+        if not self.validate():
+            self.initial_focus.focus_set() # put focus back
+            return
+
+        self.withdraw()
+        self.update_idletasks()
+
+        self.apply()
+
+        self.cancel()
+
+    def cancel(self, event=None):
+
+        # put focus back to the parent window
+        self.parent.focus_set()
+        self.destroy()
+
+    #
+    # command hooks
+
+    def validate(self):
+
+        return 1 # override
+
+    def apply(self):
+
+        pass # override
+</pre></div>
+<p>The main trickery is done in the constructor; first, <b>transient</b> is used to associate this window with a parent window (usually the application window from which the dialog was launched). The dialog won't show up as an icon in the window manager (it won't appear in the task bar under Windows, for example), and if you iconify the parent window, the dialog will be hidden as well. Next, the constructor creates the dialog body, and then calls <b>grab_set</b> to make the dialog modal, <b>geometry</b> to position the dialog relative to the parent window, <b>focus_set</b> to move the keyboard focus to the appropriate widget (usually the widget returned by the <b>body</b> method), and finally <b>wait_window</b>.</p>
+<p>Note that we use the <b>protocol</b> method to make sure an explicit close is treated as a cancel, and in the <b>buttonbox</b> method, we bind the <b>Enter</b> key to OK, and <b>Escape</b> to Cancel. The <b>default=ACTIVE</b> call marks the OK button as a default button in a platform specific way.</p>
+<p>Using this class is much easier than figuring out how it's implemented; just create the necessary widgets in the <b>body</b> method, and extract the result and carry out whatever you wish to do in the <b>apply</b> method. Here's a simple example (we'll take a closer look at the <b>grid</b> method in a moment).</p>
+<div class='example'><b>Creating a simple dialog, revisited</b>
+<pre>
+import tkSimpleDialog
+
+class MyDialog(tkSimpleDialog.Dialog):
+
+    def body(self, master):
+
+        Label(master, text="First:").grid(row=0)
+        Label(master, text="Second:").grid(row=1)
+
+        self.e1 = Entry(master)
+        self.e2 = Entry(master)
+
+        self.e1.grid(row=0, column=1)
+        self.e2.grid(row=1, column=1)
+        return self.e1 # initial focus
+
+    def apply(self):
+        first = int(self.e1.get())
+        second = int(self.e2.get())
+        print first, second # or something
+</pre></div>
+<p>And here's the resulting dialog:</p>
+<div class='figure'><b>Running the dialog2.py script</b>
+<p><img src="data-tkinter-dialog-windows-6676ce34eb83273a29e00447163b8818.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-dialog-windows-6676ce34eb83273a29e00447163b8818.gif" /></p>
+</div>
+<p>Note that the <b>body</b> method may optionally return a widget that should receive focus when the dialog is displayed. If this is not relevant for your dialog, simply return <b>None</b> (or omit the return statement).</p>
+<p>The above example did the actual processing in the <b>apply</b> method (okay, a more realistic example should probably to something with the result, rather than just printing it). But instead of doing the processing in the <b>apply</b> method, you can store the entered data in an instance attribute:</p>
+<pre>
+    ...
+
+    def apply(self):
+        first = int(self.e1.get())
+        second = int(self.e2.get())
+        self.result = first, second
+    
+d = MyDialog(root)
+print d.result
+</pre>
+<p>Note that if the dialog is cancelled, the <b>apply</b> method is never called, and the <b>result</b> attribute is never set. The <b>Dialog</b> constructor sets this attribute to <b>None</b>, so you can simply test the result before doing any processing of it. If you wish to return data in other attributes, make sure to initialize them in the <b>body</b> method (or simply set <b>result</b> to 1 in the apply method, and test it before accessing the other attributes).</p>
+<h2 style="sect1">Grid Layouts</h2>
+<p>While the <b>pack</b> manager was convenient to use when we designed application windows, it may not be that easy to use for dialogs. A typical dialog may include a number of entry fields and check boxes, with corresponding labels that should be properly aligned. Consider the following simple example:</p>
+<div class='figure'><b>Simple Dialog Layout</b>
+<p><img src="data-tkinter-dialog-windows-8d6be299bb44b167f1e62531f57a773f.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-dialog-windows-8d6be299bb44b167f1e62531f57a773f.gif" /></p>
+</div>
+<p>To implement this using the <b>pack</b> manager, we could create a frame to hold the label <span>"first:"</span>, and the corresponding entry field, and use <b>side=LEFT</b> when packing them. Add a corresponding frame for the next line, and pack the frames and the checkbutton into an outer frame using <b>side=TOP</b>. Unfortunately, packing the labels in this fashion makes it impossible to get the entry fields lined up, and if we use <b>side=RIGHT</b> to pack the entry field instead, things break down if the entry fields have different width. By carefully using <b>width</b> options, padding, <b>side</b> and <b>anchor</b> packer options, etc., we can get reasonable results with some effort. But there's a much easier way: use the <b>grid</b> manager instead.</p>
+<p>This manager splits the master widget (typically a frame) into a 2-dimensional grid, or table. For each widget, you only have to specify where in this grid it should appear, and the grid managers takes care of the rest. The following <b>body</b> method shows how to get the above layout:</p>
+<div class='example'><b>Using the grid geometry maanager</b>
+<pre>
+def body(self, master):
+
+    Label(master, text="First:").grid(row=0, sticky=W)
+    Label(master, text="Second:").grid(row=1, sticky=W)
+
+    self.e1 = Entry(master)
+    self.e2 = Entry(master)
+
+    self.e1.grid(row=0, column=1)
+    self.e2.grid(row=1, column=1)
+
+    self.cb = Checkbutton(master, text="Hardcopy")
+    self.cb.grid(row=2, columnspan=2, sticky=W)
+</pre></div>
+<p>For each widget that should be handled by the grid manager, you call the <b>grid</b> method with the <b>row</b> and <b>column</b> options, telling the manager where to put the widget. The topmost row, and the leftmost column, is numbered 0 (this is also the default). Here, the checkbutton is placed beneath the label and entry widgets, and the <b>columnspan</b> option is used to make it occupy more than one cell. Here's the result:</p>
+<div class='figure'><b>Using the grid manager</b>
+<p><img src="data-tkinter-dialog-windows-90bfacf1133c21ead67c52325c75ed3f.gif" tppabs="http://tkinter.programujte.com/images/data-tkinter-dialog-windows-90bfacf1133c21ead67c52325c75ed3f.gif" /></p>
+</div>
+<p>If you look carefully, you'll notice a small difference between this dialog, and the dialog shown by the <b>dialog2.py</b> script. Here, the labels are aligned to the left margin. If you compare the code, you'll find that the only difference is an option called <b>sticky</b>.</p>
+<p>When its time to display the frame widget, the grid geometry manager loops over all widgets, calculating a suitable width for each row, and a suitable height for each column. For any widget where the resulting cell turns out to be larger than the widget, the widget is centered by default. The <b>sticky</b> option is used to modify this behavior. By setting it to one of <b>E</b>, <b>W</b>, <b>S</b>, <b>N</b>, <b>NW</b>, <b>NE</b>, <b>SE</b>, or <b>SW</b>, you can align the widget to any side or corner of the cell. But you can also use this option to stretch the widget if necessary; if you set the option to <b>E+W</b>, the widget will be stretched to occupy the full width of the cell. And if you set it to <b>E+W+N+S</b> (or <b>NW+SE</b>, etc), the widget will be stretched in both directions. In practice, the <b>sticky</b> option replaces the <b>fill</b>, <b>expand</b>, and <b>anchor</b> options used by the pack manager.</p>
+<p>The grid manager provides many other options allowing you to tune the look and behavior of the resulting layout. These include <b>padx</b> and <b>pady</b> which are used to add extra padding to widget cells, and many others. See the <i><a href="tkinter-grid.htm" tppabs="http://tkinter.programujte.com/tkinter-grid.htm">Grid Geometry Manager</a></i> chapter for details.</p>
+<h2 style="sect1">Validating Data</h2>
+<p>What if the user types bogus data into the dialog? In our current example, the <b>apply</b> method will raise an exception if the contents of an entry field is not an integer. We could of course handle this with a <b>try/except</b> and a standard message box:</p>
+<pre>
+    ...
+
+    def apply(self):
+        try:
+            first = int(self.e1.get())
+            second = int(self.e2.get())
+            dosomething((first, second))
+        except ValueError:
+            tkMessageBox.showwarning(
+                "Bad input",
+                "Illegal values, please try again"
+            )
+</pre>
+<p>There's a problem with this solution: the <b>ok</b> method has already removed the dialog from the screen when the <b>apply</b> method is called, and it will destroy it as soon as we return. This design is intentional; if we carry out some potentially lengthy processing in the <b>apply</b> method, it would be very confusing if the dialog wasn't removed before we finished. The <b>Dialog</b> class already contain hooks for another solution: a separate <b>validate</b> method which is called before the dialog is removed.</p>
+<p>In the following example, we simply moved the code from <b>apply</b> to <b>validate</b>, and changed it to store the result in an instance attribute. This is then used in the <b>apply</b> method to carry out the work.</p>
+<pre>
+    ...
+
+    def validate(self):
+        try:
+            first= int(self.e1.get())
+            second = int(self.e2.get())
+            self.result = first, second
+            return 1
+        except ValueError:
+            tkMessageBox.showwarning(
+                "Bad input",
+                "Illegal values, please try again"
+            )
+            return 0
+
+    def apply(self):
+        dosomething(self.result)
+</pre>
+<p>Note that if we left the processing to the calling program (as shown above), we don't even have to implement the <b>apply</b> method.</p>
+<div class='navigate'>
+<hr id='zonebar' />
+<p class='navigate'>[<a href="tkinter-standard-dialogs.htm" tppabs="http://tkinter.programujte.com/tkinter-standard-dialogs.htm">back</a>] </p>
+<hr id='zonebar' />
+[<a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">index</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/useredit4f44.html?name=tkinter-dialog-windows">suggest changes</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/edit/index4f44.html?name=tkinter-dialog-windows">edit</a>] [<a href="index.php-akce=404" tppabs="http://tkinter.programujte.com/edit/index568b.html?action=new">new</a>] [<a href="javascript:void(window.open('http://validator.w3.org/check?uri='+escape(document.location.href)))">validate</a>]</div>
+<p class='small'>Copyright &#169; 1997-2005 by Fredrik Lundh.</p>
+</div>
+</div>
+</body>
+
+<!-- Mirrored from effbot.org/tkinterbook/tkinter-dialog-windows.htm by HTTrack Website Copier/3.x [XR&CO'2003], Fri, 24 Mar 2006 21:55:46 GMT -->
+</html>

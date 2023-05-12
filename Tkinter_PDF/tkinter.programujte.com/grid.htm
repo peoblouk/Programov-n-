@@ -1,0 +1,612 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Správce rozmístnění Grid ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="toplevel.htm" tppabs="http://tkinter.programujte.com/toplevel.htm">předchozí</a> ] [ <a href="pack.htm" tppabs="http://tkinter.programujte.com/pack.htm">další</a> ] [
+          <a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/grid.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/grid.htm'" tppabs="http://effbot.org/tkinterbook/grid.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Správce rozmístnění Grid
+        </h1>
+        <p>
+          Správce rozmístnění Grid (česky mřížka) vkládá udělátka do
+          pomyslné tabulky (mřížky). Rodičovské udělátko je rozděleno na řádky
+          a sloupce a každá z buněk této tabulky může obsahovat udělátko.
+        </p>
+        <h2>
+          Kdy používat správce Grid
+        </h2>
+        <p>
+          Grid je nejflexibilnější ze správců v Tkinter. Pokud se vám nechce
+          učit jak a kdy používat všechny tři správce, měli byste se
+          určitě naučit minimálně tento.
+        </p>
+        <p>
+          Správce Grid je obzvláště výhodný, když navrhujete dialogová okna.
+          Pokud jste dnes zvyklí na správce Pack, budete asi překvapení, jak
+          snadno to lze zařídit s Gridem.  Namísto používání mnoha
+          Rámečků, aby pakování fungovalo jak má, můžete v nejjednodušším
+          případě nalít všechny udělátka do jediného kontejneru a použít
+          správce grid na umístnění, tam kam chcete. (Já obvykle používám dva
+          kontejnery - jeden na dialogové tělo a jeden na tlačítka na spodku
+          okna.)
+        </p>
+        <p>
+          Podívejte se na následující příklad:
+        </p>
+        <p>
+          <img src="data-grid-42086ee6fd352370460ea5a4fd46da6a.png" tppabs="http://tkinter.programujte.com/images/data-grid-42086ee6fd352370460ea5a4fd46da6a.png">
+        </p>
+        <p>
+          Vytvoření takového layoutu pomocí správce pack je možné, ale vyžaduje
+          vytvoření několika extra udělátek Frame a mnoho starostí, aby věci
+          vypadaly tak jak mají. Když místo něho použijete správce grid, budete
+          volat pouze jednu metodu na každé udělátko a všechno bude, jak má
+          být. V další sekci uvidíte, jak na to prakticky.
+        </p>
+        <p class="note">
+          <b>Poznámka:</b> Nikdy nemíchejte grid a pack ve stejném rodičovském
+          okně. Tkinter po zbytek vašeho života bude hledat řešení, které
+          uspokojí oba dva správce. Namísto čekání aplikaci raději shoďte a
+          znovu se podívejte na svůj kód. Běžná chyba je použití chybného
+          rodiče pro některá udělátka.
+        </p>
+        <h2 id="patterns">
+          Pojetí
+        </h2>
+        <p>
+          Používá správce grid je snadné. Jednoduše vytvořte udělátka a
+          použijte metodu <b>grid</b> a v ní řekněte správci, do kterého řádku
+          a sloupce je má dát. Nemusíte předem určovat, jak velká mřížka
+          má být. Správce si sám určí velikost podle udělátek v ní.
+        </p>
+        <h3>
+          <b>Jednoduchý příklad</b>
+        </h3>
+        <p>
+          <img alt="" src="data-grid-1.png" tppabs="http://tkinter.programujte.com/images/data-grid-1.png" height="78" width="218">
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+rodic=Tk() 
+rodic.option_add('*Font', 'Verdana 10')
+
+Label(rodic, text=u"První").grid(row=0)
+Label(rodic, text=u"Druhý").grid(row=1)
+
+e1 = Entry(rodic)
+e2 = Entry(rodic)
+
+e1.grid(row=0, column=1)
+e2.grid(row=1, column=1)
+
+mainloop()
+</pre>
+        <p>
+          Pokud není sloupec zadán, je standardně 0.
+        </p>Prázdné řádky i sloupce jsou ignorovány. Výsledek by byl stejný,
+        kdybyste umístili udělátka do řady 10 a 20.
+        <h3>
+          <b>Použití parametru sticky</b>
+        </h3>
+        <p>
+          <img alt="" src="data-grid-2.png" tppabs="http://tkinter.programujte.com/images/data-grid-2.png" height="78" width="218">
+        </p>
+        <p>
+          Všimněte se, že udělátka jsou v buňkách mřížky centrována na střed.
+          TOto chování můžete změnit, použijete-li parametr <b>sticky</b>,
+          který může nabývat jedné nebo více hodnot z: <b>N</b>, <b>S</b>,
+          <b>E</b>, <b>W</b>. Zarovnání doleva je tedy <b>W</b> (west - západ).
+          Může být i více hodnot, např. <b>sticky=N+W</b>.
+        </p>
+        <pre>
+Label(rodic, text=u"První").grid(row=0, sticky=W)
+Label(rodic, text=u"Druhý").grid(row=1, sticky=W)
+
+e1 = Entry(rodic)
+e2 = Entry(rodic)
+
+e1.grid(row=0, column=1)
+e2.grid(row=1, column=1)
+</pre>
+        <h3>
+          <b>Slučování řádků a sloupců</b>
+        </h3>
+        <p>
+          <img alt="" src="data-grid-3.png" tppabs="http://tkinter.programujte.com/images/data-grid-3.png" height="180" width="315">
+        </p>
+        <p>
+          Udělátka mohou také překlenovat (span) několik buněk.
+          Parametr <b>columnspan</b> se používá, pokud chceme, aby
+          udělátko přesahovalo několik buněk a <b>rowspan</b> podobně,
+          několik řádků. Následující kód vám vyrobí výše zobrazený layout::
+        </p>
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+rodic=Tk() 
+rodic.option_add('*Font', 'Arial 10')
+
+stitek1=Label(text=u"Váha")
+stitek1.grid(sticky=E)
+stitek2=Label(text=u"Výška")
+stitek2.grid(sticky=E)
+
+vstup1=Entry()
+vstup1.grid(row=0, column=1)
+vstup2=Entry()
+vstup2.grid(row=1, column=1)
+
+zaskrtavatko=Checkbutton(text=u"Zachovat poměr")
+zaskrtavatko.grid(columnspan=2, sticky=W)
+
+obrazek=PhotoImage(file="avatarGeon.gif")
+image = Label(image=obrazek) 
+image.grid(row=0, column=2, columnspan=2, rowspan=2, sticky=W+E+N+S, padx=5, pady=5)
+
+button1=Button(text=u"Zvětšit")
+button1.grid(row=2, column=2)
+button2=Button(text=u"Zmenšit")
+button2.grid(row=2, column=3)
+
+mainloop()
+</pre>
+        <p>
+          Pár poznámek k tomuto příkladu:
+        </p>
+        <ol>
+          <li>U štítků není definována žádná pozice (buňka). V těchto případech
+          se defaultně bere sloupec=0 a řádek=<i>první následující prázdný
+          řádek v mřížce.</i>
+          </li>
+          <li>Udělátka Entry jsou pozicovány normálně, ale zaškrtávátko je
+          umístěno na nové prázdné řádce (v tomto případě řádka 2) a
+          nakonfigurován, aby překlenul 2 sloupce. Ve výsledku tedy bude stejně
+          široké, jako štítek se vstupem dohromady. Obrázek překlenuje 2 řádky
+          i sloupce současně.
+          </li>
+          <li>Tlačítka jsou umístěny v samostatných buňkách.
+          </li>
+        </ol>
+        <h3>
+          Automatické rozšiřování udělátka
+        </h3>Uvedenu podobný příklad jako u <a href=
+        "pack.htm#Tkinter.Pack-fillX" tppabs="http://tkinter.programujte.com/pack.htm#Tkinter.Pack-fillX">správce Pack:</a>
+        
+        <pre>
+# -*- coding: utf-8 -*-
+from Tkinter import *
+
+hlavni = Tk()
+
+w = Label(hlavni, text=u"Červená", bg="red", fg="white")
+w.grid(sticky=W+E)
+w = Label(hlavni, text=u"Zelená", bg="green", fg="black")
+w.grid(sticky=W+E)
+w = Label(hlavni, text=u"Modrá", bg="blue", fg="white")
+w.grid(sticky=W+E)
+
+hlavni.grid_columnconfigure(0,weight=1)
+mainloop()</pre>
+        <h2 id="reference">
+          Referenční příručka
+        </h2>
+        <dl>
+          <dt>
+            <a id="Tkinter.Grid-class" name=
+            "Tkinter.Grid-class"><b>Grid</b></a> (třída) [<a href=
+            "#Tkinter.Grid-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Správce rozmístnění Grid.  Toto je implementační třída. Grid
+              geometry manager; všechny níže popsané metod jsou dostupné u
+              všech udělátek.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid-method" name=
+            "Tkinter.Grid.grid-method"><b>grid(**parametry)</b></a> [<a href=
+            "#Tkinter.Grid.grid-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Umístí udělátko do mřížky (grid) podle parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry rozmístnění.
+              </dd>
+              <dt>
+                <i>column=</i>
+              </dt>
+              <dd>
+                Vloží udělátko do tohoto sloupce. Číslování sloupců začíná na
+                0. Pokud je vynecháno, je 0.
+              </dd>
+              <dt>
+                <i>columnspan=</i>
+              </dt>
+              <dd>
+                Pokud je uvedeno, indikuje, že buňka udělátka má přesahovat do
+                několika sloupců. Standard je 1.
+              </dd>
+              <dt>
+                <i>in=</i>
+              </dt>
+              <dd>
+                Zapakuj toto udělátko uvnitř daného widgetu. UDělátko se dá
+                packovat jen uvnitř svého rodiče nebo potomka rodiče. Tento
+                parametr se většinou vynechává a v tom případě se udělátko
+                zapakuje uvnitř svého rodiče. Všimněte si, že <b>in</b> je v
+                Pythonu klíčové slovo. Abyste ho mohli použít jako pojmenovaný
+                parametr, přidejte podtržítko (<b>in_</b>).
+              </dd>
+              <dt>
+                <i>ipadx=</i>
+              </dt>
+              <dd>
+                Dobrovolná vodorovná vnitřní výplň. Funguje
+                jako <b>padx</b>, ale výplň je přidána <i>dovnitř</i>
+                hranic udělátka. Standard je 0.
+              </dd>
+              <dt>
+                <i>ipady=</i>
+              </dt>
+              <dd>
+                Dobrovolná svislá vnitřní výplň. Funguje jako <b>pady</b>,
+                ale výplň je přidána <i>dovnitř</i> hranic udělátka. Standard
+                je 0.
+              </dd>
+              <dt>
+                <i>padx=</i>
+              </dt>
+              <dd>
+                Dobrovolná vodorovná výplň, která zaplní prostor kolem buňky
+                udělátka. Standard je 0.
+              </dd>
+              <dt>
+                <i>pady=</i>
+              </dt>
+              <dd>
+                Dobrovolná svislá výplň, která zaplní prostor kolem buňky
+                udělátka. Standard je 0.
+              </dd>
+              <dt>
+                <i>row=</i>
+              </dt>
+              <dd>
+                Vloží udělátko do tohoto řádku. Čísla řádků začínají na 0.
+                Pokud je vynecháno, vezme se první další prázdný řádek v mřížce.
+              </dd>
+              <dt>
+                <i>rowspan=</i>
+              </dt>
+              <dd>
+                Pokud je uvedeno, indikuje, že buňka udělátka má přesahovat do
+                několika řádek. Standard je 1.
+              </dd>
+              <dt>
+                <i>sticky=</i>
+              </dt>
+              <dd>
+                Určuje, jak se bude udělátko rozšiřovat, když bude buňka větší
+                než udělátko samo. Může nabývat hodnot  <b>S</b>,
+                <b>N</b>, <b>E</b> a <b>W</b> nebo <b>NW</b>, <b>NE</b>,
+                <b>SW</b> a <b>SE</b>.
+                <p>
+                  Například <b>W</b> (west) znamená, že udělátko bude
+                  zarovnáno k levému okraji buňky. <b>W+E</b> znamená, že
+                  udělátko bude roztahování tak, aby vždy vyplnilo celou buňku.
+                  <b>W+E+N+S</b> znamená, že udělátko bude roztahováno v obou
+                  směrech. Standard je udělátko vycentrováno v buňce bez
+                  automatického rozšiřování.
+                </p>
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_bbox-method" name=
+            "Tkinter.Grid.grid_bbox-method"><b>grid_bbox(column=None, row=None,
+            col2=None, row2=None)</b></a> [<a href=
+            "#Tkinter.Grid.grid_bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Metoda  grid_bbox.
+            </p>
+            <dl>
+              <dt>
+                <i>column</i>
+              </dt>
+              <dt>
+                <i>row</i>
+              </dt>
+              <dt>
+                <i>col2</i>
+              </dt>
+              <dt>
+                <i>row2</i>
+              </dt>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_columnconfigure-method" name=
+            "Tkinter.Grid.grid_columnconfigure-method"><b>grid_columnconfigure(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Grid.grid_columnconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavení parametrů pro sloupec buněk.
+            </p>
+            <p>
+              Chcete-li použít toto na určitou buňku, musíte tuto metodu volat
+              na jejím rodiči.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pořadí sloupce.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry sloupce.
+              </dd>
+              <dt>
+                <i>minsize=</i>
+              </dt>
+              <dd>
+                Nastaví minimální velikost sloupce. Pokud však bude sloupec
+                zcela prázdný, nezobrazí se ani když bude tento parametr
+                nastaven.
+              </dd>
+              <dt>
+                <i>pad=</i>
+              </dt>
+              <dd>
+                Výplň, která se přidá k největšímu udělátku v daném sloupci,
+                když se nastavuje šířka celého sloupce.
+              </dd>
+              <dt>
+                <i>weight=</i>
+              </dt>
+              <dd>
+                Relativní váha, která se používá k rozdělování nadbytečného
+                prostoru mezi sloupci. Sloupec s váhou 2 se bude zvětšovat 2x
+                rychleji než sloupec s váhou 1. Standard je 0, což značí, že
+                sloupec se zvětšovat nebude vůbec.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_configure-method" name=
+            "Tkinter.Grid.grid_configure-method"><b>grid_configure(**options)</b></a>
+            [<a href="#Tkinter.Grid.grid_configure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako <a class="link" href=
+              "#Tkinter.Grid.grid-method"><b>grid</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_forget-method" name=
+            "Tkinter.Grid.grid_forget-method"><b>grid_forget()</b></a>
+            [<a href="#Tkinter.Grid.grid_forget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odebrat toto udělátko správci grid. Udělátko není zničeno, může
+              být tak znovu zobrazeno správcem <b>grid</b> nebo jakýmkoliv
+              jiným.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_info-method" name=
+            "Tkinter.Grid.grid_info-method"><b>grid_info()</b></a> [<a href=
+            "#Tkinter.Grid.grid_info-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací slovník obsahující současné parametry buněk u buňky, kterou
+              okupuje aktuální udělátko.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Slovník obsahující parametry správce grid. options.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_location-method" name=
+            "Tkinter.Grid.grid_location-method"><b>grid_location(x, y)</b></a>
+            [<a href="#Tkinter.Grid.grid_location-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací buňku mřížky, která je pod nebo nejblíže zadanému pixelu.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Dvojici, obsahující číslo řádku a sloupce.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_propagate-method" name=
+            "Tkinter.Grid.grid_propagate-method"><b>grid_propagate(flag)</b></a>
+            [<a href="#Tkinter.Grid.grid_propagate-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Povoluje nebo zakazuje propagaci rozmístnění. Pokud je uvolněno,
+              což je standard, správce Grid se vždy snaží změnit velikost
+              udělátka, kdykoliv se změní velikost potomka. 
+            </p>
+            <dl>
+              <dt>
+                <i>flag</i>
+              </dt>
+              <dd>
+                Na povolení propagace - True.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_remove-method" name=
+            "Tkinter.Grid.grid_remove-method"><b>grid_remove()</b></a>
+            [<a href="#Tkinter.Grid.grid_remove-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odebrat toto udělátko ze správce grid. Udělátko nebude zničeno,
+              může být znovu zobrazeno  správcem grid nebo jakýmkoliv
+              jiným.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_rowconfigure-method" name=
+            "Tkinter.Grid.grid_rowconfigure-method"><b>grid_rowconfigure(index,
+            **options)</b></a> [<a href=
+            "#Tkinter.Grid.grid_rowconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavení parametrů pro řádku buněk.
+            </p>
+            <p>
+              Chcete-li použít toto na určitou buňku, musíte tuto metodu volat
+              na jejím rodiči.
+            </p>
+            <dl>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Pořadí řádky.
+              </dd>
+              <dt>
+                <i>**options</i>
+              </dt>
+              <dd>
+                Parametry řádky.
+              </dd>
+              <dt>
+                <i>minsize=</i>
+              </dt>
+              <dd>
+                Nastaví minimální velikost řádky. Pokud však bude řádka zcela
+                prázdná, nezobrazí se ani když bude tento parametr nastaven.
+              </dd>
+              <dt>
+                <i>pad=</i>
+              </dt>
+              <dd>
+                Výplň, která se přidá k největšímu udělátku v daném řádku, když
+                se nastavuje šířka celého řádku.
+              </dd>
+              <dt>
+                <i>weight=</i>
+              </dt>
+              <dd>
+                Relativní váha, která se používá k rozdělování nadbytečného
+                prostoru mezi řádky. Řádek s váhou 2 se bude zvětšovat 2x
+                rychleji než řádek s váhou 1. Standard je 0, což značí, že
+                řádek se zvětšovat nebude vůbec.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_size-method" name=
+            "Tkinter.Grid.grid_size-method"><b>grid_size()</b></a> [<a href=
+            "#Tkinter.Grid.grid_size-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací současnou velikost mřížky správce rozmístnění, který je
+              připojen k tomuto udělátku.  Velikost je definována jako
+              indexy prvního prázdného sloupce a první prázdné řádky (v tomto
+              pořadí).
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Dvojici, obsahující počet sloupců a řádků.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Grid.grid_slaves-method" name=
+            "Tkinter.Grid.grid_slaves-method"><b>grid_slaves(row=None,
+            column=None)</b></a> [<a href=
+            "#Tkinter.Grid.grid_slaves-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací seznam "potomků" spravovaných tímto udělátkem. Udělátka
+              jsou vrácena ve formě referencí.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Seznam udělátek.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

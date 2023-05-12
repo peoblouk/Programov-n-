@@ -1,0 +1,3248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Udělátko Canvas ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech An
+          Introduction to Tkinter
+        </p>
+        <p class="navigate">
+          [ <a href="button.htm" tppabs="http://tkinter.programujte.com/button.htm">předchozí</a> ] [ <a href=
+          "checkbutton.htm" tppabs="http://tkinter.programujte.com/checkbutton.htm">další</a> ] [&nbsp;<a href="index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ]
+          [ <a href="javascript:if(confirm('http://effbot.org/tkinterbook/canvas.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/canvas.htm'" tppabs="http://effbot.org/tkinterbook/canvas.htm">originál</a> ]
+        </p>
+        <h1 class="title">
+          Tkinter - udělátko Canvas
+        </h1>
+        <p>
+          Udělátko <b>Canvas</b> (plátno) poskytuje strukturovanou grafiku pro
+          Tkinter. Jedná se o všestranně využitelný widget, který se dá použít
+          na kreslení grafů a rysů a na implementaci nejrůznějších
+          uživatelských udělátek.
+        </p>
+        <h2>
+          Kdy udělátko Canvas použít
+        </h2>
+        <p>
+          Canvas je všestranným udělátkem, který se běžně používá na
+          zobrazování a editaci grafů a jiných kreseb.
+        </p>
+        <p>
+          Další běžné užití tohoto udělátka je možnost implementace
+          nejrůznějších typů vlastních udělátek. Například pomocí něho můžete
+          sestavit "teploměr" - grafický ukazatel průběhu (procenta) nějaké
+          činnosti a to tak, že vykreslujete na plátno čtverečky.
+        </p>
+        <h2 id="patterns">
+          Příklady
+        </h2>
+        <p>
+          Metodu <span style="font-weight: bold;">create</span> používejte,
+          chcete-li přidat (nakreslit) na plátno nové prvky (items).
+        </p>
+        <pre>
+from Tkinter import *
+
+hlavni = Tk()
+
+w = Canvas(hlavni, width=200, height=100)
+w.pack()
+
+w.create_line(0, 0, 200, 100)
+w.create_line(0, 100, 200, 0, fill="red", dash=(4, 4))
+w.create_rectangle(50, 25, 150, 75, fill="blue")
+
+mainloop()
+</pre><img src="data-canvas-a7323f8dce58f8d5601e8ad722211f0a.png" tppabs="http://tkinter.programujte.com/images/data-canvas-a7323f8dce58f8d5601e8ad722211f0a.png"
+        alt="canvas">
+        <p>
+          Mějte na paměti, že prvky přidané na plátno tam zůstávají, dokud je
+          neodstraníte (tedy podobně jako u vektorové grafiky - pokud přemaluji
+          přes čtverec jiný čtverec, původní čtverec se překryje, ale nesmaže).
+        </p>
+        <p>
+          Pokud chcete kresbu změnit, můžete použít metody na změnu prvků jako
+          např. <b>coords</b> (coordinates = souřadnice), <b>itemconfig</b>
+          (item = prvek, config= změna) a <b>move</b> (přesun) nebo na smazání
+          metodu <b>delete</b> (smazat).
+        </p>
+        <pre>
+i = w.create_line(xy, fill="red")
+
+w.coords(i, new_xy) # změnit souřadnice
+w.itemconfig(i, fill="blue") # změnit barvu
+w.delete(i) # smazat
+w.delete(ALL) # smazat vše
+
+</pre>
+        <h2 id="concepts">
+          Pojetí (Patterns)
+        </h2>
+        <p>
+          Při kreslení na plátně vytváříte jeden nebo více <i>prvků</i>, které
+          jsou umísťovány na sebe. Standardně jsou nové prvky umísťovány nahoru
+          nad všechny současné prvky na plátně.
+        </p>
+        <p>
+          Tkinter poskytuje mnoho metod umožňujících manipulaci s prvky. Vedle
+          jiných možností můžete svázat (bind) jednotlivé prvky plátna s
+          voláním funkce přes události.
+        </p>
+        <h3 id="canvas-items">
+          Prvky plátna (Canvas items)
+        </h3>
+        <p>
+          Udělátko <b>Canvas</b> standardně poskytuje následující prvky:
+        </p>
+        <ul>
+          <li>
+            <a href="#Tkinter.Canvas.create_arc-method"><b>arc</b></a> (arc,
+            chord, or pieslice) (oblouk, tětiva, výseč kruhu)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_bitmap-method"><b>bitmap</b></a>
+            (bitmapový obrázek *.xbm vestavěný nebo načtený ze souboru)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_image-method"><b>image</b></a>
+            (ostatní obrázky&nbsp;<a href="bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm">BitmapImage</a>
+            nebo <a href="photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm">PhotoImage</a>)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_line-method"><b>line</b></a> (čára)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_oval-method"><b>oval</b></a> (kruh
+            nebo elipsa)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_polygon-method"><b>polygon</b></a>
+            (mnohoúhelník)
+          </li>
+          <li>
+            <a href=
+            "#Tkinter.Canvas.create_rectangle-method"><b>rectangle</b></a>
+            (čtverec)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_text-method"><b>text</b></a>(text)
+          </li>
+          <li>
+            <a href="#Tkinter.Canvas.create_window-method"><b>window</b></a>
+            (okno)
+          </li>
+        </ul>
+        <p>
+          Tětivy, výseče, ovály, mnohoúhelníky a čtverce se skládají z hraniční
+          čáry a vnitřní plochy. Kterákoliv z nich nebo obě současně mohou být
+          průhledné.
+        </p>
+        <p>
+          Prvek window se používá na vkládání kterýchkoliv udělátek Tkinter na
+          plátno. V těchto případech Canvas funguje jednoduše jako geometry
+          manager (správce poskládání).
+        </p>
+        <p>
+          Můžete si také napsat své vlastní prvky v C nebo C++ a zapojit je do
+          Tkinter pomocí Python extension modules.
+        </p>
+        <h3>
+          Systém souřadnic (Coordinate Systems)
+        </h3>
+        <p>
+          Udělátko <b>Canvas</b> používá dva systémy souřadnic; systém
+          souřadnic okna (s (0,0) v levém horním rohu) a systém souřadnic
+          plátna, který určuje, kde jsou kresleny prvky na plátně. Při
+          posunování (scrolling) plátna pomocí posuvníků můžete stanovit, který
+          část systému souřadnic plátna zobrazit v okně.
+        </p>
+        <p>
+          Volba <b>scrollregion</b> se používá k omezení operací posunu plátna.
+          Obvykle se to dělá takto:
+        </p>
+        <pre>
+ platno.config(scrollregion=canvas.bbox(ALL))
+
+</pre>
+        <p>
+          Chcete-li změnit souřadnice okna na souřadnice plátna používejte
+          metody <a href="#Tkinter.Canvas.canvasx-method"><b>canvasx</b></a> a
+          <a href="#Tkinter.Canvas.canvasy-method"><b>canvasy</b></a>:
+        </p>
+        <pre>
+def volanafunkce(udalost):
+   platno = udalost.widget
+   x = platno.canvasx(udalost.x)
+   y = platno.canvasx(udalost.y)
+   print udalost.x, udalost.y # souradnice plochy
+   print x, y # souradnice platna
+   print platno.find_closest(x, y) #nejblizsi prvek na platne
+</pre>
+        <h3>
+          Identifikátory prvku: Ovladače a Tagy (Item Specifiers: Handles and Tags)
+        </h3>
+        <p>
+          Udělátko <b>Canvas</b> vám umožňuje se odkazovat na prvky několika
+          způsoby. Všude, kde se očekává určení prvku, můžete použít jedno z
+          následujícího:
+        </p>
+        <ul>
+          <li>ovladače prvku (celá čísla)
+          </li>
+          <li>tagy (značky)
+          </li>
+          <li>
+            <b>ALL</b> (vše)
+          </li>
+          <li>
+            <b>CURRENT</b> (aktuální)
+          </li>
+        </ul>
+        <p>
+          <b>Ovladače prvku</b> jsou celá čísla, která se používají na určení
+          konkrétního prvku na plátně. Jsou to defakto proměnné, 
+          které získáváte při vytvoření. V proměnné 'prvek' bude právě 'ovladač prvku', 
+          'celé číslo', které Tkinter každému prvku přiřadí: 
+          
+          <pre>
+prvek = platno.create_line(0, 0, 100, 100)
+          </pre> 
+          
+          Ovladače se mohou předávat mnoha metodám plátna jako čísla nebo řetězce.
+        </p>
+        <p>
+          <b>Tagy</b> jsou symbolická jména připojená k prvkům. Tagy jsou
+          řetězce a mohou obsahovat cokoliv kromě bílých mezer (obyčejné
+          mezery, tabulátory, entery).
+        </p>
+        <p>
+          Prvky mohou mít žádný, jeden nebo více tagů. Stejný
+          tag se může použít pro více než jeden prvek. Udělátko <span style=
+          "font-weight: bold;">Canvas</span> však, narozdíl od udělátka
+          <span style="font-weight: bold;">Text</span>, neumožňuje vytvářet
+          vazby nebo jakkoliv měnit tagy, které nemají živé prvky. Tagy jsou
+          vlastněny prvky a ne Canvasem. 
+        </p>
+        <p>
+          Tagy můžete zadávat pomocí parametrů při vytváření prvku, nastavovat
+          je pomocí metody <a href=
+          "#Tkinter.Canvas.itemconfig-method"><b>itemconfig</b></a> nebo je
+          přidávat pomocí metody <a href=
+          "#Tkinter.Canvas.addtag_withtag-method"><b>addtag_withtag</b></a>.
+          Parametr <b>tags</b> je možné zadávat jako normální řetězec nebo jako
+          n-tici řetězců.
+        </p>
+        <pre>
+prvek = platno.create_line(0, 0, 100, 100, tags="uno")
+platno.itemconfig(prvek, tags=("jedna", "dva"))
+platno.addtag_withtag("tri", "jedna")
+
+</pre>
+        <p>
+          Použijte <span style="font-weight: bold;">gettags</span>, chcete-li
+          dostat všechny tagy, které jsou spojeny s určitým prvkem. Chcete-li
+          dostat všechny ovladače, které mají určitý tag, použijte
+          <b>find_withtag</b>.
+        </p>
+        <pre>
+&gt;&gt;&gt; print platno.gettags(prvek)
+('jedna', 'dva', 'tri')
+&gt;&gt;&gt; print platno.find_withtag("jedna")
+(1,)
+</pre>
+        <p>
+          Udělátko <b>Canvas</b> poskytuje také dva přednastavené tagy:
+        </p>
+        <p>
+          <b>ALL</b> (nebo řetězec "all") zahrnuje všechny prvky na plátně.
+        </p>
+        <p>
+          <b>CURRENT</b> (nebo "current") zahrnuje prvek pod kurzorem myši,
+          pokud nějaký takový je. Tohoto se dá využít uvnitř vazby události
+          myši při odkazu na prvek, který volanou funkci vyvolal.
+        </p>
+        <h3>
+          Tisk
+        </h3>
+        <p>
+          Toto udělátko podporuje tisk na postscriptové tiskárny.
+        </p>
+        <h2>
+          Implementační záležitosti (Performance Issues)
+        </h2>
+        <p>
+          The <b>Canvas</b> widget implements a straight-forward damage/repair
+          display model. Changes to the canvas, and external events such as
+          <b>Expose</b>, are all treated as "damage" to the screen. The widget
+          maintains a <b>dirty rectangle</b> to keep track of the damaged area.
+        </p>
+        <p>
+          When the first damage event arrives, the canvas registers an idle
+          task (using <b>after_idle</b>) which is used to "repair" the canvas
+          when the program gets back to the Tkinter main loop. You can force
+          updates by calling the <b>update_idletasks</b> method.
+        </p>
+        <p>
+          When it's time to redraw the canvas, the widget starts by allocating
+          a pixmap (on X windows, this is an image memory stored on the
+          display) with the same size as the dirty rectangle.
+        </p>
+        <p>
+          It then loops over the canvas items, and redraws <i>all</i> items for
+          which the bounding box touch the dirty rectangle (this means that
+          diagonal lines may be redrawn also if they don't actually cover the
+          rectangle, but this is usually no big deal).
+        </p>
+        <p>
+          Finally, the widget copies the pixmap to the display, and releases
+          the pixmap. The copy operation is a very fast operation on most
+          modern hardware.
+        </p>
+        <p>
+          Since the canvas uses a <i>single</i> dirty rectangle, you can
+          sometimes get better performance by forcing updates. For example, if
+          you're changing things in different parts of the canvas without
+          returning to the main loop, adding explicit calls to
+          <b>update_idletasks()</b> allows the canvas to update a few small
+          rectangles, instead of a large one with many more objects.
+        </p>
+        <h2 id="reference">
+          Referenční příručka (Reference)
+        </h2>
+        <dl>
+          <dt>
+            <a id="Tkinter.Canvas-class" name=
+            "Tkinter.Canvas-class"><b>Canvas(master=None, **parametry)</b></a>
+            (třída) [<a href="#Tkinter.Canvas-class">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Strukturované grafické plátno.
+            </p>
+            <dl>
+              <dt>
+                <i>master</i>
+              </dt>
+              <dd>
+                Rodičovské udělátko.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                parametry udělátka. Hledejte metodu <a class="link" href=
+                "#Tkinter.Canvas.config-method"><b>config</b></a>, kde získáte
+                seznam dostupných parametrů.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag-method" name=
+            "Tkinter.Canvas.addtag-method"><b>addtag(tag, metoda,
+            *parametry)</b></a> [<a href="#Tkinter.Canvas.addtag-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává tag pro určené prvky. Aplikace by měli využívat
+              specifičtější metody, když je to možné. To je např. používat
+              metodu <a class="link" href=
+              "#Tkinter.Canvas.addtag_above-method"><b>addtag_above</b></a>
+              místo <b>addtag("above")</b>, a tak podobně.
+            </p>
+          </dd>
+          <dd>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Tag, který se má přidat.
+              </dd>
+              <dt>
+                <i>metoda</i>
+              </dt>
+              <dd>
+                Jak přidat nový tag. Může nabývat následujících hodnot:
+                "above", "all", "below", "closest", "enclosed", "overlapping"
+                nebo "withtag".
+              </dd>
+              <dt>
+                <i>*parametry</i>
+              </dt>
+              <dd>
+                Volitelné parametry. Bližší detaily najdete u jednotlivých
+                metod.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_above-method" name=
+            "Tkinter.Canvas.addtag_above-method"><b>addtag_above(tag,
+            prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_above-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává tag k prvku, který leží nad daným prvkem.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat..
+              </dd>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Tag nebo identifikátor příslušného prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_all-method" name=
+            "Tkinter.Canvas.addtag_all-method"><b>addtag_all(tag)</b></a>
+            [<a href="#Tkinter.Canvas.addtag_all-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává tag ke všem prvkům na plátně. Jedná se o zkrácenou verzi
+              <b>addtag_withtag(newtag, ALL)</b>.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_below-method" name=
+            "Tkinter.Canvas.addtag_below-method"><b>addtag_below(tag,
+            prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_below-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidává tag k prvku, který je pod daným prvkem.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Tag nebo identifikátor příslušného prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_closest-method" name=
+            "Tkinter.Canvas.addtag_closest-method"><b>addtag_closest(tag, x, y,
+            halo=None, start=None)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_closest-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá tag k prvku nejbližšímu k daným souřadnicím. Pozice je
+              zadávána v souřadnicích plátna. Tato metoda uspěje vždy, pokud je
+              na plátně nejméně jeden prvek. Chcete-li přidat tagy prvkům,
+              které se nalézají v určité vzdálenosti od pozice, použijte
+              <a class="link" href=
+              "#Tkinter.Canvas.addtag_overlapping-method"><b>add_overlapping</b></a>
+              s malým čtvercem vystředěným na pozici.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Vodorovná souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Svislá souřadnice.
+              </dd>
+              <dt>
+                <i>halo</i>
+              </dt>
+              <dd>
+                Nepovinná vzdálenost halo.
+              </dd>
+              <dt>
+                <i>start</i>
+              </dt>
+              <dd>
+                Nepovinný počáteční prvek.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_enclosed-method" name=
+            "Tkinter.Canvas.addtag_enclosed-method"><b>addtag_enclosed(tag, x1,
+            y1, x2, y2)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_enclosed-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá tag ke všem prvkům, které jsou uzavřeny v zadaném čtverci.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+              <dt>
+                <i>x1</i>
+              </dt>
+              <dd>
+                Levá souřadnice.
+              </dd>
+              <dt>
+                <i>y1</i>
+              </dt>
+              <dd>
+                Horní souřadnice.
+              </dd>
+              <dt>
+                <i>x2</i>
+              </dt>
+              <dd>
+                Pravá souřadnice.
+              </dd>
+              <dt>
+                <i>y2</i>
+              </dt>
+              <dd>
+                Dolní souřadnice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_overlapping-method" name=
+            "Tkinter.Canvas.addtag_overlapping-method"><b>addtag_overlapped(tag,
+            x1, y1, x2, y2)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_overlapping-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá tag ke všem prvkům, které překrývají daný obdélník. To
+              zahrnuje i prvky, které jsou v něm zcela uzavřeny.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+              <dt>
+                <i>x1</i>
+              </dt>
+              <dd>
+                Levá souřadnice.
+              </dd>
+              <dt>
+                <i>y1</i>
+              </dt>
+              <dd>
+                Horní souřadnice.
+              </dd>
+              <dt>
+                <i>x2</i>
+              </dt>
+              <dd>
+                Pravá souřadnice.
+              </dd>
+              <dt>
+                <i>y2</i>
+              </dt>
+              <dd>
+                Dolní souřadnice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.addtag_withtag-method" name=
+            "Tkinter.Canvas.addtag_withtag-method"><b>addtag_withtag(tag,
+            prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.addtag_withtag-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá tag ke všem prvkům, které mají daný tag.
+            </p>
+            <dl>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Prvek, který se má přidat.
+              </dd>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Odkaz na prvek. Pokud je odkaz ve formě tagu, přidá se nový tag
+                ke všem prvkům, obsahujícím daný tag. Pokud je odkaz ve formě
+                identifikátoru, přidá se nový tag pouze k tomu určenému
+                jedinému prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.bbox-method" name=
+            "Tkinter.Canvas.bbox-method"><b>bbox(prvek=None)</b></a> [<a href=
+            "#Tkinter.Canvas.bbox-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací ohraničující obdélník, který zahrnuje všechny dané prvky.
+              Pokud je prvek vynechán, navrácený obdélník zahrnuje všechny
+              prvky. Ohraničující obdélník je přibližný a může se o pár pixelů
+              lišit od skutečnosti.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku. Pokud je vynechán, navrácený obdélník zahrnuje
+                všechny prvky na plátně.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Ohraničující obdélník jako 4-místná n-tice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.canvasx-method" name=
+            "Tkinter.Canvas.canvasx-method"><b>canvasx(x,
+            gridspacing=None)</b></a> [<a href=
+            "#Tkinter.Canvas.canvasx-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí okenní souřadnice na souřadnice plátna.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Souřadnice okna.
+              </dd>
+              <dt>
+                <i>gridspacing</i>
+              </dt>
+              <dd>
+                Volitelná mezera v mřížce. Souřadnice je zaokrouhlena na
+                nejbližší souřadnici mřížky.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Souřadnice plátna.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.canvasy-method" name=
+            "Tkinter.Canvas.canvasy-method"><b>canvasy(y,
+            gridspacing=None)</b></a> [<a href=
+            "#Tkinter.Canvas.canvasy-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Převádí okenní souřadnice na souřadnice plátna.
+            </p>
+            <dl>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Souřadnice okna.
+              </dd>
+              <dt>
+                <i>gridspacing</i>
+              </dt>
+              <dd>
+                Volitelná mezera v mřížce. Souřadnice je zaokrouhlena na
+                nejbližší souřadnici mřížky.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Souřadnice plátna.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.config-method" name=
+            "Tkinter.Canvas.config-method"><b>config(**parametry)</b></a>
+            [<a href="#Tkinter.Canvas.config-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Upravuje jeden nebo více parametrů udělátka Canvas. Pokud nejsou
+              zadány žádné parametry, metoda vrací slovník, který obsahuje
+              všechny současné hodnoty parametrů.
+            </p>
+            <dl>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry udělátka.
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí plátna. Defaultně je nastavena standardní barva
+                pozadí udělátka. (databázové jméno je background, třída je
+                Background)
+              </dd>
+              <dt>
+                <i>bg=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>background</b>.
+              </dd>
+              <dt>
+                <i>borderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje plátna. Standardně je 0 (žádný okraj).
+                (borderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>bd=</i>
+              </dt>
+              <dd>
+                Stejné jako <b>borderwidth</b>.
+              </dd>
+              <dt>
+                <i>closeenough=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (closeEnough/CloseEnough)
+              </dd>
+              <dt>
+                <i>confine=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 1. (confine/Confine)
+              </dd>
+              <dt>
+                <i>cursor=</i>
+              </dt>
+              <dd>
+                Jaký se použije kurzor, když se myš bude pohybovat nad plátnem.
+                (cursor/Cursor)
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška plátna. Standardní hodnota je '7c'. (height/Height)
+              </dd>
+              <dt>
+                <i>highlightbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když plátno nebude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightBackground/HighlightBackground)
+              </dd>
+              <dt>
+                <i>highlightcolor=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na zvýraznění okraje, když plátno bude
+                mít focus. Standardní nastavení záleží na systému.
+                (highlightColor/HighlightColor)
+              </dd>
+              <dt>
+                <i>highlightthickness=</i>
+              </dt>
+              <dd>
+                Šířka zvýrazněného okraje. Standardní nastavení záleží na
+                systému (obvykle jeden nebo dva pixely).
+                (highlightThickness/HighlightThickness)
+              </dd>
+              <dt>
+                <i>insertbackground=</i>
+              </dt>
+              <dd>
+                Jaká barva se použije na textový vkládací kurzor. Standardní
+                nastavení záleží na systému. (insertBackground/Foreground)
+              </dd>
+              <dt>
+                <i>insertborderwidth=</i>
+              </dt>
+              <dd>
+                Šířka okraje textového vkládacího kurzoru. Kurzor bude
+                vykreslen stylem okraje <span style=
+                "font-weight: bold;">RAISED</span>, bude-li šířka nenulová.
+                (insertBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>insertofftime=</i>
+              </dt>
+              <dd>
+                Společně s <b>insertontime</b> tento parametr řídí blikání
+                kurzoru. Obě dvě hodnoty jsou zadávány s milisekundách.
+                (insertOffTime/OffTime)
+              </dd>
+              <dt>
+                <i>insertontime=</i>
+              </dt>
+              <dd>
+                Viz <b>insertofftime</b>. (insertOnTime/OnTime)
+              </dd>
+              <dt>
+                <i>insertwidth=</i>
+              </dt>
+              <dd>
+                Šířka textového vkládacího kurzoru. Obvykle jeden až dva
+                pixely. (insertWidth/InsertWidth)
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je '0,0'. (offset/Offset)
+              </dd>
+              <dt>
+                <i>relief=</i>
+              </dt>
+              <dd>
+                Styl okraje. Standardně <b>FLAT</b> (PLOCHÝ). Další možnosti
+                jsou <b>SUNKEN</b> (PROPADLÝ), <b>RAISED</b> (VYVÝŠENÝ),
+                <b>GROOVE</b> (DLAŽDICE) a <b>RIDGE</b> (MÍRNĚ PROPADLÝ).
+                (relief/Relief)
+              </dd>
+              <dt>
+                <i>scrollregion=</i>
+              </dt>
+              <dd>
+                Rolovací oblast plátna. Žádná standardní hodnota.
+                (scrollRegion/ScrollRegion)
+              </dd>
+              <dt>
+                <i>selectbackground=</i>
+              </dt>
+              <dd>
+                Barva pozadí při označení (výběru). Standardní nastavení záleží
+                na systému a monitoru. (selectBackground/Foreground)
+              </dd>
+              <dt>
+                <i>selectborderwidth=</i>
+              </dt>
+              <dd>
+                Barva okraje při označení (výběru). Standardní nastavení záleží
+                na systému. (selectBorderWidth/BorderWidth)
+              </dd>
+              <dt>
+                <i>selectforeground=</i>
+              </dt>
+              <dd>
+                Barva textu při označení (výběru). Standardní nastavení záleží
+                na systému. (selectForeground/Background)
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav plátna. Může nabývat hodnot NORMAL, DISABLED nebo HIDDEN.
+                Standardní je NORMAL. Toto je globální nastavení, nicméně
+                jednotlivé prvky plátna mohou používat parametr <span style=
+                "font-weight: bold;">state</span> na úrovni prvku, který
+                přepisuje toto globální nastavení. (state/State)
+              </dd>
+              <dt>
+                <i>takefocus=</i>
+              </dt>
+              <dd>
+                Indikuje, že může použít klávesu Tab k přesunu na toto
+                udělátko. Standardně má hodnotu prázdného řetězce, což znamená,
+                že udělátko canvas může mít focus jen když má nějaké
+                klávesnicové vazby (keyboard bindings). (takeFocus/TakeFocus)
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka plátna. Standardní hodnota je '10c'. (width/Width)
+              </dd>
+              <dt>
+                <i>xscrollcommand=</i>
+              </dt>
+              <dd>
+                Používá se pro připojení plátna vodorovnému posuvníku. Tento
+                parametr by měl být nastaven na metodu <span style=
+                "font-weight: bold;">set</span> příslušného posuvníku.
+                (xScrollCommand/ScrollCommand)
+              </dd>
+              <dt>
+                <i>xscrollincrement=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (xScrollIncrement/ScrollIncrement)
+              </dd>
+              <dt>
+                <i>yscrollcommand=</i>
+              </dt>
+              <dd>
+                Používá se pro připojení plátna svislému posuvníku. Tento
+                parametr by měl být nastaven na metodu <span style=
+                "font-weight: bold;">set</span> příslušného posuvníku.
+                (yScrollCommand/ScrollCommand)
+              </dd>
+              <dt>
+                <i>yscrollincrement=</i>
+              </dt>
+              <dd>
+                Standardní hodnota je 0. (yScrollIncrement/ScrollIncrement)
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.coords-method" name=
+            "Tkinter.Canvas.coords-method"><b>coords(prvek,
+            *souřadnice)</b></a> [<a href=
+            "#Tkinter.Canvas.coords-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací souřadnice prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku (tag nebo identifikátor).
+              </dd>
+              <dt>
+                <i>*souřadnice</i>
+              </dt>
+              <dd>
+                Dobrovolný seznam souřadnicových dvojic. Pokud je zadáno,
+                souřadnice nahradí aktuální souřadnice všech odpovídajících
+                prvků.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pokud nejsou zadány žádné souřadnice, tato metoda vrací
+                souřadnice odpovídajícího prvku. Pokud Identifikátor prvku odpovídá
+                více než jednomu, funkce vrací souřadnice prvního nalezeného.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_arc-method" name=
+            "Tkinter.Canvas.create_arc-method"><b>create_arc(bbox,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_arc-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Kreslí na plátno oblouk, tětivu a výseč kruhu. Nový prvek je vždy
+              nakreslen nahoru, přes všechny existující prvky.
+            </p>
+            <dl>
+              <dt>
+                <i>bbox</i>
+              </dt>
+              <dd>
+                Ohraničující obdélník žádaného oblouku.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry oblouku.
+              </dd>
+              <dt>
+                <i>activedash=</i>
+              </dt>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Vyplňující barva, která se použije, pokud myš je nad prvkem,
+                pokud je odlišná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activeoutline=</i>
+              </dt>
+              <dt>
+                <i>activeoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>activewidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>dash=</i>
+              </dt>
+              <dd>
+                Vzorek čárkovaného okraje, zadaný jako seznam délek
+                jednotlivých segmentů. Vykresleny jsou pouze liché segmenty.
+              </dd>
+              <dt>
+                <i>dashoffset=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>disableddash=</i>
+              </dt>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Vyplňující barva, která se použije, pokud je prvek vypnut
+                (disabled), pokud je odlišná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledoutline=</i>
+              </dt>
+              <dt>
+                <i>disabledoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>disabledwidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>extent=</i>
+              </dt>
+              <dd>
+                Velikost vzhledem k úhlu <b>start</b>. Standardně je 90.0.
+              </dd>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Vyplňující barba. Prázdný řetězec značí průhledný.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outline=</i>
+              </dt>
+              <dd>
+                Barva okraje. Standardně je "black".
+              </dd>
+              <dt>
+                <i>outlineoffset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outlinestipple=</i>
+              </dt>
+              <dd>
+                Vzor okraje.
+              </dd>
+              <dt>
+                <i>start=</i>
+              </dt>
+              <dd>
+                Počáteční úhel. Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jeden z NORMAL (normální) , DISABLED (vypnutý) a
+                HIDDEN (skrytý).
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>style=</i>
+              </dt>
+              <dd>
+                Jedna z hodnot PIESLICE, CHORD nebo ARC. Standardně je
+                PIESLICE.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Přidá tag k tomuto prvku nebo tuple obsahující několik tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardně je 1.0.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_bitmap-method" name=
+            "Tkinter.Canvas.create_bitmap-method"><b>create_bitmap(pozice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_bitmap-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykreslení bitmapy na plátno. Upozornění: bitmapa v pojetí
+              Tkinter rozhodně není *.bmp nebo podobné. Jedná se o starý formát
+              X11 bitmap. Na dnešní běžné typy obrázků používejte <a href=
+              "photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm"><b>PhotoImage</b></a> nebo PIL (použití popsáno
+              také ve <a href="photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm"><b>PhotoImage</b></a>).
+            </p>
+            <dl>
+              <dt>
+                <i>pozice</i>
+              </dt>
+              <dd>
+                Pozice bitmapy, zadaná jako dvě souřadnice.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry bitmapy.
+              </dd>
+              <dt>
+                <i>activebackground=</i>
+              </dt>
+              <dt>
+                <i>activebitmap=</i>
+              </dt>
+              <dt>
+                <i>activeforeground=</i>
+              </dt>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Jak umístnit bitmapu relativně k žádné pozici. Standardně je
+                CENTER.
+              </dd>
+              <dt>
+                <i>background=</i>
+              </dt>
+              <dd>
+                Barva pozadí, která se používá pro pixely, které jsou "off".
+                Použijte prázdný řetězec, pokud chcete pozadí průhledné.
+                Standardně je průhledné.
+              </dd>
+              <dt>
+                <i>bitmap=</i>
+              </dt>
+              <dd>
+                Popisovač bitmapy. Více informací najdete v <a href=
+                "bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm"><b>BitmapImage</b></a>. Chcete-li zobrazit
+                objekt <b>BitmapImage</b>, použijte funkci <a class="link"
+                href="#Tkinter.Canvas.create_image-method"><b>create_image</b></a>.
+
+              </dd>
+              <dt>
+                <i>disabledbackground=</i>
+              </dt>
+              <dt>
+                <i>disabledbitmap=</i>
+              </dt>
+              <dt>
+                <i>disabledforeground=</i>
+              </dt>
+              <dt>
+                <i>foreground=</i>
+              </dt>
+              <dd>
+                Barva popředí, která se použije pro pixely, které jsou "on".
+                Standardně je "black".
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_image-method" name=
+            "Tkinter.Canvas.create_image-method"><b>create_image(pozice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_image-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykreslí na plátno obrázek.
+            </p>
+            <dl>
+              <dt>
+                <i>pozice</i>
+              </dt>
+              <dd>
+                Pozice obrázku zadaná jako dvě souřadnice.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry obrázku.
+              </dd>
+              <dt>
+                <i>activeimage=</i>
+              </dt>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Jak umístnit obrázek relativně k zadané pozici. Standardně je
+                CENTER.
+              </dd>
+              <dt>
+                <i>disabledimage=</i>
+              </dt>
+              <dt>
+                <i>image=</i>
+              </dt>
+              <dd>
+                Objekt obrázku. Měl by to být <a href=
+                "photoimage.htm" tppabs="http://tkinter.programujte.com/photoimage.htm"><b>PhotoImage</b></a> nebo <a href=
+                "bitmapimage.htm" tppabs="http://tkinter.programujte.com/bitmapimage.htm"><b>BitmapImage</b></a> nebo kompatabilní
+                objekt, jako např. PIL PhotoImage. Aplikace musí držet
+                referenci na objekt obrázku.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_line-method" name=
+            "Tkinter.Canvas.create_line-method"><b>create_line(souřadnice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_line-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykreslí na plátno čáru.
+            </p>
+            <dl>
+              <dt>
+                <i>souřadnice</i>
+              </dt>
+              <dd>
+                Souřadnice obrázku.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry čáry.
+              </dd>
+              <dt>
+                <i>activedash=</i>
+              </dt>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Barva čáry, která se použije když je myš nad prvkem, pokud je
+                rozdílná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>activewidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>arrow=</i>
+              </dt>
+              <dd>
+                Standardně je NONE.
+              </dd>
+              <dt>
+                <i>arrowshape=</i>
+              </dt>
+              <dd>
+                Standardně je "8 10 3".
+              </dd>
+              <dt>
+                <i>capstyle=</i>
+              </dt>
+              <dd>
+                Standardně je BUTT.
+              </dd>
+              <dt>
+                <i>dash=</i>
+              </dt>
+              <dd>
+                Vzorek čáry, zadaný jako seznam délek jednotlivých segmentů.
+                Vykresleny jsou pouze liché segmenty.
+              </dd>
+              <dt>
+                <i>dashoffset=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>disableddash=</i>
+              </dt>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Barva čáry, která se použije, když je prvek vypnutý, pokud je
+                odlišná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>disabledwidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Barva čáry. Standardně je "black".
+              </dd>
+              <dt>
+                <i>joinstyle=</i>
+              </dt>
+              <dd>
+                Standardně je ROUND.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>smooth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>splinesteps=</i>
+              </dt>
+              <dd>
+                Standardně je 12.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardně je 1.0.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_oval-method" name=
+            "Tkinter.Canvas.create_oval-method"><b>create_oval(bbox,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_oval-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykresluje na plátno elipsu.
+            </p>
+            <dl>
+              <dt>
+                <i>bbox</i>
+              </dt>
+              <dd>
+                Souřadnice elipsy.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry elipsy.
+              </dd>
+              <dt>
+                <i>activedash=</i>
+              </dt>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Barva výplně, která se použije, když je myš nad prvkem, pokud
+                je rozdílná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activeoutline=</i>
+              </dt>
+              <dt>
+                <i>activeoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>activewidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>dash=</i>
+              </dt>
+              <dd>
+                Vzorek čárkovaného okraje, zadaný jako seznam délek
+                jednotlivých segmentů. Vykresleny jsou pouze liché segmenty.
+              </dd>
+              <dt>
+                <i>dashoffset=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>disableddash=</i>
+              </dt>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Barva výplně, když je prvek vypnutý, pokud je odlišná od
+                <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledoutline=</i>
+              </dt>
+              <dt>
+                <i>disabledoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>disabledwidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Barva výplně. Prázdný řetězec značí průhlednost.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outline=</i>
+              </dt>
+              <dd>
+                Barva okraje. Standardně je "black".
+              </dd>
+              <dt>
+                <i>outlineoffset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outlinestipple=</i>
+              </dt>
+              <dd>
+                Vzor okraje.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardně je 1.0.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_polygon-method" name=
+            "Tkinter.Canvas.create_polygon-method"><b>create_polygon(souřadnice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_polygon-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykreslí na plátno mnohoúhelník.
+            </p>
+            <dl>
+              <dt>
+                <i>souřadnice</i>
+              </dt>
+              <dd>
+                Souřadnice mnohoúhelníku.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry mnohoúhelníku.
+              </dd>
+              <dt>
+                <i>activedash=</i>
+              </dt>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Barva výplně, která se použije, když je myš nad prvkem, pokud
+                je rozdílná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activeoutline=</i>
+              </dt>
+              <dt>
+                <i>activeoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>activewidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>dash=</i>
+              </dt>
+              <dd>
+                Vzorek čárkovaného okraje, zadaný jako seznam délek
+                jednotlivých segmentů. Vykresleny jsou pouze liché segmenty.
+              </dd>
+              <dt>
+                <i>dashoffset=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>disableddash=</i>
+              </dt>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Barva výplně, když je prvek vypnutý, pokud je odlišná od
+                <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledoutline=</i>
+              </dt>
+              <dt>
+                <i>disabledoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>disabledwidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Barva výplně. Standardně je "black".
+              </dd>
+              <dt>
+                <i>joinstyle=</i>
+              </dt>
+              <dd>
+                Standardně je ROUND.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outline=</i>
+              </dt>
+              <dd>
+                Barva okraje.
+              </dd>
+              <dt>
+                <i>outlineoffset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outlinestipple=</i>
+              </dt>
+              <dd>
+                Vzor okraje.
+              </dd>
+              <dt>
+                <i>smooth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>splinesteps=</i>
+              </dt>
+              <dd>
+                Standardně je 12.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardně je 1.0.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_rectangle-method" name=
+            "Tkinter.Canvas.create_rectangle-method"><b>create_rectangle(bbox,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_rectangle-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykresluje na plátno obdélník.
+            </p>
+            <dl>
+              <dt>
+                <i>bbox</i>
+              </dt>
+              <dd>
+                Ohraničující obdélník.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry obdélníku.
+              </dd>
+              <dt>
+                <i>activedash=</i>
+              </dt>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Barva výplně, která se použije, když je myš nad prvkem, pokud
+                je rozdílná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activeoutline=</i>
+              </dt>
+              <dt>
+                <i>activeoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>activewidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.0.
+              </dd>
+              <dt>
+                <i>dash=</i>
+              </dt>
+              <dd>
+                Vzorek čárkovaného okraje, zadaný jako seznam délek
+                jednotlivých segmentů. Vykresleny jsou pouze liché segmenty.
+              </dd>
+              <dt>
+                <i>dashoffset=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>disableddash=</i>
+              </dt>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Barva výplně, když je prvek vypnutý, pokud je odlišná od
+                <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledoutline=</i>
+              </dt>
+              <dt>
+                <i>disabledoutlinestipple=</i>
+              </dt>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>disabledwidth=</i>
+              </dt>
+              <dd>
+                Standardně je 0.
+              </dd>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Barva výplně. Prázdný řetězec značí průhlednost.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outline=</i>
+              </dt>
+              <dd>
+                Barva okraje. Standardně je "black".
+              </dd>
+              <dt>
+                <i>outlineoffset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>outlinestipple=</i>
+              </dt>
+              <dd>
+                Vzor okraje.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Standardně je 1.0.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_text-method" name=
+            "Tkinter.Canvas.create_text-method"><b>create_text(pozice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_text-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vykresluje na plátno text.
+            </p>
+            <dl>
+              <dt>
+                <i>pozice</i>
+              </dt>
+              <dd>
+                Pozice textu zadávaná jako dvě souřadnice. Standardně je text
+                na tuto pozici centrován. Toto chování můžete změnit použitím
+                parametru <b>anchor</b>. Například chcete-li, aby souřadnice
+                udávala levý horní roh, použijte <b>anchor</b>=<b>NW</b>.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry textu.
+              </dd>
+              <dt>
+                <i>activefill=</i>
+              </dt>
+              <dd>
+                Barva textu, která se použije, když je myš nad prvkem, pokud je
+                rozdílná od <b>fill</b>.
+              </dd>
+              <dt>
+                <i>activestipple=</i>
+              </dt>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Kam umístnit text relativně k zadané pozici. Standardně je
+                CENTER.
+              </dd>
+              <dt>
+                <i>disabledfill=</i>
+              </dt>
+              <dd>
+                Barva textu, když je prvek vypnutý, pokud je odlišná od
+                <b>fill</b>.
+              </dd>
+              <dt>
+                <i>disabledstipple=</i>
+              </dt>
+              <dt>
+                <i>fill=</i>
+              </dt>
+              <dd>
+                Barva textu. Standardně je "black".
+              </dd>
+              <dt>
+                <i>font=</i>
+              </dt>
+              <dd>
+                Identifikátor fontu. Standardní nastavení je závislé na systému.
+              </dd>
+              <dt>
+                <i>justify=</i>
+              </dt>
+              <dd>
+                Standardně je LEFT.
+              </dd>
+              <dt>
+                <i>offset=</i>
+              </dt>
+              <dd>
+                Standardně je "0,0".
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>stipple=</i>
+              </dt>
+              <dd>
+                Vzorek výplně.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag připojený k tomuto prvku nebo tuple obsahující několik
+                tagů.
+              </dd>
+              <dt>
+                <i>text=</i>
+              </dt>
+              <dd>
+                Text, který se má zobrazit.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Maximální délka řádky. Řádky delší než tato hodnota budou
+                zalomeny. Standardně je 0 (žádné zalamování).
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.create_window-method" name=
+            "Tkinter.Canvas.create_window-method"><b>create_window(pozice,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.create_window-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Umístí jakékoliv Tkinterovské udělátko na plátno. Udělátko se
+              vykreslují vždy úplně návrh plátna. To znamená, že nemůžete dále
+              kreslit prvky přes tyto udělátka. Canvas v tomto případě funguje
+              jako správce rozmístnění.
+            </p>
+            <dl>
+              <dt>
+                <i>pozice</i>
+              </dt>
+              <dd>
+                Pozice okna, zadané jako dvě souřadnice.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry okna.
+              </dd>
+              <dt>
+                <i>anchor=</i>
+              </dt>
+              <dd>
+                Jak umístnit widget relativně k zadané pozici. Standardně je
+                CENTER.
+              </dd>
+              <dt>
+                <i>height=</i>
+              </dt>
+              <dd>
+                Výška okna. Standardně je použita požadovaná výška okna.
+              </dd>
+              <dt>
+                <i>state=</i>
+              </dt>
+              <dd>
+                Stav prvku. Jedna z hodnot NORMAL, DISABLED nebo HIDDEN.
+              </dd>
+              <dt>
+                <i>tags=</i>
+              </dt>
+              <dd>
+                Tag, který se má připojit k tomuto prvku nebo tuple obsahující
+                několik tagů.
+              </dd>
+              <dt>
+                <i>width=</i>
+              </dt>
+              <dd>
+                Šířka okna. Standardně je použita požadovaná šířka okna.
+              </dd>
+              <dt>
+                <i>window=</i>
+              </dt>
+              <dd>
+                Objekt okna.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.dchars-method" name=
+            "Tkinter.Canvas.dchars-method"><b>dchars(prvek, from,
+            to=None)</b></a> [<a href="#Tkinter.Canvas.dchars-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže text z editovatelného prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>from</i>
+              </dt>
+              <dd>
+                Odkud začít mazat text.
+              </dd>
+              <dt>
+                <i>to</i>
+              </dt>
+              <dd>
+                Kde přestat mazat text. Pokud je vynecháno, je smazán jeden
+                znak.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.delete-method" name=
+            "Tkinter.Canvas.delete-method"><b>delete(prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.delete-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Maže všechny odpovídající prvky. Není chybou zadat takový identifikátor
+              prvku, které neodpovídá žádnému prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku (tag nebo identifikátor).
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.dtag-method" name=
+            "Tkinter.Canvas.dtag-method"><b>dtag(prvek, tag=None)</b></a>
+            [<a href="#Tkinter.Canvas.dtag-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraní zadaný tag ze všech odpovídajících prvků. Pokud je tag
+              vynechán, budou odstraněny všechny tagy ze všech odpovídajících
+              prvků. Není chybou zadat takový identifikátor prvku, které nebude
+              odpovídat žádnému prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku. (tag nebo identifikátor).
+              </dd>
+              <dt>
+                <i>tag</i>
+              </dt>
+              <dd>
+                Tag, který se má odstranit z odpovídajících prvků. Pokud je
+                vynechán, jsou odstraněny všechny tagy.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_above-method" name=
+            "Tkinter.Canvas.find_above-method"><b>find_above(prvek)</b></a>
+            [<a href="#Tkinter.Canvas.find_above-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací prvek, který leží hned nad daným prvkem.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Daný prvek.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_all-method" name=
+            "Tkinter.Canvas.find_all-method"><b>find_all()</b></a> [<a href=
+            "#Tkinter.Canvas.find_all-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací všechny prvky na plátně. Tato metoda vrací tuple,
+              obsahující identifikátory všech prvků na plátně s nejvrchnějším
+              prvkem jako posledním. To znamená, že pokud jste nezměnili pořadí
+              za použití <a class="link" href=
+              "#Tkinter.Canvas.lift-method"><b>lift</b></a> nebo <a class=
+              "link" href="#Tkinter.Canvas.lower-method"><b>lower</b></a>,
+              prvky jsou vráceny v pořadí, v jakém jste je vytvořili. Jedná se
+              o zkratku za <b>find_withtag(ALL)</b>.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Tuple, obsahující všechny prvky na plátně.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_below-method" name=
+            "Tkinter.Canvas.find_below-method"><b>find_below(prvek)</b></a>
+            [<a href="#Tkinter.Canvas.find_below-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací první, který je hned pod daným prvkem.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_closest-method" name=
+            "Tkinter.Canvas.find_closest-method"><b>find_closest(x, y,
+            halo=None, start=None)</b></a> [<a href=
+            "#Tkinter.Canvas.find_closest-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací nejbližší prvek k dané pozici. Pozice je udávána v
+              souřadnicích plátna, což značí, že tato metoda uspěje vždy, pokud
+              je na plátně nejméně jeden prvek. Chcete-li nalézt prvek, který
+              je v určité vzdálenosti od pozice, použijte <a class="link" href=
+              "#Tkinter.Canvas.find_overlapping-method"><b>find_overlapping</b></a>
+              , s malým obdélníkem centrovaným kolem pozice.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Horizontální souřadnice okna.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Vertikální souřadnice okna.
+              </dd>
+              <dt>
+                <i>halo</i>
+              </dt>
+              <dd>
+                Nepovinná vzdálenost halo.
+              </dd>
+              <dt>
+                <i>start</i>
+              </dt>
+              <dd>
+                Nepovinný počáteční prvek.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_enclosed-method" name=
+            "Tkinter.Canvas.find_enclosed-method"><b>find_enclosed(x1, y1, x2,
+            y2)</b></a> [<a href="#Tkinter.Canvas.find_enclosed-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Najde všechny prvky, které jsou zcela obsaženy v daném obdélníku.
+            </p>
+            <dl>
+              <dt>
+                <i>x1</i>
+              </dt>
+              <dd>
+                Levá hrana.
+              </dd>
+              <dt>
+                <i>y1</i>
+              </dt>
+              <dd>
+                Horní hrana.
+              </dd>
+              <dt>
+                <i>x2</i>
+              </dt>
+              <dd>
+                Pravá hrana.
+              </dd>
+              <dt>
+                <i>y2</i>
+              </dt>
+              <dd>
+                Spodní hrana.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Tuple, obsahující všechny odpovídající prvky.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_overlapping-method" name=
+            "Tkinter.Canvas.find_overlapping-method"><b>find_overlapping(x1,
+            y1, x2, y2)</b></a> [<a href=
+            "#Tkinter.Canvas.find_overlapping-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Najde všechny prvky, které překrývají daný obdélník nebo jsou v
+              něm zcela obsaženy.
+            </p>
+            <dl>
+              <dt>
+                <i>x1</i>
+              </dt>
+              <dd>
+                Levá hrana.
+              </dd>
+              <dt>
+                <i>y1</i>
+              </dt>
+              <dd>
+                Horní hrana.
+              </dd>
+              <dt>
+                <i>x2</i>
+              </dt>
+              <dd>
+                Pravá hrana.
+              </dd>
+              <dt>
+                <i>y2</i>
+              </dt>
+              <dd>
+                Spodní hrana.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Tuple, obsahující všechny odpovídající prvky.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.find_withtag-method" name=
+            "Tkinter.Canvas.find_withtag-method"><b>find_withtag(prvek)</b></a>
+            [<a href="#Tkinter.Canvas.find_withtag-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Najde všechny prvky obsahující daný identifikátor prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.focus-method" name=
+            "Tkinter.Canvas.focus-method"><b>focus(prvek=None)</b></a>
+            [<a href="#Tkinter.Canvas.focus-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posune focus na daný prvek. Pokud má prvek vazby na klávesy, bude
+              přijímat všechna další klávesové události za předpokladu, že
+              samotný canvas má také focus. Je vždy nejlepší nejdříve volat
+              focus_set na canvas a následně focus na prvek na plátně.
+            </p>
+            <p>
+              Chcete-li zrušit focus na prvek, zavolejte tuto metodu s prázdným
+              řetězcem.
+            </p>
+            <p>
+              Chcete-li zjistit, který prvek má aktuálně focus, zavolejte tuto
+              metodu bez parametru.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku. Chcete-li zrušit focus na prvek, použijte prázdný
+                řetězec.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Pokud je prvek vynechán, tato metoda vrací prvek, která
+                aktuálně focus má nebo None, pokud žádný prvek focus nemá.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.gettags-method" name=
+            "Tkinter.Canvas.gettags-method"><b>gettags(prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.gettags-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací tagy spojené s prvkem.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Tuple, obsahující všechny tagy spojené s prvkem. prvek.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.icursor-method" name=
+            "Tkinter.Canvas.icursor-method"><b>icursor(prvek, index)</b></a>
+            [<a href="#Tkinter.Canvas.icursor-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posouvá vkládací kurzor na danou pozici. Tato metoda se dá použít
+              jen u editovatelných prvků.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index kurzoru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.index-method" name=
+            "Tkinter.Canvas.index-method"><b>index(prvek, index)</b></a>
+            [<a href="#Tkinter.Canvas.index-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací číselný kurzorový index odpovídající dané pozici. Číselné
+              indexování funguje stejně jako indexování seznamů v Pythonu; 0 je
+              prostě první index zleva a len(text) je prostě vpravo od
+              posledního znaku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index. Můžete použít číselné vyjádření nebo jednu z hodnot
+                INSERT (aktuální poloha vkládacího kurzoru), END (délka textu)
+                nebo SEL_FIRST a SEL_LAST (začátek a konec výběru/označení).
+                &nbsp;Můžete také použít formu "@x,y", kde x a y jsou
+                souřadnice plátna a získáte tak index nejbližší dané
+                souřadnici.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Číselný index (kladné celé číslo -&nbsp; integer).
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.insert-method" name=
+            "Tkinter.Canvas.insert-method"><b>insert(prvek, index,
+            text)</b></a> [<a href="#Tkinter.Canvas.insert-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vkládá text do editovatelných prvků.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kam text vložit. Může být buď číselný index nebo symbolická
+                konstanta. Detaily najdete u metody&nbsp;<a class="link" href=
+                "#Tkinter.Canvas.index-method"><b>index</b></a>. Pokud vkládáte
+                text na index INSERT, kurzor se posouvá současně s textem.
+              </dd>
+              <dt>
+                <i>text</i>
+              </dt>
+              <dd>
+                Text, který se má vložit.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.itemcget-method" name=
+            "Tkinter.Canvas.itemcget-method"><b>itemcget(prvek,
+            parametr)</b></a> [<a href="#Tkinter.Canvas.itemcget-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací současnou hodnotu parametru prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>parametr</i>
+              </dt>
+              <dd>
+                Parametr prvku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Hodnotu parametru. Pokud identifikátor prvku odkazuje na více než
+                jeden prvek, tato metoda vrací hodnotu parametru prvního
+                nalezeného.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.itemconfig-method" name=
+            "Tkinter.Canvas.itemconfig-method"><b>itemconfig(prvek,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.itemconfig-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění jeden nebo více parametrů u všech odpovídajících prvků.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.itemconfigure-method" name=
+            "Tkinter.Canvas.itemconfigure-method"><b>itemconfigure(prvek,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.itemconfigure-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Stejné jako&nbsp;<a class="link" href=
+              "#Tkinter.Canvas.itemconfig-method"><b>itemconfig</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.lift-method" name=
+            "Tkinter.Canvas.lift-method"><b>lift(prvek, **parametry)</b></a>
+            [<a href="#Tkinter.Canvas.lift-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              (Zastaralé) Posouvá prvek na vrchol zásobníku. Stejné jako
+              <a class="link" href=
+              "#Tkinter.Canvas.tag_raise-method"><b>tag_raise</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.lower-method" name=
+            "Tkinter.Canvas.lower-method"><b>lower(prvek, **parametry)</b></a>
+            [<a href="#Tkinter.Canvas.lower-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              (Zastaralé) Posouvá prvek na spodek zásobníku. Stejné jako
+              <a class="link" href=
+              "#Tkinter.Canvas.tag_lower-method"><b>tag_lower</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.move-method" name=
+            "Tkinter.Canvas.move-method"><b>move(prvek, dx, dy)</b></a>
+            [<a href="#Tkinter.Canvas.move-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje odpovídající prvky o daný posun.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>dx</i>
+              </dt>
+              <dd>
+                Horizontální posun.
+              </dd>
+              <dt>
+                <i>dy</i>
+              </dt>
+              <dd>
+                Vertikální posun.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.postscript-method" name=
+            "Tkinter.Canvas.postscript-method"><b>postscript(**parametry)</b></a>
+            [<a href="#Tkinter.Canvas.postscript-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vytváří&nbsp;Postscriptovou kopii obsahu plátna. Obrázky a
+              udělátka však obsaženy nejsou.
+            </p>
+            <dl>
+              <dt>
+                <i>**parametry</i>
+              </dt>
+              <dd>
+                Parametry Postscript.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.scale-method" name=
+            "Tkinter.Canvas.scale-method"><b>scale(self, xscale, yscale,
+            xoffset, yoffset)</b></a> [<a href=
+            "#Tkinter.Canvas.scale-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Zvětšuje nebo zmenšuje odpovídají prvky v daném měřítku.
+              Souřadnice pro každý prvku jsou přepočítány podle
+              vzorce((coord-offset)*scale+offset); jinými slovy - každý prvek
+              je nejprve posunut o daný offset, pak pak vynásoben koeficient
+              měřítka, a pak opět posunut zpět. Tato metoda mění souřadnice
+              prvku; může se vám stát, že ztratíte přesnost, použijete-li tuto
+              metodu několikrát za sebou na stejném prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>xscale</i>
+              </dt>
+              <dd>
+                Vodorovné měřítko.
+              </dd>
+              <dt>
+                <i>yscale</i>
+              </dt>
+              <dd>
+                Svislé měřítko.
+              </dd>
+              <dt>
+                <i>xoffset</i>
+              </dt>
+              <dd>
+                Vodorovný posun v souřadnicích plátna.
+              </dd>
+              <dt>
+                <i>yoffset</i>
+              </dt>
+              <dd>
+                Svislý posun v souřadnicích plátna.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.scan_dragto-method" name=
+            "Tkinter.Canvas.scan_dragto-method"><b>scan_dragto(x, y)</b></a>
+            [<a href="#Tkinter.Canvas.scan_dragto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Roluje obsah udělátka relativně k dané zarážce. Obsah je posunut
+              10x vzdálenost mezi zarážkou a danou pozicí. Na nastavení zarážky
+              použijte <a class="link" href=
+              "#Tkinter.Canvas.scan_mark-method"><b>scan_mark</b></a> ,
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Vodorovná souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Svislá souřadnice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.scan_mark-method" name=
+            "Tkinter.Canvas.scan_mark-method"><b>scan_mark(x, y)</b></a>
+            [<a href="#Tkinter.Canvas.scan_mark-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje zarážku. Ta pak může být použita pro rychlé rolování na
+              pozici myši.
+            </p>
+            <dl>
+              <dt>
+                <i>x</i>
+              </dt>
+              <dd>
+                Vodorovná souřadnice.
+              </dd>
+              <dt>
+                <i>y</i>
+              </dt>
+              <dd>
+                Svislá souřadnice.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.select_adjust-method" name=
+            "Tkinter.Canvas.select_adjust-method"><b>select_adjust(prvek,
+            index)</b></a> [<a href=
+            "#Tkinter.Canvas.select_adjust-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Mění výběr tak, aby obsahoval daný index. Tato metoda také
+              nastavuje kotvu (anchor) na tuto pozici. Typické využití je u
+              vazeb myši.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Index výběru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.select_clear-method" name=
+            "Tkinter.Canvas.select_clear-method"><b>select_clear()</b></a>
+            [<a href="#Tkinter.Canvas.select_clear-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Odstraňuje výběr, pokud nějaký v tomto udělátku je. widget.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.select_from-method" name=
+            "Tkinter.Canvas.select_from-method"><b>select_from(prvek,
+            index)</b></a> [<a href="#Tkinter.Canvas.select_from-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje kotvu výběru. Na rozšířená výběru
+              použijte&nbsp;<a class="link" href=
+              "#Tkinter.Canvas.select_adjust-method"><b>select_adjust</b></a>
+              nebo <a class="link" href=
+              "#Tkinter.Canvas.select_to-method"><b>select_to</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Kotva výběru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.select_item-method" name=
+            "Tkinter.Canvas.select_item-method"><b>select_item()</b></a>
+            [<a href="#Tkinter.Canvas.select_item-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací prvek, který obsahuje výběr textu u tohoto udělátka na
+              plátně.
+            </p>
+            <p>
+              Tato metoda v některých starších verzích Tkinter vrací vždy None.
+              Tento problém se obchází náhradou této metody za
+              <b>canvas.tk.call(canvas._w, "select", "item")</b>.
+            </p>
+            <dl>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Identifikátor prvku nebo None, pokud žádný výběr neexistuje.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.select_to-method" name=
+            "Tkinter.Canvas.select_to-method"><b>select_to(prvek,
+            index)</b></a> [<a href="#Tkinter.Canvas.select_to-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Upravuje výběr tak, že bude zahrnovat oblast mezi současnou
+              kotvou výběru a daným indexem. Kotva se nastavuje pomocí
+              <a class="link" href=
+              "#Tkinter.Canvas.select_from-method"><b>select_from</b></a> or
+              <a class="link" href=
+              "#Tkinter.Canvas.select_adjust-method"><b>select_adjust</b></a>.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>index</i>
+              </dt>
+              <dd>
+                Koncový bod výběru.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.tag_bind-method" name=
+            "Tkinter.Canvas.tag_bind-method"><b>tag_bind(prvek, event=None,
+            volanafunkce, add=None)</b></a> [<a href=
+            "#Tkinter.Canvas.tag_bind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Přidá vazbu na událost ke všem odpovídajícím prvkům.
+            </p>
+            <p>
+              Nové vazby jsou svázány s prvkem a ne tagem. Například,
+              vytvoříte-li vazby u všech prvků, které mají
+              tag&nbsp;<b>movable</b>, budou uplatněny u všech existujících
+              odpovídajících prvků na plátně. Pokud ale následně vytvoříte
+              další nové prvky s tagem&nbsp;<b>movable</b>, tyto příslušnou
+              vazbu mít nebudou.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku (tag or identifikátor).
+              </dd>
+              <dt>
+                <i>event</i>
+              </dt>
+              <dd>
+                Identifikátor události.
+              </dd>
+              <dt>
+                <i>volanafunkce</i>
+              </dt>
+              <dd>
+                Volatelný objekt, který přijímá jeden parametr - událost. Pro
+                všechny příslušné události je tato volanafunkce&nbsp;volaná s
+                parametrem&nbsp;události.
+              </dd>
+              <dt>
+                <i>add</i>
+              </dt>
+              <dd>
+                Obvykle nové vazby nahrazují všechny dosavadní vazby pro
+                stejnou událost. Pokud je tento parametr&nbsp;"+", nové vazby
+                jsou přidávány k již existujícím.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.tag_lower-method" name=
+            "Tkinter.Canvas.tag_lower-method"><b>tag_lower(prvek)</b></a>
+            [<a href="#Tkinter.Canvas.tag_lower-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje prvek na spodek zásobníku plátna. Pokud je nalezeno více
+              odpovídajících prvků jsou posunuty všechny s respektováním jejich
+              relativního pořadí.
+            </p>
+            <p>
+              Tato metoda nefunguje s okenními prvky (window items). Používejte
+              metodu udělátka <b>lower,</b> chcete-li změnit pořadí.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.tag_raise-method" name=
+            "Tkinter.Canvas.tag_raise-method"><b>tag_raise(prvek)</b></a>
+            [<a href="#Tkinter.Canvas.tag_raise-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Posunuje prvek na vršek zásobníku plátna. Pokud je nalezeno více
+              odpovídajících prvků jsou posunuty všechny s respektováním jejich
+              relativního pořadí.
+            </p>
+            <p>
+              Tato metoda nefunguje s okenními prvky (window items). Používejte
+              metodu udělátka <b>lift,</b> chcete-li změnit pořadí.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.tag_unbind-method" name=
+            "Tkinter.Canvas.tag_unbind-method"><b>tag_unbind(self, prvek,
+            event)</b></a> [<a href="#Tkinter.Canvas.tag_unbind-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Pro danou událost odstraňuje případné vazby u všech
+              odpovídajících prvků.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                <i>sequence</i>
+              </dt>
+              <dd>
+                Identifikátor události.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.tkraise-method" name=
+            "Tkinter.Canvas.tkraise-method"><b>tkraise(prvek,
+            **parametry)</b></a> [<a href=
+            "#Tkinter.Canvas.tkraise-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              (Zastaralé) Stejné jako <a class="link" href=
+              "#Tkinter.Canvas.tag_raise-method"><b>tag_raise</b></a>.
+            </p>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.type-method" name=
+            "Tkinter.Canvas.type-method"><b>type(prvek)</b></a> [<a href=
+            "#Tkinter.Canvas.type-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Vrací typ prvku. Pokud se prvek odkazuje na více než jeden prvek,
+              tato metoda vrací typ prvního nalezeného prvku.
+            </p>
+            <dl>
+              <dt>
+                <i>prvek</i>
+              </dt>
+              <dd>
+                Identifikátor prvku.
+              </dd>
+              <dt>
+                Vrací:
+              </dt>
+              <dd>
+                Řetězec udávající typ prvku. Může nabývat hodnot <b>"arc"</b>,
+                <b>"bitmap"</b>, <b>"image"</b>, <b>"line"</b>, <b>"oval"</b>,
+                <b>"polygon"</b>, <b>"rectangle"</b>, <b>"text"</b> nebo
+                <b>"window"</b>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.xview-method" name=
+            "Tkinter.Canvas.xview-method"><b>xview(how, *args)</b></a>
+            [<a href="#Tkinter.Canvas.xview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje vodorovný pohled na plátno.
+            </p>
+            <dl>
+              <dt>
+                <i>how</i>
+              </dt>
+              <dd>
+                Jak nastavit plátno. Může nabývat hodnot&nbsp;"moveto" nebo
+                "scroll".
+              </dd>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dd>
+                Dodatečné parametry. Pro metodu&nbsp;"moveto" to je jediný
+                zlomek. Pro metodu"scroll" je to jednotka a počet. Bližší popis
+                najdete v metodách <a class="link" href=
+                "#Tkinter.Canvas.xview_moveto-method"><b>xview_moveto</b></a> a
+                <a class="link" href=
+                "#Tkinter.Canvas.xview_scroll-method"><b>xview_scroll</b></a>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.xview_moveto-method" name=
+            "Tkinter.Canvas.xview_moveto-method"><b>xview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Canvas.xview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje plátno tak, že daný posun je u levé strany plátna.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+              <dd>
+                Posunutí posunu. Posun 0.0 je na
+                začátku&nbsp;<b>scrollregion</b> a&nbsp;1.0 na konci.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.xview_scroll-method" name=
+            "Tkinter.Canvas.xview_scroll-method"><b>xview_scroll(number,
+            what)</b></a> [<a href="#Tkinter.Canvas.xview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Roluje plátno vodorovně o danou vzdálenost.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dd>
+                Počet jednotek.
+              </dd>
+              <dt>
+                <i>what</i>
+              </dt>
+              <dd>
+                Jakou jednotku použít. Může nabývat hodnot&nbsp;<b>"units"</b>
+                (menší kroky) nebo <b>"pages"</b>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.yview-method" name=
+            "Tkinter.Canvas.yview-method"><b>yview(how, *args)</b></a>
+            [<a href="#Tkinter.Canvas.yview-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje svislý pohled na plátno.
+            </p>
+            <dl>
+              <dt>
+                <i>how</i>
+              </dt>
+              <dd>
+                Jak nastavit plátno. Může nabývat hodnot&nbsp;"moveto" nebo
+                "scroll".
+              </dd>
+              <dt>
+                <i>*args</i>
+              </dt>
+              <dd>
+                Dodatečné parametry. Pro metodu&nbsp;"moveto" to je jediný
+                zlomek. Pro metodu"scroll" je to jednotka a počet. Bližší popis
+                najdete v metodách&nbsp; <a class="link" href=
+                "#Tkinter.Canvas.yview_moveto-method"><b>yview_moveto</b></a> a
+                <a class="link" href=
+                "#Tkinter.Canvas.yview_scroll-method"><b>yview_scroll</b></a>.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.yview_moveto-method" name=
+            "Tkinter.Canvas.yview_moveto-method"><b>yview_moveto(fraction)</b></a>
+            [<a href="#Tkinter.Canvas.yview_moveto-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Nastavuje plátno tak, že daný posun je u horní strany plátna.
+            </p>
+            <dl>
+              <dt>
+                <i>fraction</i>
+              </dt>
+              <dd>
+                Posunutí posunu. Posun 0.0 je na
+                začátku&nbsp;<b>scrollregion</b> a&nbsp;1.0 na konci.
+              </dd>
+            </dl>
+          </dd>
+          <dt>
+            <a id="Tkinter.Canvas.yview_scroll-method" name=
+            "Tkinter.Canvas.yview_scroll-method"><b>yview_scroll(number,
+            what)</b></a> [<a href="#Tkinter.Canvas.yview_scroll-method">#</a>]
+          </dt>
+          <dd>
+            <p>
+              Roluje plátno svisle o danou vzdálenost.
+            </p>
+            <dl>
+              <dt>
+                <i>number</i>
+              </dt>
+              <dd>
+                Počet jednotek.
+              </dd>
+              <dt>
+                <i>what</i>
+              </dt>
+              <dd>
+                Jakou jednotku použít. Může nabývat hodnot&nbsp;<b>"units"</b>
+                (menší kroky) nebo <b>"pages"</b>.
+              </dd>
+            </dl>
+          </dd>
+        </dl>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

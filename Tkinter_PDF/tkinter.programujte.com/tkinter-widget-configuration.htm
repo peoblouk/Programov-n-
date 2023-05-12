@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <meta name="generator" content=
+    "HTML Tidy for Windows (vers 1 June 2005), see www.w3.org">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <title>
+      Konfigurace udělátek ::: Úvod do Tkinter ::: tkinter.programujte.com
+    </title>
+    <link rel="stylesheet" href="effbot2.css" tppabs="http://tkinter.programujte.com/css/effbot2.css" type="text/css" media=
+    "screen">
+    <link rel="stylesheet" href="effbotprint.css" tppabs="http://tkinter.programujte.com/css/effbotprint.css" type="text/css" media=
+    "print">
+  </head>
+  <body bgcolor="white">
+    <div id="effbot-page">
+      <div id="effbot-body">
+        <p class="info">
+          Úvod do Tkinter - Okna pro jazyk Python - Postavené na základech 'An
+          Introduction to Tkinter'
+        </p>
+        <p class="navigate">
+          [ <a href="tkinter-classes.htm" tppabs="http://tkinter.programujte.com/tkinter-classes.htm">předchozí</a> ] [ <a href=
+          "tkinter-widget-styling.htm" tppabs="http://tkinter.programujte.com/tkinter-widget-styling.htm">další</a> ] [ <a href=
+          "index-1.htm" tppabs="http://tkinter.programujte.com/index.htm">obsah</a> ] [ <a href=
+          "javascript:if(confirm('http://effbot.org/tkinterbook/tkinter-widget-configuration.htm  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://effbot.org/tkinterbook/tkinter-widget-configuration.htm'" tppabs="http://effbot.org/tkinterbook/tkinter-widget-configuration.htm">originál</a>
+          ]
+        </p>
+        <h1 class="title">
+          Konfigurace udělátek
+        </h1>
+        <p>
+          Chcete-li měnit vzhled&nbsp; již vytvořeného udělátka, používejte
+          raději <i>parametry (options)</i> než volání metod. Běžné parametry
+          umožňují měnit text a barvu, dále velikost, volanou funkci, apod.
+          Všechny základní udělátka mají implementováno stejné konfigurační
+          rozhraní pro zacházení s parametry:
+        </p>
+        <h2>
+          Konfigurační rozhraní
+        </h2>
+        <div class="method">
+          <p class="def">
+            <b>TridaUdelatka(rodič, parametr=hodnota, ...)</b> <span>=&gt;
+            udělátko</span>
+          </p>
+          <p>
+            (kde <i>TridaUdelatka</i> je <a href="tkinter-classes.htm" tppabs="http://tkinter.programujte.com/tkinter-classes.htm">jedna z
+            tříd</a> zmíněné dříve)
+          </p>
+          <p>
+            Vytvoří instanci této třídy udělátka jako potomka daného rodiče při
+            použití daných parametrů. Všechny parametry mají standardní
+            hodnoty, takže v nejjednodušším případě musíte určit pouze rodiče.
+            Můžete dokonce vypustit i toho, pokud skutečně chcete; Tkinter pak
+            použije jako rodiče naposledy vytvořené hlavní okno.
+            Parametr&nbsp;<b>name</b> se může nastavit jen při vytvoření
+            udělátka.
+          </p>
+        </div>
+        <div class="method">
+          <p class="def">
+            <b>cget("parametr")</b> <span>=&gt; hodnota</span>
+          </p>
+          <p>
+            Vrací současnou hodnotu parametru. Jak název parametru, tak vrácená
+            hodnota, jsou řetězce. Chcete-li získat parametr <b>name</b>,
+            použijte <b>str(widget)</b>.
+          </p>
+        </div>
+        <div class="method">
+          <p class="def">
+            <b>config(parametr=hodnota, ...)</b>
+          </p>
+          <p class="def">
+            <b>configure(</b><b>parametr=hodnota</b><b>, ...)</b>
+          </p>
+          <p>
+            Nastaví jeden nebo více parametrů (zadané jako pojmenované
+            argumenty).
+          </p>
+        </div>
+        <p>
+          Poznámka: některé názvy parametrů kolidují s názvy <a href=
+          "javascript:if(confirm('http://docs.python.org/ref/keywords.html  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://docs.python.org/ref/keywords.html'" tppabs="http://docs.python.org/ref/keywords.html">klíčových slov</a> v
+          Pythonu. Potřebujete-li použít tyto jména jako pojmenované argumenty,
+          přidejte jednoduše na konec slova podtržítko(<b>class_</b>,
+          <b>from_</b>, ...). Opakuji:&nbsp;parametr&nbsp;<b>name</b> měnit
+          nemůžete, ten se dá nastavit jen jednou a to při vytvoření udělátka.
+        </p>
+        <div class="method">
+          <p class="def">
+            <b>keys()</b> <span>=&gt; seznam</span>
+          </p>
+          <p>
+            Vrací seznam všech parametrů, které se dají u příslušného udělátka
+            nastavit. Samozřejmě kromě parametru <b>name</b>.
+          </p>
+        </div>
+        <h3>
+          Použití slovníku
+        </h3>
+        <p>
+          Kvůli pohodlí udělátka mají implementování přístup k parametrům přes
+          lokální slovník. Metoda <b>__setitem__</b> je spojena
+          s&nbsp;<b>configure</b>, zatímco&nbsp; <b>__getitem__</b> je
+          nastavena na&nbsp;<b>cget</b>. Výsledkem tohoto triku je pohodlnější
+          přístup k parametrům, a to jak pro čtení tak pro zápis:
+        </p>
+        <pre>
+hodnota = widget["parametr"]
+widget["parametr"] = hodnota
+</pre>
+        <p>
+          Poznámka: každé takovéto přiřazení způsobí volání příslušné funkce v
+          Tk. Chcete-li tedy měnit vícero parametrů je vždy lepší udělat to v
+          jednom volání pomocí&nbsp; <b>config</b> nebo <b>configure</b>.
+        </p>
+        <h2>
+          Zpětná kompatibilita
+        </h2>
+        <p>
+          Pojmenované argumenty byly představeny poprvé v&nbsp;Python 1.3.
+          Předtím byly parametry předávány konstruktorům udělátek (stejně
+          jako&nbsp;<b>config</b> metodám) pomocí slovníků. Zdrojový kód tedy
+          vypadal tehdy takto:
+        </p>
+        <pre>
+self.tlacitko = Button(frame, {"text": "KONEC", "fg": "red", "command": frame.quit})
+self.tlacitko.pack({"side": LEFT})
+</pre>
+        <p>
+          Syntaxe pojmenovaných argumentů je samozřejmě o mnoho elegantnější a
+          způsobuje méně chybovosti. Nicméně z důvodů zpětné kompatibility
+          Tkinter podporuje stále ještě i tuto starou syntaxi. Neměla by být
+          však již v nových aplikacích používána., i když se to může někdy
+          hodit. Například když potřebujete vytvořit specielní udělátko, které
+          potřebuje předávat přijaté parametry své rodičovské třídě, mohlo by
+          vás napadnout následující řešení:
+        </p>
+        <pre>
+def __init__(self, master, **kw):
+    Canvas.__init__(self, master, kw) # kw je slovnik
+</pre>
+        <p>
+          Fredrik Lundh doporučuje v originále této dokumentace používat místo
+          tohoto řešení funkci <b>apply</b>. Ta se však později objevila na
+          seznamu zavrženíhodných v dalších (Python 3.0) verzích Pythona. Takže
+          jen pro úplnost možnost řešení s&nbsp; <b>apply</b>:
+        </p>
+        <pre>
+def __init__(self, master, **kw):
+    apply(Canvas.__init__, (self, master), kw)
+
+</pre>
+        <hr class="zonebar">
+        <p class="info">
+          Přeložil a upravil - Pavel Kosina - Copyright © 2006 TkinterCZ -
+          <a href="javascript:if(confirm('http://www.gnu.cz/article/36/  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?'))window.location='http://www.gnu.cz/article/36/'" tppabs="http://www.gnu.cz/article/36/">GNU Free Documentation
+          License 1.2</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
